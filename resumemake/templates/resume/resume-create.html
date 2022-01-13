@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Create resume website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+		<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/forms/select/select2.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/pickers/pickadate/pickadate.css')}}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap-extended.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/colors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/components.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/dark-layout.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/bordered-layout.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/semi-dark-layout.min.css')}}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/pages/faq.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/pages/profile-pic.css')}}">
+
+    <!-- END: Page CSS-->
+  </head>
+  <!-- END: Head-->
+
+  <!-- BEGIN: Body-->
+  <body class="vertical-layout footer-static pace-done menu-hide vertical-overlay-menu navbar-sticky menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    {% include 'nav_dash.html' %}
+
+    {% include '_menu.html' %}
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper">
+        <div class="content-header row">
+          <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+              <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Create Resume</h2>
+                <div class="breadcrumb-wrapper">
+                  <ol class="breadcrumb">
+                    <div class="badge badge-primary mr-1 mb-1" data-toggle="tooltip" data-placement="top" title data-original-title="template">
+                      <i class="feather icon-file"></i>
+                      <span>{{ resume_site.template }}</span>
+                    </div>
+                    <div class="badge badge-info mr-1 mb-1" data-toggle="tooltip" data-placement="top" title data-original-title="site name">
+                      <i class="feather icon-globe"></i>
+                      <span>{{ resume_site.site_name }}</span>
+                    </div>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+            <div class="form-group breadcrumb-right">
+              <div class="dropdown">
+                {% if resume_site.status == 'Active' %}
+                  <button class="btn-icon btn btn-primary btn-round btn-sm" type="button">Publish</button>
+                {% else %}
+                  <a href="#" class="btn-icon btn btn-warning btn-round btn-sm" type="button">Publish</a>
+                {% endif %}
+                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Preview</button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" target="_blank" href="{{ url_for('public.previewresume', site_id=resume_site.site_id, site_name=resume_site.site_name) }}"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">With My Data</span></a>
+                  <a class="dropdown-item" target="_blank" href="{{ url_for('public.preview', template='sunshine') }}"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Original Template</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-body"><!-- search header -->
+
+        <!-- frequently asked questions tabs pills -->
+        <section id="faq-tabs">
+        <!-- vertical tab pill -->
+        <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-12">
+          <div class="faq-navigation d-flex justify-content-between flex-column mb-2 mb-md-0">
+            <!-- pill tabs navigation -->
+            <ul class="nav nav-pills nav-left flex-column" role="tablist">
+              <!-- resField -->
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="resField"
+                  data-toggle="pill"
+                  href="#resume-field"
+                  aria-expanded="true"
+                  role="tab"
+                >
+                  <i data-feather="user" class="font-medium-3 mr-1"></i>
+                  <span class="font-weight-bold">Personel</span>
+                </a>
+              </li>
+
+              <!-- delivery -->
+              <li class="nav-item">
+                <a class="nav-link" id="delivery" data-toggle="pill" href="#resume-collapse" aria-expanded="false" role="tab">
+                  <i data-feather="briefcase" class="font-medium-3 mr-1"></i>
+                  <span class="font-weight-bold">Work</span>
+                </a>
+              </li>
+
+              <!-- cancellation and return -->
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="education-settings"
+                  data-toggle="pill"
+                  href="#faq-education-settings"
+                  aria-expanded="false"
+                  role="tab"
+                >
+                  <i data-feather="book" class="font-medium-3 mr-1"></i>
+                  <span class="font-weight-bold">Education</span>
+                </a>
+              </li>
+
+              <!-- my order -->
+              <li class="nav-item">
+                <a class="nav-link" id="skills-settings" data-toggle="pill" href="#faq-skills-settings" aria-expanded="false" role="tab">
+                  <i data-feather="award" class="font-medium-3 mr-1"></i>
+                  <span class="font-weight-bold">Skills</span>
+                </a>
+              </li>
+
+              <!-- product and services-->
+              <li class="nav-item">
+                <a class="nav-link" id="product-services" data-toggle="pill" href="#faq-product-services" aria-expanded="false" role="tab">
+                  <i data-feather="thumbs-up" class="font-medium-3 mr-1"></i>
+                  <span class="font-weight-bold">Testimonials</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" id="site-settings" data-toggle="pill" href="#faq-site-settings" aria-expanded="false" role="tab">
+                  <i data-feather="settings" class="font-medium-3 mr-1"></i>
+                  <span class="font-weight-bold">Site Settings</span>
+                </a>
+              </li>
+            </ul>
+
+            <!-- FAQ image -->
+            <img
+              src="{{ url_for('static', filename='app-assets/images/illustration/faq-illustrations.svg')}}"
+              class="img-fluid d-none d-md-block"
+            />
+          </div>
+        </div>
+
+        <div class="col-lg-9 col-md-8 col-sm-12">
+          <!-- pill tabs tab content -->
+          <div class="tab-content">
+            <!-- resField panel -->
+            <div class="tab-pane active" id="resume-field" role="tabpanel" aria-labelledby="resField" aria-expanded="true">
+              <!-- icon and header -->
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-tag bg-light-primary mr-1">
+                  <i data-feather="user" class="font-medium-4"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Personel Information</h4>
+                </div>
+              </div>
+
+              <!-- frequent answer and question  collapse  -->
+              <div class="collapse-margin collapse-icon mt-2" id="resume-field-qna">
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="basic-info-id"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#basic-info"
+                    aria-expanded="false"
+                    aria-controls="basic-info"
+                  >
+                    <span class="lead collapse-title">Basic Info</span>
+                  </div>
+
+                  <div id="basic-info" class="collapse" aria-labelledby="basic-info-id" data-parent="#resume-field-qna">
+        						<div class="card-body">
+                      <div class="tab-content">
+                        <div>
+                          <input type='hidden' id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+                          <div class="media mb-2">
+                            <div class="avatar-wrapper">
+                            	<img class="profile-pic" src="{{ url_for('static', filename='images/profiles/'+current_user.profile_picture) }}" />
+                            	<div class="upload-button"></div>
+                            	<input class="file-upload" type="file" id="file" name="file" accept="image/*"/>
+                            </div>
+                            <div class="media-body mt-50">
+                                <h4 class="media-heading">{{ current_user }}</h4>
+                                <p class="text-muted mt-50"><small>Allowed JPG, JPEG or PNG. Max size of 2Mb</small></p>
+                            </div>
+                          </div>
+                          <form>
+                            <div class="row">
+                              <div class="col-12 col-sm-6">
+                                  <div class="form-group">
+                                      <div class="controls">
+                                          <label>First Name</label>
+                                          <input type="text" class="form-control" placeholder="First Name" value="{{ current_user.name }}" id="FirstName">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="controls">
+                                          <label>Last Name</label>
+                                          <input type="text" class="form-control" placeholder="Last Name" value="{{ current_user.surname }}" id="LastName">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="controls">
+                                          <label>E-mail</label>
+                                          <input type="email" class="form-control" placeholder="Email" value="{{ resume_site.email }}" id="email">
+                                      </div>
+                                  </div>
+      														<div class="form-group">
+                                      <div class="controls">
+                                          <label>Phone</label>
+                                          <input type="text" class="form-control" placeholder="Phone" value="{{ resume_site.phone_number }}" id="phone">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-sm-6">
+    														<div class="form-group">
+    																<div class="controls">
+    																		<label>Tagline</label>
+    																		<input type="text" class="form-control" placeholder="Ex: Web Developer + Seo Expert" value="{{ resume_site.tagline }}" id="tagline">
+    																</div>
+    														</div>
+    														<div class="form-group">
+    																<div class="controls">
+    																		<label>Birth Day</label>
+                                        <input type="text" class="form-control" value="{{ resume_site.birth_day }}" placeholder="Birth Day" id="birth_day">
+    																</div>
+    														</div>
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <input type="text" class="form-control" value="{{ resume_site.country }}" placeholder="Country" id="country">
+                                </div>
+    														<div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" value="{{ resume_site.province }}" placeholder="City" id="city">
+                                </div>
+                              </div>
+                              <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                  <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 save" data="basic_info" data-site-id="{{resume_site.site_id}}">Save
+                                      Changes</button>
+                                  <button type="reset" class="btn btn-outline-warning">Reset</button>
+                              </div>
+                            </div>
+                          </form>
+                          <!-- users edit account form ends -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="resFieldSeven"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#resume-field-seven"
+                    aria-expanded="false"
+                    aria-controls="resume-field-seven"
+                  >
+                    <span class="lead collapse-title">
+                      Introduction
+                    </span>
+                  </div>
+                  <div
+                    id="resume-field-seven"
+                    class="collapse"
+                    aria-labelledby="resFieldSeven"
+                    data-parent="#resume-field-qna"
+                  >
+                    <div class="card-body">
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="form-group">
+                                  <div class="controls">
+                                      <label>Introduction Title</label>
+                                      <input type="text" class="form-control" value="{{ resume_site.intro_title }}" placeholder="About Me or I am Web Developer" id="intro_title">
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <label>Introduction</label>
+        							<div id="editor-container">
+                        {{ resume_site.introduction|safe }}
+                      </div>
+                      <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 save" data="introduction" data-site-id="{{resume_site.site_id}}">Save Changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        				<div class="card">
+                  <div
+                    class="card-header"
+                    id="resFieldSix"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#resume-field-six"
+                    aria-expanded="false"
+                    aria-controls="resume-field-six"
+                  >
+                    <span class="lead collapse-title">
+                      Social Links
+                    </span>
+                  </div>
+                  <div
+                    id="resume-field-six"
+                    class="collapse"
+                    aria-labelledby="resFieldSix"
+                    data-parent="#resume-field-qna"
+                  >
+                    <div class="card-body">
+                      <form>
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <fieldset>
+                                <label>Twitter</label>
+                                <div class="input-group mb-75 input-group-merge">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text feather icon-twitter" id="basic-addon3"></span>
+                                    </div>
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" style="color: lightgrey;">https://twitter.com/</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="{{ resume_site.twitter }}" aria-describedby="basic-addon3" id="twitter" maxlength="50">
+                                </div>
+
+                                <label>Facebook</label>
+                                <div class="input-group mb-75 input-group-merge">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text feather icon-facebook" id="basic-addon4"></span>
+                                    </div>
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" style="color: lightgrey;">https://facebook.com/</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="{{ resume_site.facebook }}" aria-describedby="basic-addon4" id="facebook" maxlength="50">
+                                </div>
+                                <label>Instagram</label>
+                                <div class="input-group mb-75 input-group-merge">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text feather icon-instagram" id="basic-addon5"></span>
+                                    </div>
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" style="color: lightgrey;">https://instagram.com/</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="{{ resume_site.instagram }}" aria-describedby="basic-addon5" id="instagram" maxlength="50">
+                                </div>
+                            </fieldset>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                              <label>Github</label>
+                              <div class="input-group mb-75 input-group-merge">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text feather icon-github" id="basic-addon9"></span>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" style="color: lightgrey;">https://github.com/</span>
+                                  </div>
+                                  <input type="text" class="form-control" value="{{ resume_site.github }}" aria-describedby="basic-addon9" id="github" maxlength="50">
+                              </div>
+                              <label>Youtube</label>
+                              <div class="input-group mb-75 input-group-merge">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text feather icon-youtube" id="basic-addon12"></span>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" style="color: lightgrey;">https://youtube.com/</span>
+                                  </div>
+                                  <input type="text" class="form-control" value="{{ resume_site.youtube }}" aria-describedby="basic-addon12" id="youtube" maxlength="50">
+                              </div>
+                              <label>Linkedin</label>
+                              <div class="input-group mb-75 input-group-merge">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text feather icon-linkedin" id="basic-addon11"></span>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" style="color: lightgrey;">https://linkedin.com/</span>
+                                  </div>
+                                  <input type="text" class="form-control" value="{{ resume_site.linkedin }}" aria-describedby="basic-addon11" id="linkedin" maxlength="50">
+                              </div>
+                          </div>
+                          <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                              <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="social" data-site-id="{{resume_site.site_id}}">Save
+                                  Changes</button>
+                              <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- delivery panel -->
+            <div class="tab-pane" id="resume-collapse" role="tabpanel" aria-labelledby="delivery" aria-expanded="false">
+              <!-- icon and header -->
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-tag bg-light-primary mr-1">
+                  <i data-feather="briefcase" class="font-medium-4"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Work</h4>
+                  <span>Work Experiences</span>
+                </div>
+              </div>
+
+              <!-- frequent answer and question  collapse  -->
+              <div class="collapse-margin collapse-icon mt-2" id="resume-collapse-qna">
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="deliveryOne"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#resume-collapse-one"
+                    aria-expanded="false"
+                    aria-controls="resume-collapse-one"
+                  >
+                    <span class="lead collapse-title">Work History</span>
+                  </div>
+
+                  <div id="resume-collapse-one" class="collapse" aria-labelledby="deliveryOne" data-parent="#resume-collapse-qna">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.workExps() %}
+                          <table class="table table-hover" id="workExp_table">
+                            <thead>
+                              <tr>
+                                <th>Position</th>
+                                <th>Company</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_work">
+                          {% for workExp in resume_site.workExps() %}
+                            <tr class="table-active" id="w_{{workExp.id}}">
+                              <td><span class="font-weight-bold">{{ workExp.position }}</span></td>
+                              <td>{{ workExp.company }}</td>
+                              <td>{{ workExp.start_month }} {{ workExp.start_year }} - {{ workExp.end_month }} {{ workExp.end_year }}</td>
+                              <td><i class="fa fa-trash-o deleteItem" data="w_{{workExp.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="workExp_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Position</th>
+                                <th>Company</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_work">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_workexp">
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Position</label>
+                                    <input type="text" class="form-control" placeholder="Ex: Web Developer" id="position"  >
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Company</label>
+                                    <input type="text" class="form-control" placeholder="Company Name" id="company" >
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Start Month</label>
+                                        <select class="form-control"id="start_month_job">
+                                          <option selected>Jan</option>
+                                          <option>Feb</option>
+                                          <option>Mar</option>
+                                          <option>Apr</option>
+                                          <option>May</option>
+                                          <option>June</option>
+                                          <option>July</option>
+                                          <option>Aug</option>
+                                          <option>Sep</option>
+                                          <option>Oct</option>
+                                          <option>Nov</option>
+                                          <option>Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Start Year</label>
+                                        <select class="form-control" id="start_year_job">
+                                          <option value="2020">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>End Month</label>
+                                        <select type='text' class="form-control"id="end_month_job">
+                                          <option selected>Jan</option>
+                                          <option>Feb</option>
+                                          <option>Mar</option>
+                                          <option>Apr</option>
+                                          <option>May</option>
+                                          <option>June</option>
+                                          <option>July</option>
+                                          <option>Aug</option>
+                                          <option>Sep</option>
+                                          <option>Oct</option>
+                                          <option>Nov</option>
+                                          <option>Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>End Year</label>
+                                        <select class="form-control" id="end_year_job">
+                                          <option value="2020">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <label>Description</label>
+                        <textarea class="form-control" id="desc_work" rows="5" placeholder="Comment.."></textarea>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="workExp" data-site-id="{{resume_site.site_id}}">Save
+                              Changes</button>
+                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherWork" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="deliveryThree" data-toggle="collapse" role="button" data-target="#resume-collapse-three" aria-expanded="false" aria-controls="resume-collapse-three">
+                    <span class="lead collapse-title">Services</span>
+                  </div>
+                  <div id="resume-collapse-three" class="collapse" aria-labelledby="deliveryThree" data-parent="#resume-collapse-qna">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.services() %}
+                          <table class="table table-hover" id="service_table">
+                            <thead>
+                              <tr>
+                                <th>Servis Name</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_service">
+                          {% for service in resume_site.services() %}
+                            <tr class="table-active" id="se_{{service.id}}">
+                              <td><span class="font-weight-bold">{{ service.service_name }}</span></td>
+                              <td><i class="fa fa-trash-o deleteItem" data="se_{{service.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="service_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Service Name</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_service">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_service">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Servis Name</label>
+                                    <input type="text" class="form-control" placeholder="Service Name" id="service_name">
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6 col-md-12">
+                            <fieldset class="form-group">
+                              <label for="basicInputFile">Service Photo</label>
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="file" id="service_file" accept="image/*">
+                                <label class="custom-file-label" for="service_file">Choose file</label>
+                              </div>
+                            </fieldset>
+                          </div>
+                        </div>
+                        <label>Description</label>
+                        <textarea class="form-control" id="desc_service" rows="5" placeholder="Service Detail.."></textarea>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="service" data-site-id="{{resume_site.site_id}}">Save
+                                Changes</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherService" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="deliveryTwo" data-toggle="collapse" role="button" data-target="#resume-collapse-two" aria-expanded="false" aria-controls="resume-collapse-two">
+                    <span class="lead collapse-title">Portfolio</span>
+                  </div>
+                  <div id="resume-collapse-two" class="collapse" aria-labelledby="deliveryTwo" data-parent="#resume-collapse-qna">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.ports() %}
+                          <table class="table table-hover" id="port_table">
+                            <thead>
+                              <tr>
+                                <th>Project Name</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_port">
+                          {% for port in resume_site.ports() %}
+                            <tr class="table-active" id="p_{{port.id}}">
+                              <td><span class="font-weight-bold">{{ port.project_name }}</span></td>
+                              <td><i class="fa fa-trash-o deleteItem" data="p_{{port.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="port_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Project Name</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_port">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_port">
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Project Name</label>
+                                    <input type="text" class="form-control" placeholder="Project Name" id="port_project_name">
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                              <div class="controls">
+                                <label>Website</label>
+                                <input type="text" class="form-control" placeholder="Website" id="port_website">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                  <label for="tags">Tags</label>
+                                  <select class="form-control" id="tags" multiple="multiple">
+                                  </select>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Creation Time</label>
+                                    <input type="text" class="form-control" placeholder="Creation Time" id="port_creation_time" >
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <label for="desc_testi">Explaination</label>
+                        <textarea class="form-control" id="desc_port" rows="5" placeholder="Explain.."></textarea>
+                        <div class="row">
+                          <div class="col-lg-6 col-md-12">
+                            <fieldset class="form-group">
+                              <label for="basicInputFile">Project Pictures</label>
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="port_pics" multiple='multiple'>
+                                <label class="custom-file-label" for="port_pics">Choose file</label>
+                              </div>
+                            </fieldset>
+                          </div>
+                        </div>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="port" data-site-id="{{resume_site.site_id}}">Save
+                                Changes</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                    </form>
+                    <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherPort" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- cancellation return  -->
+            <div class="tab-pane" id="faq-education-settings" role="tabpanel" aria-labelledby="education-settings" aria-expanded="false">
+              <!-- icon and header -->
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-tag bg-light-primary mr-1">
+                  <i data-feather="book" class="font-medium-4"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Education</h4>
+                  <span>Which license do I need?</span>
+                </div>
+              </div>
+
+              <!-- frequent answer and question  collapse  -->
+              <div class="collapse-margin collapse-icon mt-2" id="faq-cancellation-qna">
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="cancellationOne"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#faq-cancellation-one"
+                    aria-expanded="false"
+                    aria-controls="faq-cancellation-one"
+                  >
+                    <span class="lead collapse-title">
+                      Education
+                    </span>
+                  </div>
+
+                  <div
+                    id="faq-cancellation-one"
+                    class="collapse"
+                    aria-labelledby="cancellationOne"
+                    data-parent="#faq-cancellation-qna"
+                  >
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.edus() %}
+                          <table class="table table-hover" id="edu_table">
+                            <thead>
+                              <tr>
+                                <th>Studied</th>
+                                <th>School</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_edu">
+                          {% for edu in resume_site.edus() %}
+                            <tr class="table-active" id="e_{{edu.id}}">
+                              <td><span class="font-weight-bold">{{ edu.field }}</span></td>
+                              <td>{{ edu.school }}</td>
+                              <td>{{ edu.start_month }} {{ edu.start_year }} - {{ edu.end_month }} {{ edu.end_year }}</td>
+                              <td><i class="fa fa-trash-o deleteItem" data="e_{{edu.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="edu_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Studied</th>
+                                <th>School</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_edu">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_edu">
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Field of Study</label>
+                                    <input type="text" class="form-control" placeholder="Field of Study" id="field" >
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>School</label>
+                                    <input type="text" class="form-control" placeholder="School Name" id="school">
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Start Month</label>
+                                        <select type='text' class="form-control"id="start_month_edu">
+                                          <option selected>Jan</option>
+                                          <option>Feb</option>
+                                          <option>Mar</option>
+                                          <option>Apr</option>
+                                          <option>May</option>
+                                          <option>June</option>
+                                          <option>July</option>
+                                          <option>Aug</option>
+                                          <option>Sep</option>
+                                          <option>Oct</option>
+                                          <option>Nov</option>
+                                          <option>Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Start Year</label>
+                                        <select class="form-control" id="start_year_edu">
+                                          <option value="2020">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>End Month</label>
+                                        <select class="form-control"id="end_month_edu">
+                                          <option selected>Jan</option>
+                                          <option>Feb</option>
+                                          <option>Mar</option>
+                                          <option>Apr</option>
+                                          <option>May</option>
+                                          <option>June</option>
+                                          <option>July</option>
+                                          <option>Aug</option>
+                                          <option>Sep</option>
+                                          <option>Oct</option>
+                                          <option>Nov</option>
+                                          <option>Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>End Year</label>
+                                        <select class="form-control" id="end_year_edu">
+                                          <option value="2020">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <label>Description</label>
+                        <textarea class="form-control" id="desc_edu" rows="5" placeholder="Comment.."></textarea>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="edu" data-site-id="{{resume_site.site_id}}">Save
+                                Changes</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherEdu" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="cancellationFive" data-toggle="collapse" role="button" data-target="#faq-cancellation-five" aria-expanded="false" aria-controls="faq-cancellation-five">
+                    <span class="lead collapse-title">Courses</span>
+                  </div>
+                  <div id="faq-cancellation-five" class="collapse" aria-labelledby="cancellationFive" data-parent="#faq-cancellation-qna">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.courses() %}
+                          <table class="table table-hover" id="course_table">
+                            <thead>
+                              <tr>
+                                <th>Course</th>
+                                <th>Institute</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_course">
+                          {% for course in resume_site.courses() %}
+                            <tr class="table-active" id="c_{{course.id}}">
+                              <td><span class="font-weight-bold">{{ course.course_name }}</span></td>
+                              <td>{{ course.institution }}</td>
+                              <td>{{ course.start_month }} {{ course.start_year }} - {{ course.end_month }} {{ course.end_year }}</td>
+                              <td><i class="fa fa-trash-o deleteItem" data="c_{{course.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="course_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Course</th>
+                                <th>Institute</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_course">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_course">
+                        <div class="row">
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Course</label>
+                                    <input type="text" class="form-control" placeholder="Course Name" id="course_name">
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Institution</label>
+                                    <input type="text" class="form-control" placeholder="Institution" id="institution" >
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Start Month</label>
+                                        <select type='text' class="form-control"id="start_month_course">
+                                          <option selected>Jan</option>
+                                          <option>Feb</option>
+                                          <option>Mar</option>
+                                          <option>Apr</option>
+                                          <option>May</option>
+                                          <option>June</option>
+                                          <option>July</option>
+                                          <option>Aug</option>
+                                          <option>Sep</option>
+                                          <option>Oct</option>
+                                          <option>Nov</option>
+                                          <option>Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Start Year</label>
+                                        <select class="form-control" id="start_year_course">
+                                          <option value="2020">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-6">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>End Month</label>
+                                        <select class="form-control" id="end_month_course">
+                                          <option selected>Jan</option>
+                                          <option>Feb</option>
+                                          <option>Mar</option>
+                                          <option>Apr</option>
+                                          <option>May</option>
+                                          <option>June</option>
+                                          <option>July</option>
+                                          <option>Aug</option>
+                                          <option>Sep</option>
+                                          <option>Oct</option>
+                                          <option>Nov</option>
+                                          <option>Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>End Year</label>
+                                        <select class="form-control" id="end_year_course">
+                                          <option value="2020">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <textarea class="form-control" id="editor-course" rows="5" placeholder="Course Detail.."></textarea>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="course" data-site-id="{{resume_site.site_id}}">Save
+                                Changes</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherCourse" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- my order -->
+            <div class="tab-pane" id="faq-skills-settings" role="tabpanel" aria-labelledby="skills-settings" aria-expanded="false">
+              <!-- icon and header -->
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-tag bg-light-primary mr-1">
+                  <i data-feather="award" class="font-medium-4"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Skills</h4>
+                  <span>Which license do I need?</span>
+                </div>
+              </div>
+
+              <!-- Set Skills  -->
+              <div class="collapse-margin collapse-icon mt-2" id="faq-skills-settings-qna">
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="myOrderOne"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#faq-skills-settings-one"
+                    aria-expanded="false"
+                    aria-controls="faq-skills-settings-one"
+                  >
+                    <span class="lead collapse-title">Skills</span>
+                  </div>
+
+                  <div id="faq-skills-settings-one" class="collapse" aria-labelledby="myOrderOne" data-parent="#faq-skills-settings-qna">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.skills() %}
+                          <table class="table table-hover" id="skill_table">
+                            <thead>
+                              <tr>
+                                <th>Skill</th>
+                                <th>Level</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_skill">
+                          {% for skill in resume_site.skills() %}
+                            <tr class="table-active" id="s_{{skill.id}}">
+                              <td><span class="font-weight-bold">{{ skill.skill }}</span></td>
+                              <td>{{ skill.level }}</td>
+                              <td><i class="fa fa-trash-o deleteItem" data="s_{{skill.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="skill_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Skill</th>
+                                <th>Level</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_skill">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_skill">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Skill</label>
+                                        <input type='text' class="form-control" placeholder="Skill" id="skill"/>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Level</label>
+                                        <input type='number' class="form-control" placeholder="Level" id="level">
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Category</label>
+                                        <input type='text' class="form-control" placeholder="Ex: Design" id="sk_category"/>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="skill" data-site-id="{{resume_site.site_id}}">Save
+                                Changes</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherSkill" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="myOrderTwo" data-toggle="collapse" role="button" data-target="#faq-skills-settings-two" aria-expanded="false" aria-controls="faq-skills-settings-two">
+                    <span class="lead collapse-title">
+                      Languages
+                    </span>
+                  </div>
+                  <div id="faq-skills-settings-two" class="collapse" aria-labelledby="myOrderTwo" data-parent="#faq-skills-settings-qna">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.langs() %}
+                          <table class="table table-hover" id="lang_table">
+                            <thead>
+                              <tr>
+                                <th>Language</th>
+                                <th>Level</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_lang">
+                          {% for lang in resume_site.langs() %}
+                            <tr class="table-active" id="l_{{lang.id}}">
+                              <td><span class="font-weight-bold">{{ lang.language }}</span></td>
+                              <td>{{ lang.language }}</td>
+                              <td><i class="fa fa-trash-o deleteItem" data="l_{{lang.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="lang_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Language</th>
+                                <th>Level</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_lang">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_lang">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Language</label>
+                                        <input type='text' class="form-control" placeholder="Language" id="lang"/>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label>Level</label>
+                                        <input type='text' class="form-control" placeholder="Level" id="lang_level"/>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="lang" data-site-id="{{resume_site.site_id}}">Save
+                                Changes</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherLang" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- product services -->
+            <div class="tab-pane" id="faq-product-services" role="tabpanel" aria-labelledby="product-services" aria-expanded="false">
+              <!-- icon and header -->
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-tag bg-light-primary mr-1">
+                  <i data-feather="thumbs-up" class="font-medium-4"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Testimonials</h4>
+                  <span>Which license do I need?</span>
+                </div>
+              </div>
+
+              <!-- frequent answer and question  collapse  -->
+              <div class="collapse-margin collapse-icon mt-2" id="faq-product-qna">
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="productOne"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#faq-product-one"
+                    aria-expanded="false"
+                    aria-controls="faq-product-one"
+                  >
+                    <span class="lead collapse-title">
+                      Testimonials
+                    </span>
+                  </div>
+
+                  <div id="faq-product-one" class="collapse" aria-labelledby="productOne" data-parent="#faq-product-qna">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.testimos() %}
+                          <table class="table table-hover" id="testi_table">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_testi">
+                          {% for testi in resume_site.testimos() %}
+                            <tr class="table-active" id="t_{{testi.id}}">
+                              <td><span class="font-weight-bold">{{ testi.name }}</span></td>
+                              <td>{{ testi.company }}</td>
+                              <td><i class="fa fa-trash-o deleteItem" data="t_{{testi.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="testi_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_testi">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_testi">
+                        <div class="row">
+                          <div class="col-lg-4 col-md-12">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" placeholder="Name" id="tested_name">
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-12">
+                            <div class="form-group">
+                              <div class="controls">
+                                <label>Company or Occupation</label>
+                                <input type="text" class="form-control" placeholder="Company or Occupation" id="com_occ">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-12">
+                            <fieldset class="form-group">
+                              <label for="basicInputFile">Photo</label>
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="testi_pic" accept="image/*">
+                                <label class="custom-file-label" for="testi_pic">Choose file</label>
+                              </div>
+                            </fieldset>
+                          </div>
+                        </div>
+                        <label>Testimonial</label>
+                        <textarea class="form-control" id="desc_testi" rows="5" placeholder="Testimonial.."></textarea>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="testi" data-site-id="{{resume_site.site_id}}">Save
+                              Changes</button>
+                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherTesti" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="faq-site-settings" role="tabpanel" aria-labelledby="site-settings" aria-expanded="false">
+              <!-- icon and header -->
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-tag bg-light-primary mr-1">
+                  <i data-feather="settings" class="font-medium-4"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Site Settings</h4>
+                  <span>Determine your settings</span>
+                </div>
+              </div>
+
+              <!-- frequent answer and question  collapse  -->
+              <div class="collapse-margin collapse-icon mt-2" id="faq-site-settings">
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="siteSettingsOne"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#faq-site-settings-one"
+                    aria-expanded="false"
+                    aria-controls="faq-site-settings-one"
+                  >
+                    <span class="lead collapse-title">
+                      Connect Domain
+                    </span>
+                  </div>
+
+                  <div id="faq-site-settings-one" class="collapse" aria-labelledby="SiteSettingsOne" data-parent="#faq-site-settings">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-10 col-sm-10">
+                          <label>Domain</label>
+                          <div class="input-group mb-75 input-group-merge">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text feather icon-link-2"></span>
+                              </div>
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" style="color: lightgrey;">https://www.</span>
+                              </div>
+                              <input type="text" class="form-control" id="domain">
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-2">
+                          <div class="form-group">
+                              <div class="controls">
+                                  <button type="button" class="btn btn-primary mt-2 mr-1 waves-effect waves-float waves-light connect-domain" data-site-id="{{resume_site.site_id}}">Connect</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                      {% if resume_site.domain %}
+                        <div class="table-responsive" id="domain_result">
+                          <table class="table table-striped table-hover-animation">
+                            <thead>
+                              <tr>
+                                <th>Domain</th>
+                                <th>Points To</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr style="cursor: pointer;">
+                                <td>
+                                  <span class="font-weight-bold" id="DomainConnected">https://{{ resume_site.domain }}</span>
+                                </td>
+                                <td id="point">125.111.201.20</td>
+                                <td>
+                                  <button type="button" class="btn btn-flat-success waves-effect">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check me-25"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Done</span>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      {% else %}
+                        <div class="table-responsive" style="display: none;" id="domain_result">
+                          <table class="table table-striped table-hover-animation">
+                            <thead>
+                              <tr>
+                                <th>Domain</th>
+                                <th>Points To</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr style="cursor: pointer;">
+                                <td>
+                                  <span class="font-weight-bold" id="DomainConnected"></span>
+                                </td>
+                                <td id="point"></td>
+                                <td>
+                                  <button type="button" class="btn btn-flat-success waves-effect">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check me-25"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Done</span>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div
+                    class="card-header"
+                    id="SiteSettingsTwo"
+                    data-toggle="collapse"
+                    role="button"
+                    data-target="#faq-site-settings-two"
+                    aria-expanded="false"
+                    aria-controls="faq-site-settings-two"
+                  >
+                    <span class="lead collapse-title">
+                      Notifications
+                    </span>
+                  </div>
+
+                  <div id="faq-site-settings-two" class="collapse" aria-labelledby="SiteSettingsTwo" data-parent="#faq-site-settings">
+                    <div class="card-body">
+                      <div class="table-responsive" style="margin-bottom: 15px;">
+                        {% if resume_site.testimos() %}
+                          <table class="table table-hover" id="testi_table">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_testi">
+                          {% for testi in resume_site.testimos() %}
+                            <tr class="table-active" id="t_{{testi.id}}">
+                              <td><span class="font-weight-bold">{{ testi.name }}</span></td>
+                              <td>{{ testi.company }}</td>
+                              <td><i class="fa fa-trash-o deleteItem" data="t_{{testi.id}}" aria-hidden="true"></i></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                        {% else %}
+                          <table class="table table-hover" id="testi_table" style="display: none;">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tbody_testi">
+
+                            </tbody>
+                          </table>
+                        {% endif %}
+                      </div>
+                      <form id="form_testi">
+                        <div class="row">
+                          <div class="col-lg-4 col-md-12">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" placeholder="Name" id="tested_name">
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-12">
+                            <div class="form-group">
+                              <div class="controls">
+                                <label>Company or Occupation</label>
+                                <input type="text" class="form-control" placeholder="Company or Occupation" id="com_occ">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-12">
+                            <fieldset class="form-group">
+                              <label for="basicInputFile">Photo</label>
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="testi_pic" accept="image/*">
+                                <label class="custom-file-label" for="testi_pic">Choose file</label>
+                              </div>
+                            </fieldset>
+                          </div>
+                        </div>
+                        <label>Testimonial</label>
+                        <textarea class="form-control" id="desc_testi" rows="5" placeholder="Testimonial.."></textarea>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="testi" data-site-id="{{resume_site.site_id}}">Save
+                              Changes</button>
+                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        </div>
+                      </form>
+                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherTesti" style="display: none;">Add Another</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </section>
+        <!-- / frequently asked questions tabs pills -->
+
+        </div>
+      </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+      <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT  &copy; 2020<a class="ml-25" target="_blank">Webpaget</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{{ url_for('static', filename='app-assets/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
+
+    <!-- <script src="{{ url_for('static', filename='app-assets/vendors/js/pickers/pickadate/picker.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/vendors/js/pickers/pickadate/picker.time.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script> -->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{{ url_for('static', filename='app-assets/js/core/app-menu.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/core/app.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/scripts/customizer.min.js')}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ url_for('static', filename='js/save.js')}}"></script>
+
+		<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <!-- END: Theme JS-->
+
+    <script>
+      $(window).on('load',  function(){
+        if (feather) {
+          feather.replace({ width: 14, height: 14 });
+        }
+      })
+    </script>
+
+		<script type="text/javascript">
+			var quillIntro = new Quill('#editor-container', {
+				modules: {
+					toolbar: [
+						['bold', 'italic', 'underline'],
+						[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+					]
+				},
+				placeholder: 'Introduce Yourself',
+				theme: 'snow'  // or 'bubble'
+			});
+
+		</script>
+
+		<style media="screen">
+			#editor-container{
+				height: 200px;
+			}
+      .custom-file-label::after{
+        color: #4e5154;
+        background-color: #ededed;
+        height: auto;
+      }
+		</style>
+
+  </body>
+  <!-- END: Body-->
+</html>

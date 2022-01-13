@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="Webpaget">
+    <title>FAQ - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/vendors.min.css')}}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap-extended.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/colors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/components.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/dark-layout.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/bordered-layout.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/semi-dark-layout.min.css')}}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/pages/page-pricing.min.css')}}">
+
+    <!-- END: Page CSS-->
+  </head>
+  <!-- END: Head-->
+
+  <!-- BEGIN: Body-->
+  <body class="vertical-layout footer-static pace-done menu-hide vertical-overlay-menu navbar-sticky menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    {% include 'nav_dash.html' %}
+
+    {% include '_menu.html' %}
+
+    <div class="app-content content ">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+          <section id="pricing-plan">
+
+            <!-- pricing plan cards -->
+            <div class="row pricing-card">
+              <div class="col-12 col-sm-offset-2 col-sm-10 col-md-12 col-lg-offset-2 col-lg-10 mx-auto">
+                <div class="row">
+                  <!-- basic plan -->
+                  <div class="col-12 col-md-4">
+                    <div class="card basic-pricing text-center">
+                      <div class="card-body">
+                        <img src="{{ url_for('static', filename='images/Pot1.svg')}}" class="mb-2 mt-5" alt="svg img">
+                        <h3>Basic</h3>
+                        <p class="card-text">A simple start for everyone</p>
+                        <div class="annual-plan">
+                          <div class="plan-price mt-2">
+                            <sup class="font-medium-1 fw-bold text-primary">$</sup>
+                            <span class="pricing-basic-value fw-bolder text-primary">0</span>
+                            <sub class="pricing-duration text-body font-medium-1 fw-bold">/month</sub>
+                          </div>
+                          <small class="annual-pricing d-none text-muted"></small>
+                        </div>
+                        <ul class="list-group list-group-circle text-left">
+                          <li class="list-group-item">100 responses a month</li>
+                          <li class="list-group-item">Unlimited forms and surveys</li>
+                          <li class="list-group-item">Unlimited fields</li>
+                          <li class="list-group-item">Basic form creation tools</li>
+                          <li class="list-group-item">Up to 2 subdomains</li>
+                        </ul>
+                        <button class="btn w-100 btn-outline-success mt-2 waves-effect">Your current plan</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/ basic plan -->
+
+                  <!-- standard plan -->
+                  <div class="col-12 col-md-4">
+                    <div class="card standard-pricing popular text-center">
+                      <div class="card-body">
+                        <div class="pricing-badge text-end">
+                          <span class="badge rounded-pill badge-light-primary">Popular</span>
+                        </div>
+                        <img src="{{ url_for('static', filename='images/Pot2.svg')}}" class="mb-1" alt="svg img">
+                        <h3>Standard</h3>
+                        <p class="card-text">For small to medium businesses</p>
+                        <div class="annual-plan">
+                          <div class="plan-price mt-2">
+                            <sup class="font-medium-1 fw-bold text-primary">$</sup>
+                            <span class="pricing-standard-value fw-bolder text-primary">49</span>
+                            <sub class="pricing-duration text-body font-medium-1 fw-bold">/month</sub>
+                          </div>
+                          <small class="annual-pricing d-none text-muted"></small>
+                        </div>
+                        <ul class="list-group list-group-circle text-left">
+                          <li class="list-group-item">Unlimited responses</li>
+                          <li class="list-group-item">Unlimited forms and surveys</li>
+                          <li class="list-group-item">Instagram profile page</li>
+                          <li class="list-group-item">Google Docs integration</li>
+                          <li class="list-group-item">Custom “Thank you” page</li>
+                        </ul>
+                        <button class="btn w-100 btn-primary mt-2 waves-effect waves-float waves-light" id="buy">Upgrade</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/ standard plan -->
+
+                  <!-- enterprise plan -->
+                  <div class="col-12 col-md-4">
+                    <div class="card enterprise-pricing text-center">
+                      <div class="card-body">
+                        <img src="{{ url_for('static', filename='images/Pot3.svg')}}" class="mb-2" alt="svg img">
+                        <h3>Enterprise</h3>
+                        <p class="card-text">Solution for big organizations</p>
+                        <div class="annual-plan">
+                          <div class="plan-price mt-2">
+                            <sup class="font-medium-1 fw-bold text-primary">$</sup>
+                            <span class="pricing-enterprise-value fw-bolder text-primary">99</span>
+                            <sub class="pricing-duration text-body font-medium-1 fw-bold">/month</sub>
+                          </div>
+                          <small class="annual-pricing d-none text-muted"></small>
+                        </div>
+                        <ul class="list-group list-group-circle text-left">
+                          <li class="list-group-item">PayPal payments</li>
+                          <li class="list-group-item">Logic Jumps</li>
+                          <li class="list-group-item">File upload with 5GB storage</li>
+                          <li class="list-group-item">Custom domain support</li>
+                          <li class="list-group-item">Stripe integration</li>
+                        </ul>
+                        <button class="btn w-100 btn-outline-primary mt-2 waves-effect">Upgrade</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/ enterprise plan -->
+                </div>
+              </div>
+            </div>
+            <!--/ pricing plan cards -->
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+      <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT  &copy; 2020<a class="ml-25" target="_blank">Webpaget</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{{ url_for('static', filename='app-assets/vendors/js/vendors.min.js')}}"></script>
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{{ url_for('static', filename='app-assets/js/core/app-menu.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/core/app.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/scripts/customizer.min.js')}}"></script>
+		<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+
+		<script type="text/javascript">
+		  Paddle.Environment.set('sandbox');
+		  Paddle.Setup({ vendor: 2061 });
+
+			function openCheckout() {
+				Paddle.Checkout.open({
+					product: 15888,
+					email: '{{ current_user.email }}',
+					allowQuantity: false,
+					success: '{{ url_for("dashboard.publish", site_name="seoturk") }}'
+				});
+			}
+			document.getElementById('buy').addEventListener('click', openCheckout, false);
+
+		</script>
+
+    <script>
+      $(window).on('load',  function(){
+        if (feather) {
+          feather.replace({ width: 14, height: 14 });
+        }
+      })
+    </script>
+
+  </body>
+  <!-- END: Body-->
+</html>

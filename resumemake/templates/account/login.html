@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en" class="light">
+    <!-- BEGIN: Head -->
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Create online resume, cv websites and multiauthored blog websites." />
+        <meta name="keywords" content="Multiauthored Blog Website, Create Blog, Online resume, Resume Website, Create Website" />
+        <meta name="author" content="Webpaget" />
+        <title>Webpaget login</title>
+        <!-- BEGIN: CSS Assets-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/alerts.css') }}" />
+        <!-- END: CSS Assets-->
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-F39DY700Q3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-F39DY700Q3');
+        </script>
+    </head>
+    <!-- END: Head -->
+    <body class="login">
+        <div class="container sm:px-10">
+            <div class="block xl:grid grid-cols-2 gap-4">
+                <!-- BEGIN: Login Info -->
+                <div class="hidden xl:flex flex-col min-h-screen">
+                    <div class="my-auto">
+                        <img class="-intro-x w-1/2 -mt-16" src="{{ url_for('static', filename='images/illustration.svg') }}">
+                        <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+                            A few more clicks to
+                            <br>
+                            sign in to your account.
+                        </div>
+                        <div class="-intro-x mt-5 text-lg text-white dark:text-gray-500">Create and Manage your websites</div>
+                    </div>
+                </div>
+                <!-- END: Login Info -->
+                <!-- BEGIN: Login Form -->
+                <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                    <div class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+                        <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                            Sign In
+                        </h2>
+                        <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account.</div>
+                        <form method="post" action="{{ url_for('account.login') }}">
+                          {% for message in get_flashed_messages() %}
+            								<div class="alert alert-danger" role="alert">{{ message }}</div>
+            							{% endfor %}
+                          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                          <div class="intro-x mt-8">
+                              <input type="text" name="login-eu" class="intro-x login__input input input--lg border border-gray-300 block" placeholder="Email or Username" required>
+                              <input type="password" name="login-password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password" required>
+                          </div>
+                          <div class="intro-x flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm mt-4">
+                              <div class="flex items-center mr-auto">
+                                  <input type="checkbox" class="input border mr-2" id="remember-me">
+                                  <label class="cursor-pointer select-none" for="remember-me">Remember me</label>
+                              </div>
+                              <a href="">Forgot Password?</a>
+                          </div>
+                          <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                              <button type="submit" class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top">Login</button>
+                              <button type="button" onclick="signup()" class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 dark:border-dark-5 dark:text-gray-300 mt-3 xl:mt-0 align-top">Sign up</button>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END: Login Form -->
+            </div>
+        </div>
+        <script>
+          function signup(){
+            location.href = "/signup";
+          }
+        </script>
+    </body>
+</html>

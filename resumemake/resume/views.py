@@ -1,0 +1,275 @@
+from flask import render_template, Blueprint, request, jsonify, redirect, url_for, abort
+from flask_login import current_user, login_required
+from utils import (crop_max_square, allowed_img_file,
+    get_extension, UPLOAD_PROFILE_FOLDER, UPLOAD_SERVICE_FOLDER,
+    UPLOAD_TESTI_FOLDER, UPLOAD_PORT_FOLDER)
+from werkzeug.utils import secure_filename
+from PIL import Image
+from resumemake import db
+from resumemake.models import (WorkExperiences, Educations,
+    Courses, Skills, Languages, Services,
+    Testimonials, Portfolios, PortTags, PortFiles, ResumeSite)
+import os, uuid, bleach, validators
+
+resume = Blueprint('resume',__name__)
+
+@resume.route('/resume-create')
+@login_required
+def resumecreate():
+    site_id = request.args.get('site_id', str)
+    site_name = request.args.get('site_name', str)
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, site_name=site_name, owner=current_user).first_or_404()
+    return render_template('resume/resume-create.html', resume_site=resume_site)
+
+@resume.route('/basicinfo/<site_id>', methods=['POST'])
+def basic_info(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    current_user.name = request.form['FirstName']
+    current_user.surname = request.form['LastName']
+    resume_site.email = request.form['email']
+    resume_site.phone_number = request.form['phone']
+    resume_site.tagline = request.form['tagline']
+    resume_site.province = request.form['city']
+    resume_site.birth_day = request.form['birth_day']
+    resume_site.country = request.form['country']
+
+    if 'file' in request.files:
+        file = request.files['file']
+        filename = file.filename
+        if allowed_img_file(filename):
+            filename = secure_filename(filename)
+            unique_filename = str(uuid.uuid4())+get_extension(filename)
+            current_user.profile_picture = unique_filename
+            file.save(os.path.join(UPLOAD_PROFILE_FOLDER, unique_filename))
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "b"})
+
+@resume.route('/introduction/<site_id>', methods=['POST'])
+def introduction(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    intro = request.form['introduction']
+    intro_title = request.form['intro_title']
+    resume_site.introduction = intro
+    resume_site.intro_title = intro_title
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "i"})
+
+@resume.route('/social/<site_id>', methods=['POST'])
+@login_required
+def social(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    resume_site.twitter = request.form['twitter']
+    resume_site.facebook = request.form['facebook']
+    resume_site.instagram = request.form['instagram']
+    resume_site.github = request.form['github']
+    resume_site.youtube = request.form['youtube']
+    resume_site.linkedin = request.form['linkedin']
+
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "so"})
+
+@resume.route('/workExp/<site_id>', methods=['POST'])
+@login_required
+def workExp(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    workExp = WorkExperiences(position=request.form['position'], company=request.form['company'],
+        start_month=request.form['start_month_job'], start_year=request.form['start_year_job'],
+        end_month=request.form['end_month_job'], end_year=request.form['end_year_job'],
+        description=request.form['desc_work'], resume_id=resume_site.id)
+    db.session.add(workExp)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": 'w', 'workExp_id': workExp.id, "position": workExp.position,
+        "company": workExp.company, "duration": workExp.start_month + " " + str(workExp.start_year) + " - " + workExp.end_month + " " + str(workExp.end_year)})
+
+@resume.route('/service/<site_id>', methods=['POST'])
+def service(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    service = Services(service_name=request.form['service_name'], description=request.form['desc_service'], resume_id=resume_site.id)
+    if 'service_file' in request.files:
+        file = request.files['service_file']
+        filename = file.filename
+    if file and allowed_img_file(filename):
+        filename = secure_filename(filename)
+        unique_filename = str(uuid.uuid4())+get_extension(filename)
+        service.picture = unique_filename
+        file.save(os.path.join(UPLOAD_SERVICE_FOLDER, unique_filename))
+    db.session.add(service)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "se", "service_id": service.id, "service_name": service.service_name})
+
+@resume.route('/portfolio/<site_id>', methods=['POST'])
+def portfolio(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    port = Portfolios(project_name=request.form['project_name'], website=request.form['website'],
+        creation_time=request.form['creation_time'],
+        description=request.form['desc_port'], resume_id=resume_site.id)
+    db.session.add(port)
+    db.session.commit()
+
+    for tag in request.form['tags'].split(','):
+        t = PortTags(tag=tag, port_id=port.id)
+        db.session.add(t)
+
+    for i in range(int(request.form['ins'])):
+        key = 'port_pics' + str(i)
+        if key in request.files:
+            file = request.files[key]
+            filename = file.filename
+        if file and allowed_img_file(filename):
+            filename = secure_filename(filename)
+            unique_filename = str(uuid.uuid4())+get_extension(filename)
+            port_files = PortFiles(filename=unique_filename, port_files_id=port.id)
+            file.save(os.path.join(UPLOAD_PORT_FOLDER, unique_filename))
+            db.session.add(port_files)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "p", "port_id": port.id, "project_name": port.project_name})
+
+@resume.route('/testimonials/<site_id>', methods=['POST'])
+def testimonials(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    testi = Testimonials(name=request.form['name'], company=request.form['company'],
+        description=request.form['desc_testi'], resume_id=resume_site.id)
+    if 'testi_pic' in request.files:
+        file = request.files['testi_pic']
+        filename = file.filename
+    if file and allowed_img_file(filename):
+        filename = secure_filename(filename)
+        unique_filename = str(uuid.uuid4())+get_extension(filename)
+        testi.picture = unique_filename
+        image = Image.open(file)
+        i = crop_max_square(image).resize((300, 300), Image.LANCZOS)
+        i.save(os.path.join(UPLOAD_TESTI_FOLDER, unique_filename), quality=95)
+    db.session.add(testi)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "t", "testi_id": testi.id, "name": testi.name, "company": testi.company})
+
+@resume.route('/edu/<site_id>', methods=['POST'])
+@login_required
+def edu(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    edu = Educations(field=request.form['field'], school=request.form['school'],
+        start_month=request.form['start_month_edu'], start_year=request.form['start_year_edu'],
+        end_month=request.form['end_month_edu'], end_year=request.form['end_year_edu'],
+        description=request.form['desc_edu'], resume_id=resume_site.id)
+    db.session.add(edu)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": 'e', 'edu_id': edu.id, "field": edu.field,
+        "school": edu.school, "duration": edu.start_month + " " + str(edu.start_year) + " - " + edu.end_month + " " + str(edu.end_year)})
+
+@resume.route('/course/<site_id>', methods=['POST'])
+@login_required
+def course(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    course = Courses(course_name=request.form['course_name'], institution=request.form['institution'],
+        start_month=request.form['start_month_course'], start_year=request.form['start_year_course'],
+        end_month=request.form['end_month_course'], end_year=request.form['end_year_course'],
+        description=request.form['desc_course'], resume_id=resume_site.id)
+    db.session.add(course)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": 'c', 'course_id': course.id, "course_name": course.course_name,
+        "institution": course.institution, "duration": course.start_month + " " + str(course.start_year) + " - " + course.end_month + " " + str(course.end_year)})
+
+@resume.route('/skill/<site_id>', methods=['POST'])
+@login_required
+def skill(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    skill = Skills(skill=request.form['skill'], level=request.form['level'], category=request.form['category'], resume_id=resume_site.id)
+    db.session.add(skill)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "s", "skill_id": skill.id, "skill": skill.skill, "level": skill.level})
+
+@resume.route('/language/<site_id>', methods=['POST'])
+@login_required
+def language(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    lang = Languages(language=request.form['lang'], level=request.form['level'], resume_id=resume_site.id)
+    db.session.add(lang)
+    db.session.commit()
+    return jsonify({"success": True, "current_field": "l", "lang_id": lang.id, "lang": lang.language, "level": lang.level})
+
+@resume.route('/connect_resume_domain/<site_id>', methods=['POST'])
+@login_required
+def connect_domain(site_id):
+    site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    domain = request.form['domain']
+    if not validators.url("https://" + domain):
+        return jsonify({"success": False})
+    site.domain = domain
+    db.session.commit()
+    return jsonify({"success": True})
+
+@resume.route('/deleteItem/<site_id>', methods=['POST'])
+@login_required
+def deleteItem(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    data = request.get_json(force=True)
+    itemType, itemId = data['type_id'].split('_')
+    if itemType == 'w':
+        item = WorkExperiences.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "w"})
+        else:
+            return jsonify({"success": False})
+    elif itemType == 'e':
+        item = Educations.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "e"})
+        else:
+            return jsonify({"success": False})
+    elif itemType == 'c':
+        item = Courses.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "c"})
+        else:
+            return jsonify({"success": False})
+    elif itemType == 's':
+        item = Skills.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "s"})
+        else:
+            return jsonify({"success": False})
+    elif itemType == 'l':
+        item = Languages.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "l"})
+        else:
+            return jsonify({"success": False})
+    elif itemType == 'se':
+        item = Services.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            os.remove(os.path.join(UPLOAD_SERVICE_FOLDER, item.picture))
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "se"})
+        else:
+            return jsonify({"success": False})
+    elif itemType == 't':
+        item = Testimonials.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            os.remove(os.path.join(UPLOAD_TESTI_FOLDER, item.picture))
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "t"})
+        else:
+            return jsonify({"success": False})
+    elif itemType == 'p':
+        item = Portfolios.query.filter_by(id=itemId).first()
+        if resume_site.id == item.resume_id:
+            portfiles = PortFiles.query.filter_by(port_files_id=item.id).all()
+            for portfile in portfiles:
+                os.remove(os.path.join(UPLOAD_PORT_FOLDER, portfile.filename))
+            db.session.delete(item)
+            db.session.commit()
+            return jsonify({"success": True, "current_field": "p"})
+        else:
+            return jsonify({"success": False})

@@ -1,0 +1,48 @@
+<!-- Navbar STart -->
+<header id="topnav" class="defaultscroll sticky">
+    <div class="container">
+        <!-- Logo container-->
+        <a class="logo" href="{{ url_for('public.index') }}">
+          <img src="{{ url_for('static', filename='images/logo.png')}}" alt="missing_logo" height="36" style="margin-right: 5px;">
+          <img src="{{ url_for('static', filename='images/webpaget.png')}}" style="color: blue;margin-top: 25px; float: right;">
+        </a>
+        <div class="buy-button">
+            <a href="{{ url_for('account.signup') }}" class="btn btn-primary">Sign Up</a>
+        </div><!--end login button-->
+        <!-- End Logo container-->
+        <div class="menu-extras">
+            <div class="menu-item">
+                <!-- Mobile menu toggle-->
+                <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                    <div class="lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </a>
+                <!-- End mobile menu toggle-->
+            </div>
+        </div>
+
+        <div id="navigation">
+            <!-- Navigation Menu-->
+            <ul class="navigation-menu">
+                <li class="has-submenu parent-parent-menu-item">
+                    <a href="#templates">Templates</a>
+                </li>
+
+                <li class="has-submenu parent-parent-menu-item">
+                    <a href="#faq">Faq</a>
+
+                </li>
+                <li class="has-submenu parent-menu-item">
+                    <a href="#contact">Contact</a>
+                </li>
+            </ul><!--end navigation menu-->
+            <div class="buy-menu-btn d-none">
+                <a href="{{ url_for('account.signup') }}" class="btn btn-primary">Sign Up</a>
+            </div><!--end login button-->
+        </div><!--end navigation-->
+    </div><!--end container-->
+</header><!--end header-->
+<!-- Navbar End -->

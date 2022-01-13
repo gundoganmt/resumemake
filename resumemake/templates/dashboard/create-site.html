@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="Webpaget">
+    <title>FAQ - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/vendors.min.css')}}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap-extended.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/colors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/components.min.css')}}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
+
+    <!-- END: Page CSS-->
+  </head>
+  <!-- END: Head-->
+
+  <!-- BEGIN: Body-->
+  <body class="vertical-layout footer-static pace-done menu-hide vertical-overlay-menu navbar-sticky menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    {% include 'nav_dash.html' %}
+
+    {% include '_menu.html' %}
+
+    <div class="app-content content ">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper">
+        <div class="content-header row">
+          <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+              <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Resume Templates</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-body">
+        <section id="basic-examples">
+          <div class="row match-height">
+            <div class="col-xl-4 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-content">
+                        <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/sunshine.jpg') }}" alt="sunshine" title="Details">
+                        <div class="card-body">
+                            <h5>Sunshine</h5>
+                            <p class="card-text  mb-0">Portfolio Website</p>
+                            <div class="card-btns d-flex justify-content-between mt-2">
+                                <a data-toggle="modal" name="choose" data-target="#new-folder-modal" class="btn btn-primary mr-1 mb-1 waves-effect waves-light" data-template="sunshine">Choose</a>
+                                <a href="{{ url_for('public.preview', template='sunshine') }}" target="_blank" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-content">
+                        <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/ronaldo.jpg') }}">
+                        <div class="card-body">
+                            <h5>Ronaldo</h5>
+                            <p class="card-text  mb-0">Portfolio Website</p>
+                            <div class="card-btns d-flex justify-content-between mt-2">
+                              <a data-toggle="modal" name="choose" data-target="#new-folder-modal" class="btn btn-primary mr-1 mb-1 waves-effect waves-light" data-template="ronaldo">Choose</a>
+                              <a href="{{ url_for('public.preview', template='ronaldo') }}" target="_blank" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-content">
+                        <img class="card-img-top img-fluid" src="{{ url_for('static', filename='images/elegence.jpg') }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5>Elegence</h5>
+                            <p class="card-text  mb-0">Portfolio Website</p>
+                            <div class="card-btns d-flex justify-content-between mt-2">
+                              <a data-toggle="modal" name="choose" data-target="#new-folder-modal" class="btn btn-primary mr-1 mb-1 waves-effect waves-light" data-template="elegence">Choose</a>
+                              <a href="{{ url_for('public.preview', template='elegence') }}" target="_blank" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+      <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT  &copy; 2020<a class="ml-25" target="_blank">Webpaget</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{{ url_for('static', filename='app-assets/vendors/js/vendors.min.js')}}"></script>
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{{ url_for('static', filename='app-assets/js/core/app-menu.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/core/app.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/scripts/customizer.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/createSite.js')}}"></script>
+
+    <script>
+      $(window).on('load',  function(){
+        if (feather) {
+          feather.replace({ width: 14, height: 14 });
+        }
+      })
+    </script>
+
+    <!-- Create New Folder Modal Starts-->
+    <div class="modal fade" id="new-folder-modal">
+      <input type='hidden' id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Your Site Name</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="error"></p>
+            <input type="text" class="form-control" id="site_name" placeholder="Give your site a name" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary mr-1" id="createsite">Create</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Create New Folder Modal Ends -->
+
+
+  </body>
+  <!-- END: Body-->
+</html>
