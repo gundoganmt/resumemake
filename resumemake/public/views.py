@@ -34,8 +34,8 @@ def preview(template):
     elif template == 'ronaldo':
         return render_template('preview/resumes/ronaldo.html')
 
-    elif template == 'elegence':
-        return render_template('preview/resumes/elegence.html')
+    elif template == 'elegant':
+        return render_template('preview/resumes/elegant.html')
 
     else:
         return abort(404), 404
