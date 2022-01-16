@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search)
+  var site_id = params.get('site_id');
+
   $('.save').on('click', function(e){
    const xhr = new XMLHttpRequest();
    var current_field = $(this).attr('data');
-   var site_id = $(this).attr('data-site-id');
    var csrf_token = document.getElementById('csrf_token').value;
    var form_data = new FormData();
    $(this).text('Saving...');
@@ -161,10 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
      var skill = document.getElementById('skill').value;
      var level = document.getElementById('level').value;
      var category = document.getElementById('sk_category').value;
-     if (parseInt(level) > 100 || parseInt(level) < 1){
-       alert("Skill level should be between 0 - 100");
-       return false;
-     }
      form_data.append('skill', skill);
      form_data.append('level', level);
      form_data.append('category', category);
@@ -203,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
        const result = JSON.parse(xhr.responseText);
        if(result.success){
          if(result.current_field == 's'){
-           saveSkill(result.skill, result.level, result.skill_id);
+           saveSkill(result.skill, result.level, result.category, result.skill_id);
          }
          else if(result.current_field == 'b'){
            Swal.fire({
@@ -259,7 +257,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
        }
        else{
-         alert(result.msg);
+        Swal.fire({
+          title: "Error!",
+          text: result.msg,
+          type: "error",
+          confirmButtonClass: 'btn btn-danger',
+          buttonsStyling: false,
+         });
+         $("html, body").animate({ scrollTop: 0 }, "slow");
        }
      }
    }
@@ -267,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
    return false;
   })
 
-  function saveSkill(skill, level, skill_id){
+  function saveSkill(skill, level, category, skill_id){
     var skill_table = document.getElementById('skill_table');
     var form_skill = document.getElementById('form_skill');
     var addAnother = document.getElementById("addAnotherSkill");
@@ -281,6 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '<span class="font-weight-bold">' + skill + '</span>' +
       '</td>' +
       '<td>' + level + '</td>' +
+      '<td>' + category + '</td>' +
       '<td>' +
         '<i class="fa fa-trash-o deleteItem" data=s_' + skill_id + '></i>' +
       '</td>' +
@@ -293,6 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addAnother.style.display = "none";
     })
     $("html, body").animate({ scrollTop: 0 }, "slow");
+    $("#reset_skill").click();
     return false;
   }
 
@@ -354,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addAnother.style.display = "none";
     })
     $("html, body").animate({ scrollTop: 0 }, "slow");
+    $('#reset_workexps').click();
     return false;
   }
 
@@ -411,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addAnother.style.display = "none";
     })
     $("html, body").animate({ scrollTop: 0 }, "slow");
+    $('#reset_testi').click();
     return false;
   }
 
@@ -471,6 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addAnother.style.display = "none";
     })
     $("html, body").animate({ scrollTop: 0 }, "slow");
+    $("#reset_edu").click();
     return false;
   }
 

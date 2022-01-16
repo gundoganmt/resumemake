@@ -35,7 +35,7 @@ UPLOAD_SERVICE_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/serv
 UPLOAD_TESTI_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/testimonials')
 UPLOAD_PORT_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/portfolios')
 
-RESUME_SITES_NAMES = ['sunshine', 'ronaldo', 'elegence']
+RESUME_SITES_NAMES = ['sunshine', 'ronaldo', 'elegant']
 
 def allowed_img_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMG_EXTENSIONS

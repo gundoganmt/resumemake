@@ -33,7 +33,7 @@
             <div id="menu-options" class="menu-wrap">
                <!--PERSONAL LOGO-->
                <div class="logo-flat">
-                  <img alt="personal-logo" class="img-responsive" src="/static/images/resume_img/john_doe.jpg">
+                  <img alt="personal-logo" class="img-responsive" src="{{ url_for('static', filename='images/profiles/'+resume_site.profile_picture) }}">
                </div>
                <br>
                <!--OPTIONS-->
@@ -70,14 +70,14 @@
                   <div id="v-card" class="card">
                      <!-- PROFILE PICTURE -->
                      <div id="profile" class="right">
-                        <img alt="profile-image" class="img-responsive" src="/static/images/resume_img/john_doe.jpg">
+                        <img alt="profile-image" class="img-responsive" src="{{ url_for('static', filename='images/profiles/'+resume_site.profile_picture) }}">
                         <div class="slant"></div>
                      </div>
                      <div class="card-content">
                         <!-- NAME & STATUS -->
                         <div class="info-headings">
                            <h4 class="text-uppercase left">John DOE</h4>
-                           <h6 class="text-capitalize left">Software Engineer & UI/UX Expert</h6>
+                           <h6 class="text-capitalize left">{{ resume_site.tagline }}</h6>
                         </div>
                         <!-- CONTACT INFO -->
                         <div class="infos">
@@ -102,22 +102,37 @@
                         </div>
                         <!--LINKS-->
                         <div class="links">
-                           <!-- FACEBOOK-->
-                           <a href="#" id="first_one"
-                              class="social btn-floating indigo"><i
-                              class="fa fa-facebook"></i></a>
-                           <!-- TWITTER-->
-                           <a href="#" class="social  btn-floating blue"><i
-                              class="fa fa-twitter"></i></a>
-                           <!-- GOOGLE+-->
-                           <a href="#" class="social  btn-floating red"><i
-                              class="fa fa-google-plus"></i></a>
-                           <!-- LINKEDIN-->
-                           <a href="#" class="social  btn-floating blue darken-3"><i
-                              class="fa fa-linkedin"></i></a>
-                           <!-- RSS-->
-                           <a href="#" class="social  btn-floating orange darken-3"><i
-                              class="fa fa-rss"></i></a>
+
+                           {% if resume_site.facebook %}
+                            <a target="_blank" href="https://facebook.com/{{resume_site.facebook}}" id="first_one"
+                                class="social btn-floating indigo"><i
+                                class="fa fa-facebook"></i></a>
+                           {% endif %}
+                           
+                           {% if resume_site.twitter %}
+                            <a target="_blank" href="https://twitter.com/{{resume_site.twitter}}" class="social  btn-floating blue"><i
+                                class="fa fa-twitter"></i></a>
+                           {% endif %}
+
+                           {% if resume_site.instagram %}
+                           <a target="_blank" href="https://instagram.com/{{resume_site.instagram}}" class="social  btn-floating red"><i
+                              class="fa fa-instagram"></i></a>
+                           {% endif %}
+
+                           {% if resume_site.github %}
+                           <a target="_blank" href="https://github.com/{{resume_site.github}}" class="social  btn-floating blue darken-3"><i
+                              class="fa fa-github"></i></a>
+                           {% endif %}
+
+                           {% if resume_site.youtube %}
+                            <a target="_blank" href="https://youtube.com/{{resume_site.youtube}}" class="social  btn-floating blue darken-3"><i
+                                class="fa fa-youtube"></i></a>
+                           {% endif %}
+
+                           {% if resume_site.linkedin %}
+                            <a target="_blank" href="https://linkedin.com/{{resume_site.linkedin}}" class="social  btn-floating blue darken-3"><i
+                                class="fa fa-linkedin"></i></a>
+                           {% endif %}
                         </div>
                      </div>
                   </div>
@@ -136,13 +151,8 @@
                   <div id="about-card" class="card">
                      <div class="card-content">
                         <!-- ABOUT PARAGRAPH -->
-                        <p>
-                           Hello! I’m John Doe. Senior Web Developer with over 13 years of experience
-                           specializing in front end development. Experienced with all stages of the
-                           development cycle for dynamic web projects.Having an in-depth knowledge
-                           including advanced HTML5, CSS, CSS3, SASS, LESS, JSON, XML, Java, JavaScript,
-                           JQuery, Angular JS. Strong background in management and leadership.
-                        </p>
+                        <h6 style="text-align: center;">{{ resume_site.intro_title }}</h6>
+                        {{ resume_site.introduction|safe }}
                      </div>
                      <!-- BUTTONS -->
                      <div id="about-btn" class="card-action">
@@ -168,182 +178,34 @@
                <h4 class="text-uppercase text-center"><img src="/static/images/resume_img/book.png" alt="demo">Education</h4>
             </div>
             <div id="timeline-education">
-               <!-- FIRST TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>P</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">Preparatory Education</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>Fedrick School</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 1997 - Mar 2000</small>
-                           </h6>
+               {% for edu in resume_site.edus() %}
+                <div class="timeline-block">
+                    <!-- DOT -->
+                    <div class="timeline-dot">
+                        <h6>{{ edu.field|first }}</h6>
+                    </div>
+                    <!-- TIMELINE CONTENT -->
+                    <div class="card timeline-content">
+                        <div class="card-content">
+                            <!-- TIMELINE TITLE -->
+                            <h6 class="timeline-title">{{ edu.field }}</h6>
+                            <!-- TIMELINE TITLE INFO -->
+                            <div class="timeline-info">
+                            <h6>
+                                <small>{{ edu.school }}</small>
+                            </h6>
+                            <h6>
+                                <small>{{ edu.start_month }} {{ edu.start_year }} - {{ edu.end_month }} {{ edu.end_year }}</small>
+                            </h6>
+                            </div>
+                            <!-- TIMELINE PARAGRAPH -->
+                            <p>
+                                {{ edu.description }}
+                            </p>
                         </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I completed my preparatory education from this prestigious institution.
-                           I successful completed all the credits without any fallout and got A grade overall.
-                        </p>
-                        <!-- BUTTON TRIGGER MODAL -->
-                        <a href="#" class="modal-dot" data-toggle="modal" data-target="#myModal-1">
-                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        </a>
-                     </div>
-                  </div>
-               </div>
-               <!-- SECOND TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>H</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">High School</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>RedStreet College</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2000 - Mar 2005</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I completed my high school degree from this prestigious institution.
-                           I successful completed all the credits without any fallout and got A grade overall.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-               <!-- THIRD TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>C</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">Computer Science</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>Down Street College</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2006 - Mar 2008</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I completed my computer science degree from this prestigious institution.
-                           I successful completed all the credits without any fallout and got A grade overall.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-               <!-- FOURTH TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot"><i class="fa fa-graduation-cap"></i></div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">Software Engineering</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>Oxford University</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2009 - Mar 2010</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I completed this degree from this prestigious institution.
-                           I successful completed all the credits without any fallout and got A grade overall.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-               <!-- FIFTH TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>U</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">UI/UX Workshop</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>IT Next Academy</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2010 - Mar 2011</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I completed this course from this prestigious institution.
-                           I successful completed all the credits without any fallout and got A grade overall.
-                        </p>
-                        <!-- BUTTON TRIGGER MODAL -->
-                        <a href="#" class="modal-dot" data-toggle="modal" data-target="#myModal-2">
-                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        </a>
-                     </div>
-                  </div>
-               </div>
-               <!-- SIXTH TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot"><i class="fa fa-globe"></i></div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">Web Development</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>Lipro University</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2011 - Mar 2012</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I completed this course from this prestigious institution.
-                           I successful completed all the credits without any fallout and got A grade overall.
-                        </p>
-                        <!-- BUTTON TRIGGER MODAL -->
-                        <a href="#" class="modal-dot" data-toggle="modal" data-target="#myModal-3">
-                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        </a>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
+               {% endfor %}
             </div>
          </div>
       </section>
@@ -361,96 +223,20 @@
                   <div id="skills-card" class="card">
                      <div class="card-content">
                         <div class="row">
-                           <div class="col-md-4 col-sm-4 col-xs-12">
-                              <!-- FIRST SKILL SECTION -->
-                              <div class="skills-title">
-                                 <h6 class="text-center">Professional</h6>
-                              </div>
-                              <!-- FIRST SKILL BAR -->
-                              <div class="skillbar" data-percent="90%">
-                                 <div class="skillbar-title"><span>HTML5</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">90%</div>
-                              </div>
-                              <!-- SECOND SKILL BAR  -->
-                              <div class="skillbar" data-percent="90%">
-                                 <div class="skillbar-title"><span>CSS3</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">90%</div>
-                              </div>
-                              <!-- THIRD SKILL BAR  -->
-                              <div class="skillbar" data-percent="70%">
-                                 <div class="skillbar-title"><span>jQuery</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">70%</div>
-                              </div>
-                              <!-- FOURTH SKILL BAR  -->
-                              <div class="skillbar" data-percent="68%">
-                                 <div class="skillbar-title"><span>PHP</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">68%</div>
-                              </div>
-                           </div>
-                           <div class="col-md-4 col-sm-4 col-xs-12">
-                              <!-- SECOND SKILL SECTION -->
-                              <div class="skills-title">
-                                 <h6 class="text-center">Personal</h6>
-                              </div>
-                              <!-- FIRST SKILL BAR -->
-                              <div class="skillbar" data-percent="80%">
-                                 <div class="skillbar-title"><span>Communication</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">80%</div>
-                              </div>
-                              <!-- SECOND SKILL BAR  -->
-                              <div class="skillbar" data-percent="60%">
-                                 <div class="skillbar-title"><span>Teamwork</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">60%</div>
-                              </div>
-                              <!-- THIRD SKILL BAR  -->
-                              <div class="skillbar" data-percent="70%">
-                                 <div class="skillbar-title"><span>Creativity</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">70%</div>
-                              </div>
-                              <!-- FOURTH SKILL BAR  -->
-                              <div class="skillbar" data-percent="70%">
-                                 <div class="skillbar-title"><span>Dedication</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">70%</div>
-                              </div>
-                           </div>
-                           <div class="col-md-4 col-sm-4 col-xs-12">
-                              <!-- THIRD SKILL SECTION -->
-                              <div class="skills-title">
-                                 <h6 class="text-center">Software</h6>
-                              </div>
-                              <!-- FIRST SKILL BAR -->
-                              <div class="skillbar" data-percent="80%">
-                                 <div class="skillbar-title"><span>Adobe Illustrator</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">80%</div>
-                              </div>
-                              <!-- SECOND SKILL BAR  -->
-                              <div class="skillbar" data-percent="70%">
-                                 <div class="skillbar-title"><span>Adobe InDesign</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">70%</div>
-                              </div>
-                              <!-- THIRD SKILL BAR  -->
-                              <div class="skillbar" data-percent="60%">
-                                 <div class="skillbar-title"><span>PHP Storm</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">60%</div>
-                              </div>
-                              <!-- FOURTH SKILL BAR  -->
-                              <div class="skillbar" data-percent="80%">
-                                 <div class="skillbar-title"><span>Dev Console</span></div>
-                                 <div class="skillbar-bar"></div>
-                                 <div class="skill-bar-percent">80%</div>
-                              </div>
-                           </div>
+                            {% for cat in resume_site.unique_sk_category() %}
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <div class="skills-title">
+                                        <h6 class="text-center">{{ cat }}</h6>
+                                    </div>
+                                    {% for sk in resume_site.get_skills_by_cat(cat) %}
+                                        <div class="skillbar" data-percent="{{sk.level}}%">
+                                            <div class="skillbar-title"><span>{{sk.skill}}</span></div>
+                                            <div class="skillbar-bar"></div>
+                                            <div class="skill-bar-percent">{{sk.level}}%</div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
                         </div>
                      </div>
                   </div>
@@ -468,126 +254,35 @@
                <h4 class="text-uppercase text-center"><img src="/static/images/resume_img/layers.png" alt="demo">Experience</h4>
             </div>
             <div id="timeline-experience">
-               <!-- FIRST TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>D</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">Designer</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>RulerSoft</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2010 - Mar 2012</small>
-                           </h6>
+               {% for workexp in resume_site.workExps() %}
+                <div class="timeline-block">
+                    <!-- DOT -->
+                    <div class="timeline-dot">
+                        <h6>{{ workexp.position|first }}</h6>
+                    </div>
+                    <!-- TIMELINE CONTENT -->
+                    <div class="card timeline-content">
+                        <div class="card-content">
+                            <!-- TIMELINE TITLE -->
+                            <h6 class="timeline-title">{{ workexp.position }}</h6>
+                            <!-- TIMELINE TITLE INFO -->
+                            <div class="timeline-info">
+                            <h6>
+                                <small>{{ workexp.company }}</small>
+                            </h6>
+                            <h6>
+                                <small>{{ workexp.start_month }} {{ workexp.start_year }} - {{ workexp.end_month }} {{ workexp.end_year }}</small>
+                            </h6>
+                            </div>
+                            <!-- TIMELINE PARAGRAPH -->
+                            <p>
+                            {{ workexp.description }}
+                            </p>
+                            
                         </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I started my designing carrier here, spent tow years learning and working
-                           in various designing aspects..
-                        </p>
-                        <!-- BUTTON TRIGGER MODAL -->
-                        <a href="#" class="modal-dot" data-toggle="modal" data-target="#myModal-4">
-                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        </a>
-                     </div>
-                  </div>
-               </div>
-               <!-- SECOND TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>F</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">Frontend Developer</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>Micro IT</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2012 - Mar 2014</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I started my frontend carrier here, spent tow years learning and working
-                           in various frontend aspects. I worked on about 40+ projects local and online.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-               <!-- THIRD TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>U</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">UI/UX Expert</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>Libra IT Solutions</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2014 - Mar 2015</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I started my expertise carrier here, spent tow years learning and working
-                           in various UX/UI aspects. I worked on about 70+ projects local and online.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-               <!-- FOURTH TIMELINE -->
-               <div class="timeline-block">
-                  <!-- DOT -->
-                  <div class="timeline-dot">
-                     <h6>S</h6>
-                  </div>
-                  <!-- TIMELINE CONTENT -->
-                  <div class="card timeline-content">
-                     <div class="card-content">
-                        <!-- TIMELINE TITLE -->
-                        <h6 class="timeline-title">Senior Developer</h6>
-                        <!-- TIMELINE TITLE INFO -->
-                        <div class="timeline-info">
-                           <h6>
-                              <small>WebStyle Technologies</small>
-                           </h6>
-                           <h6>
-                              <small>Jan 2016 - Continue..</small>
-                           </h6>
-                        </div>
-                        <!-- TIMELINE PARAGRAPH -->
-                        <p>
-                           I recently joined here, currently working on various development
-                           aspects. I already worked on about..
-                        </p>
-                        <!-- BUTTON TRIGGER MODAL -->
-                        <a href="#" class="modal-dot" data-toggle="modal" data-target="#myModal-5">
-                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        </a>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
+               {% endfor %}
             </div>
          </div>
       </section>
@@ -1025,59 +720,21 @@
                   <div id="clients-slider"
                      class="swiper-container swiper-container-clients">
                      <div class="swiper-wrapper">
-                        <!-- SLIDE ONE -->
-                        <div class="swiper-slide">
-                           <div class="col-md-12">
-                              <!--CLIENT IMAGE-->
-                              <div class="client-img center-block">
-                                 <img alt="client-image" class="center-block" src="/static/images/resume_img/thumb1.jpg">
-                              </div>
-                              <!--CLIENT QUOTE-->
-                              <blockquote>
-                                 I work with John on several web development projects and I find him to be extremely
-                                 creative and a technical Front End Developer. Jone expertise involves building
-                                 complex
-                                 Responsive Design layouts using HTML 5, CSS3, and JavaScript.
-                                 I work with John on several web development projects and I find him to be extremely
-                                 creative and a technical Front End Developer. Jone expertise involves building
-                                 complex
-                                 Responsive Design layouts using HTML 5, CSS3, and JavaScript.
-                                 <cite>Mike, CEO, IT World.</cite>
-                              </blockquote>
-                           </div>
-                        </div>
-                        <!-- SLIDE TWO -->
-                        <div class="swiper-slide">
-                           <div class="col-md-12">
-                              <!--CLIENT IMAGE-->
-                              <div class="client-img center-block">
-                                 <img alt="client-image" class="center-block" src="/static/images/resume_img/thumb2.jpg">
-                              </div>
-                              <!--CLIENT QUOTE-->
-                              <blockquote>
-                                 I work with John on several web development projects and I find him to be extremely
-                                 creative and a technical Front End Developer.
-                                 <cite>Mike, CEO, IT World.</cite>
-                              </blockquote>
-                           </div>
-                        </div>
-                        <!-- SLIDE THREE -->
-                        <div class="swiper-slide">
-                           <div class="col-md-12">
-                              <!--CLIENT IMAGE-->
-                              <div class="client-img center-block">
-                                 <img alt="client-image" class="center-block" src="/static/images/resume_img/thumb3.jpg">
-                              </div>
-                              <!--CLIENT QUOTE-->
-                              <blockquote>
-                                 I work with John on several web development projects and I find him to be extremely
-                                 creative and a technical Front End Developer. Jone expertise involves building
-                                 complex
-                                 Responsive Design layouts using HTML 5, CSS3, and JavaScript.
-                                 <cite>Mike, CEO, IT World.</cite>
-                              </blockquote>
-                           </div>
-                        </div>
+                        {% for testi in resume_site.testimos() %}
+                            <div class="swiper-slide">
+                            <div class="col-md-12">
+                                <!--CLIENT IMAGE-->
+                                <div class="client-img center-block">
+                                    <img alt="client-image" class="center-block" src="{{ url_for('static', filename='images/testimonials/'+testi.picture) }}">
+                                </div>
+                                <!--CLIENT QUOTE-->
+                                <blockquote>
+                                    {{ testi.description }}
+                                    <cite>{{ testi.name }}, {{ testi.company }}.</cite>
+                                </blockquote>
+                            </div>
+                            </div>
+                        {% endfor %}
                      </div>
                      <!-- Add Pagination -->
                      <div class="swiper-pagination swiper-pagination-clients"></div>

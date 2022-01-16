@@ -21,7 +21,7 @@ def mysites():
 @login_required
 def deletesite(sitetype, site_id):
     if sitetype == 'resume':
-        site = ResumeSite.query.filter_by(id=site_id, owner=current_user).first()
+        site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
     if site:
         db.session.delete(site)
         db.session.commit()

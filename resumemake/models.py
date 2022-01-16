@@ -71,6 +71,7 @@ class ResumeSite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     site_name = db.Column(db.String(50), nullable=False)
     site_id = db.Column(db.String(80), nullable=False, unique=True)
+    profile_picture = db.Column(db.String(80), nullable=True, default="blank.png")
     email = db.Column(db.String(50), nullable=True, default="")
     birth_day = db.Column(db.String(50), nullable=True, default="")
     country = db.Column(db.String(50), nullable=True, default="")

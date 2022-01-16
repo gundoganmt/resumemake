@@ -14,7 +14,7 @@ def load_user(id):
 @account.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('public.index'))
+        return redirect(url_for('dashboard.mysites'))
     if request.method == 'POST':
         login_eu = request.form['login-eu']
         password = request.form['login-password']

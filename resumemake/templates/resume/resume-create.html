@@ -76,8 +76,8 @@
                 {% endif %}
                 <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Preview</button>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" target="_blank" href="{{ url_for('public.previewresume', site_id=resume_site.site_id, site_name=resume_site.site_name) }}"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">With My Data</span></a>
-                  <a class="dropdown-item" target="_blank" href="{{ url_for('public.preview', template='sunshine') }}"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Original Template</span></a>
+                  <a class="dropdown-item" target="_blank" href="{{ url_for('public.previewresume', site_id=resume_site.site_id) }}"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">With My Data</span></a>
+                  <a class="dropdown-item" target="_blank" href="{{ url_for('public.preview', template=resume_site.template) }}"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Original Template</span></a>
                 </div>
               </div>
             </div>
@@ -157,7 +157,7 @@
 
             <!-- FAQ image -->
             <img
-              src="{{ url_for('static', filename='app-assets/images/illustration/faq-illustrations.svg')}}"
+              src="{{ url_for('static', filename='images/illustration.png')}}"
               class="img-fluid d-none d-md-block"
             />
           </div>
@@ -174,7 +174,8 @@
                   <i data-feather="user" class="font-medium-4"></i>
                 </div>
                 <div>
-                  <h4 class="mb-0">Personel Information</h4>
+                  <h4 class="mb-0">Personal Information</h4>
+                  <span>Enter personal information</span>
                 </div>
               </div>
 
@@ -200,13 +201,13 @@
                           <input type='hidden' id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
                           <div class="media mb-2">
                             <div class="avatar-wrapper">
-                            	<img class="profile-pic" src="{{ url_for('static', filename='images/profiles/'+current_user.profile_picture) }}" />
+                            	<img class="profile-pic" src="{{ url_for('static', filename='images/'+resume_site.profile_picture) }}" />
                             	<div class="upload-button"></div>
                             	<input class="file-upload" type="file" id="file" name="file" accept="image/*"/>
                             </div>
                             <div class="media-body mt-50">
-                                <h4 class="media-heading">{{ current_user }}</h4>
-                                <p class="text-muted mt-50"><small>Allowed JPG, JPEG or PNG. Max size of 2Mb</small></p>
+                                <h4 class="media-heading">Profile Picture</h4>
+                                <p class="text-muted mt-50"><small>Allowed JPG, JPEG or PNG. Max size of 2Mb. For best experience use 400x800 image.</small></p>
                             </div>
                           </div>
                           <form>
@@ -260,7 +261,7 @@
                                 </div>
                               </div>
                               <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                  <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 save" data="basic_info" data-site-id="{{resume_site.site_id}}">Save
+                                  <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 save" data="basic_info">Save
                                       Changes</button>
                                   <button type="reset" class="btn btn-outline-warning">Reset</button>
                               </div>
@@ -308,7 +309,7 @@
                         {{ resume_site.introduction|safe }}
                       </div>
                       <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 save" data="introduction" data-site-id="{{resume_site.site_id}}">Save Changes</button>
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 save" data="introduction">Save Changes</button>
                       </div>
                     </div>
                   </div>
@@ -404,7 +405,7 @@
                               </div>
                           </div>
                           <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                              <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="social" data-site-id="{{resume_site.site_id}}">Save
+                              <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="social">Save
                                   Changes</button>
                               <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
                           </div>
@@ -633,12 +634,12 @@
                             </div>
                           </div>
                         </div>
-                        <label>Description</label>
+                        <label>Comment</label>
                         <textarea class="form-control" id="desc_work" rows="5" placeholder="Comment.."></textarea>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="workExp" data-site-id="{{resume_site.site_id}}">Save
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="workExp">Save
                               Changes</button>
-                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light" id="reset_workexps">Reset</button>
                         </div>
                       </form>
                       <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherWork" style="display: none;">Add Another</a>
@@ -706,7 +707,7 @@
                         <label>Description</label>
                         <textarea class="form-control" id="desc_service" rows="5" placeholder="Service Detail.."></textarea>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="service" data-site-id="{{resume_site.site_id}}">Save
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="service">Save
                                 Changes</button>
                             <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
                         </div>
@@ -805,7 +806,7 @@
                           </div>
                         </div>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="port" data-site-id="{{resume_site.site_id}}">Save
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="port">Save
                                 Changes</button>
                             <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
                         </div>
@@ -826,7 +827,7 @@
                 </div>
                 <div>
                   <h4 class="mb-0">Education</h4>
-                  <span>Which license do I need?</span>
+                  <span>Enter education details</span>
                 </div>
               </div>
 
@@ -1041,12 +1042,12 @@
                             </div>
                           </div>
                         </div>
-                        <label>Description</label>
+                        <label>Comment</label>
                         <textarea class="form-control" id="desc_edu" rows="5" placeholder="Comment.."></textarea>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="edu" data-site-id="{{resume_site.site_id}}">Save
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="edu">Save
                                 Changes</button>
-                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light" id="reset_edu">Reset</button>
                         </div>
                       </form>
                       <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherEdu" style="display: none;">Add Another</a>
@@ -1248,7 +1249,7 @@
                         </div>
                         <textarea class="form-control" id="editor-course" rows="5" placeholder="Course Detail.."></textarea>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="course" data-site-id="{{resume_site.site_id}}">Save
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="course">Save
                                 Changes</button>
                             <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
                         </div>
@@ -1269,7 +1270,7 @@
                 </div>
                 <div>
                   <h4 class="mb-0">Skills</h4>
-                  <span>Which license do I need?</span>
+                  <span>Set your skills</span>
                 </div>
               </div>
 
@@ -1297,6 +1298,7 @@
                               <tr>
                                 <th>Skill</th>
                                 <th>Level</th>
+                                <th>Category</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
@@ -1305,6 +1307,7 @@
                             <tr class="table-active" id="s_{{skill.id}}">
                               <td><span class="font-weight-bold">{{ skill.skill }}</span></td>
                               <td>{{ skill.level }}</td>
+                              <td>{{ skill.category }}</td>
                               <td><i class="fa fa-trash-o deleteItem" data="s_{{skill.id}}" aria-hidden="true"></i></td>
                             </tr>
                           {% endfor %}
@@ -1316,6 +1319,7 @@
                               <tr>
                                 <th>Skill</th>
                                 <th>Level</th>
+                                <th>Category</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
@@ -1357,9 +1361,9 @@
                           </div>
                         </div>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="skill" data-site-id="{{resume_site.site_id}}">Save
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="skill">Save
                                 Changes</button>
-                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                            <button type="reset" class="btn btn-outline-warning waves-effect waves-light" id="reset_skill">Reset</button>
                         </div>
                       </form>
                       <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherSkill" style="display: none;">Add Another</a>
@@ -1433,7 +1437,7 @@
                           </div>
                         </div>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="lang" data-site-id="{{resume_site.site_id}}">Save
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="lang">Save
                                 Changes</button>
                             <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
                         </div>
@@ -1454,7 +1458,7 @@
                 </div>
                 <div>
                   <h4 class="mb-0">Testimonials</h4>
-                  <span>Which license do I need?</span>
+                  <span>Testimonials about you</span>
                 </div>
               </div>
 
@@ -1543,9 +1547,9 @@
                         <label>Testimonial</label>
                         <textarea class="form-control" id="desc_testi" rows="5" placeholder="Testimonial.."></textarea>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="testi" data-site-id="{{resume_site.site_id}}">Save
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="testi">Save
                               Changes</button>
-                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light" id="reset_testi">Reset</button>
                         </div>
                       </form>
                       <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherTesti" style="display: none;">Add Another</a>
@@ -1563,7 +1567,7 @@
                 </div>
                 <div>
                   <h4 class="mb-0">Site Settings</h4>
-                  <span>Determine your settings</span>
+                  <span>Set your settings</span>
                 </div>
               </div>
 
@@ -1602,7 +1606,7 @@
                         <div class="col-lg-2 col-sm-2">
                           <div class="form-group">
                               <div class="controls">
-                                  <button type="button" class="btn btn-primary mt-2 mr-1 waves-effect waves-float waves-light connect-domain" data-site-id="{{resume_site.site_id}}">Connect</button>
+                                  <button type="button" class="btn btn-primary mt-2 mr-1 waves-effect waves-float waves-light connect-domain">Connect</button>
                               </div>
                           </div>
                         </div>
@@ -1747,7 +1751,7 @@
                         <label>Testimonial</label>
                         <textarea class="form-control" id="desc_testi" rows="5" placeholder="Testimonial.."></textarea>
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="testi" data-site-id="{{resume_site.site_id}}">Save
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="testi">Save
                               Changes</button>
                           <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
                         </div>

@@ -43,9 +43,8 @@ def preview(template):
 @public.route('/previewresume')
 def previewresume():
     site_id = request.args.get('site_id', str)
-    site_name = request.args.get('site_name', str)
-    resume_site = ResumeSite.query.filter_by(site_id=site_id, site_name=site_name, owner=current_user).first_or_404()
-    return render_template('preview/resumes/breezycv.html', resume_site=resume_site)
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first_or_404()
+    return render_template('preview/resumes/elegant-rendered.html', resume_site=resume_site)
 
 @public.route('/single-portfolio/<int:port_id>')
 def singleport(port_id):
@@ -106,10 +105,6 @@ def contact():
     else:
         send_email(name, email, subject, message)
         return jsonify({"success": True, "msg": "Your message has been successfully sent. We will get back to you as soon as possible."})
-
-@public.route('/blog')
-def blog():
-    return render_template('public/blog/blogs.html')
 
 @public.app_errorhandler(404)
 def page_not_found(e):

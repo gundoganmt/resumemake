@@ -39,7 +39,7 @@ def basic_info(site_id):
         if allowed_img_file(filename):
             filename = secure_filename(filename)
             unique_filename = str(uuid.uuid4())+get_extension(filename)
-            current_user.profile_picture = unique_filename
+            resume_site.profile_picture = unique_filename
             file.save(os.path.join(UPLOAD_PROFILE_FOLDER, unique_filename))
     db.session.commit()
     return jsonify({"success": True, "current_field": "b"})
@@ -47,10 +47,8 @@ def basic_info(site_id):
 @resume.route('/introduction/<site_id>', methods=['POST'])
 def introduction(site_id):
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
-    intro = request.form['introduction']
-    intro_title = request.form['intro_title']
-    resume_site.introduction = intro
-    resume_site.intro_title = intro_title
+    resume_site.introduction = request.form['introduction']
+    resume_site.intro_title = request.form['intro_title']
     db.session.commit()
     return jsonify({"success": True, "current_field": "i"})
 
@@ -72,14 +70,32 @@ def social(site_id):
 @login_required
 def workExp(site_id):
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
-    workExp = WorkExperiences(position=request.form['position'], company=request.form['company'],
-        start_month=request.form['start_month_job'], start_year=request.form['start_year_job'],
-        end_month=request.form['end_month_job'], end_year=request.form['end_year_job'],
-        description=request.form['desc_work'], resume_id=resume_site.id)
+
+    position = request.form['position']
+    company = request.form['company']
+    start_month = request.form['start_month_job']
+    start_year = request.form['start_year_job']
+    end_month = request.form['end_month_job']
+    end_year = request.form['end_year_job']
+    description = request.form['desc_work']
+
+    workExp = WorkExperiences(position=position, company=company, start_month=start_month, 
+        start_year=start_year, end_month=end_month, end_year=end_year,
+        description=description, resume_id=resume_site.id)
+
     db.session.add(workExp)
     db.session.commit()
-    return jsonify({"success": True, "current_field": 'w', 'workExp_id': workExp.id, "position": workExp.position,
-        "company": workExp.company, "duration": workExp.start_month + " " + str(workExp.start_year) + " - " + workExp.end_month + " " + str(workExp.end_year)})
+
+    context = {
+        "success": True, 
+        "current_field": 'w', 
+        'workExp_id': workExp.id, 
+        "position": position,
+        "company": company,
+        "duration": start_month + " " + str(start_year) + " - " + end_month + " " + str(end_year)
+    }
+
+    return jsonify(context)
 
 @resume.route('/service/<site_id>', methods=['POST'])
 def service(site_id):
@@ -127,8 +143,10 @@ def portfolio(site_id):
 @resume.route('/testimonials/<site_id>', methods=['POST'])
 def testimonials(site_id):
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+
     testi = Testimonials(name=request.form['name'], company=request.form['company'],
         description=request.form['desc_testi'], resume_id=resume_site.id)
+
     if 'testi_pic' in request.files:
         file = request.files['testi_pic']
         filename = file.filename
@@ -139,22 +157,50 @@ def testimonials(site_id):
         image = Image.open(file)
         i = crop_max_square(image).resize((300, 300), Image.LANCZOS)
         i.save(os.path.join(UPLOAD_TESTI_FOLDER, unique_filename), quality=95)
+
     db.session.add(testi)
     db.session.commit()
-    return jsonify({"success": True, "current_field": "t", "testi_id": testi.id, "name": testi.name, "company": testi.company})
+
+    context = {
+        "success": True, 
+        "current_field": "t", 
+        "testi_id": testi.id, 
+        "name": testi.name, 
+        "company": testi.company
+    }
+
+    return jsonify(context)
 
 @resume.route('/edu/<site_id>', methods=['POST'])
 @login_required
 def edu(site_id):
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
-    edu = Educations(field=request.form['field'], school=request.form['school'],
-        start_month=request.form['start_month_edu'], start_year=request.form['start_year_edu'],
-        end_month=request.form['end_month_edu'], end_year=request.form['end_year_edu'],
-        description=request.form['desc_edu'], resume_id=resume_site.id)
+
+    field = request.form['field']
+    school = request.form['school']
+    start_month = request.form['start_month_edu']
+    start_year = request.form['start_year_edu']
+    end_month = request.form['end_month_edu']
+    end_year = request.form['end_year_edu']
+    description = request.form['desc_edu']
+
+    edu = Educations(field=field, school=school, start_month=start_month, 
+        start_year=start_year, end_month=end_month, end_year=end_year,
+        description=description, resume_id=resume_site.id)
+
     db.session.add(edu)
     db.session.commit()
-    return jsonify({"success": True, "current_field": 'e', 'edu_id': edu.id, "field": edu.field,
-        "school": edu.school, "duration": edu.start_month + " " + str(edu.start_year) + " - " + edu.end_month + " " + str(edu.end_year)})
+
+    context = {
+        "success": True,
+        "current_field": 'e',
+        "edu_id": edu.id,
+        "field": field,
+        "school": school,
+        "duration": start_month + " " + str(start_year) + " - " + end_month + " " + str(end_year)
+    }
+
+    return jsonify(context)
 
 @resume.route('/course/<site_id>', methods=['POST'])
 @login_required
@@ -173,10 +219,34 @@ def course(site_id):
 @login_required
 def skill(site_id):
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
-    skill = Skills(skill=request.form['skill'], level=request.form['level'], category=request.form['category'], resume_id=resume_site.id)
+
+    skill = request.form['skill']
+    level = request.form['level']
+    category = request.form['category']
+
+    if not skill or not category:
+        return jsonify({'success': False, 'msg': 'Please enter valid values'})
+    
+    if int(level) > 100 or int(level) < 1:
+        return jsonify({'success': False, 'msg': 'Level should be between 0 and 100'})
+    
+    if Skills.query.filter_by(skill=skill).first():
+        return jsonify({'success': False, 'msg': 'You already have this skill'})
+
+    skill = Skills(skill=skill, level=level, category=category, resume_id=resume_site.id)
     db.session.add(skill)
     db.session.commit()
-    return jsonify({"success": True, "current_field": "s", "skill_id": skill.id, "skill": skill.skill, "level": skill.level})
+
+    context = {
+        "success": True,
+        "current_field": "s",
+        "skill_id": skill.id,
+        "skill": skill.skill,
+        "level": skill.level,
+        "category": skill.category
+    }
+
+    return jsonify(context)
 
 @resume.route('/language/<site_id>', methods=['POST'])
 @login_required
