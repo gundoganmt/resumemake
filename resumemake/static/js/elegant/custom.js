@@ -133,73 +133,12 @@
             }
             var swiper = new Swiper(".swiper-container-clients", { pagination: ".swiper-pagination-clients", a11y: true, keyboardControl: true, autoHeight: true, speed: 800, paginationClickable: true });
         }
-        function initVideoPlayAndClose() {
-            $("#html-video").addClass("hidden");
-            $("#play-btn").on("click", function () {
-                var htmlVideo = "#html-video";
-                var vCard = "#v-card";
-                var playButtonHolder = "#button-holder";
-                var playIcon = "#icon-play";
-                $(playButtonHolder).addClass("middle");
-                setTimeout(function () {
-                    $(vCard).addClass("hide-overflow");
-                    $("body").addClass("scale-effect");
-                    $(vCard).addClass("height-change");
-                }, 600);
-                setTimeout(function () {
-                    $(playIcon).hide();
-                    $(htmlVideo).removeClass("hidden");
-                    $(htmlVideo)[0].play();
-                    $("#play-btn").addClass("black");
-                }, 1000);
-            });
-            $("#close-btn").on("click", function () {
-                var htmlVideo = "#html-video";
-                var vCard = "#v-card";
-                var playButtonHolder = "#button-holder";
-                var playIcon = "#icon-play";
-                $("body").removeClass("scale-effect");
-                setTimeout(function () {
-                    $(playIcon).show();
-                    $(playButtonHolder).removeClass("middle");
-                    $(vCard).removeClass("hide-overflow");
-                }, 1000);
-                $(vCard).removeClass("height-change");
-                $(htmlVideo).addClass("hidden");
-                $(htmlVideo)[0].pause();
-                $("#play-btn").removeClass("black");
-            });
-        }
-        function initMail() {
-            $("form#contact-form").on("submit", function (e) {
-                e.preventDefault();
-                var form = $(this);
-                $("#submit").attr("disabled", "disabled");
-                var post_data = form.serialize();
-                $("div#form-loader").removeClass("is-hidden").fadeIn(500);
-                $.ajax({ type: "POST", url: "php/mail_handler.php", data: post_data })
-                    .done(function () {
-                        $("div#form-loader").fadeOut(500);
-                        Materialize.toast("Message Sent! I will contact you shortly, Thanks", 4000);
-                        $("form#contact-form")[0].reset();
-                        Materialize.updateTextFields();
-                        $("#submit").removeAttr("disabled", "disabled");
-                    })
-                    .fail(function () {
-                        $("div#form-loader").fadeOut(500);
-                        Materialize.toast("Sorry! Something Wrong, Try Again", 4000);
-                        $("#submit").removeAttr("disabled", "disabled");
-                    });
-            });
-        }
         initNav();
         initSmoothScroll();
         initScrollToTop();
         initPortfolio();
         initSkills();
         initClientsSliders();
-        initVideoPlayAndClose();
-        initMail();
     });
     jQuery(window).on("load", function () {
         $("div#loading").fadeOut(500);

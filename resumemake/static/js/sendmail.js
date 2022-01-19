@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  $(".contact-form").submit(function( event ) {
+  $("#contact-form").submit(function( event ) {
     const xhr = new XMLHttpRequest();
-    var username = $(this).attr('data');
+    var site_id = $(this).attr('data-site-id');
     var csrf_token = document.getElementById('csrf_token').value;
     var form_data = new FormData();
-    url = '/usermails/' + username;
+    var url = '/usermails/' + site_id;
 
-    button = document.getElementById('msg-btn');
+    var button = document.getElementById('sendButton');
     button.value = "Sending...";
 
     var full_name = document.getElementById('full_name').value;
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
            buttonsStyling: false,
           });
           document.getElementById('contact-form').reset();
-          button.value = "Send message";
+          button.value = "Send";
         }
         else {
           alert(result.msg);
@@ -43,6 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
 
 
-    event.preventDefault();
+    
   });
 })

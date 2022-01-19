@@ -44,7 +44,7 @@ def preview(template):
 def previewresume():
     site_id = request.args.get('site_id', str)
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first_or_404()
-    return render_template('preview/resumes/elegant-rendered.html', resume_site=resume_site)
+    return render_template('preview/resumes/ronaldo-rendered.html', resume_site=resume_site)
 
 @public.route('/single-portfolio/<int:port_id>')
 def singleport(port_id):
@@ -77,19 +77,21 @@ def pdf():
 def pdf1():
     return render_template('preview/another.html')
 
-@public.route('/usermails/<username>', methods=['POST'])
-def usermails(username):
-    user = Users.query.filter_by(username=username).first()
-    if not user:
+@public.route('/usermails/<site_id>', methods=['POST'])
+def usermails(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id).first()
+    if not resume_site:
         return jsonify({"success": False, "msg": "Sorry, Something went wrong!"})
+
     mail = UserMails(full_name=request.form['full_name'],
         email=request.form['email'],
         subject=request.form['subject'],
         content=request.form['content'],
-        mailed=user
+        mailed=resume_site.owner
     )
     db.session.add(mail)
     db.session.commit()
+    
     return jsonify({"success": True})
 
 @public.route('/contact', methods=['POST'])

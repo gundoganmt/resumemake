@@ -230,7 +230,7 @@ def skill(site_id):
     if int(level) > 100 or int(level) < 1:
         return jsonify({'success': False, 'msg': 'Level should be between 0 and 100'})
     
-    if Skills.query.filter_by(skill=skill).first():
+    if Skills.query.filter_by(skill=skill, resume_id=resume_site.id).first():
         return jsonify({'success': False, 'msg': 'You already have this skill'})
 
     skill = Skills(skill=skill, level=level, category=category, resume_id=resume_site.id)

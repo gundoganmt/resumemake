@@ -757,16 +757,17 @@
                   <!-- CONTACT FORM -->
                   <div class="card">
                      <div class="card-content">
-                        <form id="contact-form" name="c-form">
+                        <form id="contact-form" data-site-id='{{ resume_site.site_id }}'>
+                           <input type='hidden' id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
                            <!-- NAME -->
                            <div class="input-field">
-                              <input id="first_name" type="text" class="validate" name="first_name" required>
-                              <label for="first_name">Name</label>
+                              <input id="full_name" type="text" class="validate" name="full_name" required>
+                              <label for="full_name">Name</label>
                            </div>
                            <!--SUBJECT-->
                            <div class="input-field">
-                              <input id="sub" type="text" class="validate" name="sub">
-                              <label for="sub">Subject</label>
+                              <input id="subject" type="text" class="validate" name="sub">
+                              <label for="subject">Subject</label>
                            </div>
                            <!--EMAIL-->
                            <div class="input-field">
@@ -775,13 +776,13 @@
                            </div>
                            <!--MESSAGE-->
                            <div class="input-field">
-                              <textarea id="textarea1" class="materialize-textarea" name="message"
+                              <textarea id="content" class="materialize-textarea" name="message"
                                  required></textarea>
-                              <label for="textarea1">Message</label>
+                              <label for="content">Message</label>
                            </div>
                            <!-- SEND BUTTON -->
                            <div class="contact-send">
-                              <button id="submit" name="contactSubmit" type="submit" value="Submit"
+                              <button id="sendButton" name="contactSubmit" type="submit" value="Submit"
                                  class="btn waves-effect">Send
                               </button>
                            </div>
@@ -827,5 +828,7 @@
       <script src="/static/js/elegant/swiper.jquery.min.js"></script>
       <script src="/static/js/elegant/jquery.magnific-popup.min.js"></script>
       <script src="/static/js/elegant/custom.js"></script>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="{{ url_for('static', filename='js/sendmail.js')}}"></script>  
    </body>
 </html>

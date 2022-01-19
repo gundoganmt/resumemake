@@ -16,13 +16,11 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap-extended.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/colors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/components.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/dark-layout.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/bordered-layout.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/semi-dark-layout.min.css')}}">
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/pages/app-file-manager.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/pages/my-sites.min.css')}}">
 
     <!-- END: Page CSS-->
   </head>
@@ -37,7 +35,7 @@
 
     <!-- BEGIN: Content-->
     {% if current_user.sites() %}
-      <div class="app-content content file-manager-application">
+      <div class="app-content content item-manager-application">
          <div class="content-overlay"></div>
          <div class="header-navbar-shadow"></div>
          <div class="content-area-wrapper">
@@ -55,7 +53,7 @@
                         <!-- add file button ends -->
                         <!-- sidebar list items starts  -->
                         <div class="sidebar-list">
-                           <!-- links for file manager sidebar -->
+                           <!-- links for item manager sidebar -->
                            <div class="list-group">
                               <a class="list-group-item list-group-item-action active" id="allSites">
                               <i data-feather="globe" class="mr-50 font-medium-3"></i>
@@ -69,44 +67,8 @@
                               <i data-feather="save" class="mr-50 font-medium-3"></i>
                               <span class="align-middle">Saved Sites</span>
                               </a>
-                              <a class="list-group-item list-group-item-action" id="blogSites">
-                              <i data-feather="bold" class="mr-50 font-medium-3"></i>
-                              <span class="align-middle">Blog Sites</span>
-                              </a>
-                              <a class="list-group-item list-group-item-action" id="resumeSites">
-                              <i data-feather="file-text" class="mr-50 font-medium-3"></i>
-                              <span class="align-middle">Resume Sites</span>
-                              </a>
                            </div>
-                           <div class="list-group list-group-labels">
-                              <h6 class="section-label px-2 mb-1">Other</h6>
-                              <a class="list-group-item list-group-item-action" id="authorSites">
-                              <i data-feather="book" class="mr-50 font-medium-3"></i>
-                              <span class="align-middle">Authored Sites</span>
-                              </a>
-                           </div>
-                           <!-- links for file manager sidebar ends -->
-                           <!-- storage status of file manager starts-->
-                           <div class="storage-status mb-1 px-2">
-                              <h6 class="section-label mb-1">Storage Status</h6>
-                              <div class="d-flex align-items-center cursor-pointer">
-                                 <i data-feather="server" class="font-large-1"></i>
-                                 <div class="file-manager-progress ml-1">
-                                    <span>68GB used of 100GB</span>
-                                    <div class="progress progress-bar-primary my-50" style="height: 6px">
-                                       <div
-                                          class="progress-bar"
-                                          role="progressbar"
-                                          aria-valuenow="80"
-                                          aria-valuemin="80"
-                                          aria-valuemax="100"
-                                          style="width: 80%"
-                                          ></div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- storage status of file manager ends-->
+                           
                         </div>
                         <!-- side bar list items ends  -->
                         <!-- sidebar menu links ends -->
@@ -119,10 +81,10 @@
                   <div class="content-body">
                      <!-- overlay container -->
                      <div class="body-content-overlay"></div>
-                     <!-- file manager app content starts -->
-                     <div class="file-manager-main-content">
+                     <!-- item manager app content starts -->
+                     <div class="item-manager-main-content">
                         <!-- search area start -->
-                        <div class="file-manager-content-header d-flex justify-content-between align-items-center">
+                        <div class="item-manager-content-header d-flex justify-content-between align-items-center">
                            <div class="d-flex align-items-center">
                               <div class="sidebar-toggle d-block d-xl-none float-left align-middle ml-1">
                                  <i data-feather="menu" class="font-medium-5"></i>
@@ -138,11 +100,11 @@
                            </div>
                         </div>
                         <!-- search area ends here -->
-                        <div class="file-manager-content-body">
+                        <div class="item-manager-content-body">
                            <!-- Files Container Starts -->
                            <div class="view-container list-view">
                              {% for site in current_user.sites() %}
-                               <div class="card file-manager-item file" name="{{ site.__tablename__ }}" id="{{ site.site_id }}">
+                               <div class="card item-manager-item file" name="{{ site.__tablename__ }}" id="{{ site.site_id }}">
                                   <div class="custom-control custom-checkbox">
                                      <input type="checkbox" class="custom-control-input" id="customCheck{{site.site_id}}" />
                                      <label class="custom-control-label" for="customCheck{{site.site_id}}"></label>
@@ -157,37 +119,13 @@
                                   </div>
                                   <div class="card-body">
                                      <div class="content-wrapper">
-                                        <p class="card-text file-name mb-0">{{ site.site_name }}</p>
+                                        <p class="card-text site-name mb-0">{{ site.site_name }}</p>
                                         {% if site.current_plan == 'draft' %}
-                                          <p class="card-text file-size mb-0">Draft</p>
+                                          <p class="card-text site-status mb-0">Draft</p>
                                         {% else %}
-                                          <p class="card-text file-size mb-0">Published</p>
+                                          <p class="card-text site-status mb-0">Published</p>
                                         {% endif %}
-                                        <p class="card-text file-date">{{ site.creation_time.strftime("%d %b, %Y") }}</p>
-                                     </div>
-                                     <small class="file-accessed text-muted">Last accessed: 3 hours ago</small>
-                                  </div>
-                               </div>
-                             {% endfor %}
-                             {% for site in authors %}
-                               <div class="card file-manager-item file">
-                                  <div class="custom-control custom-checkbox">
-                                     <input type="checkbox" class="custom-control-input" id="customCheck{{site.site_id}}" />
-                                     <label class="custom-control-label" for="customCheck{{site.site_id}}"></label>
-                                  </div>
-                                  <div class="card-img-top file-logo-wrapper">
-                                     <div class="dropdown float-right" data="{{ site.site_name }}">
-                                        <i data-feather="more-vertical" class="toggle-dropdown mt-n25"></i>
-                                     </div>
-                                     <div class="d-flex align-items-center justify-content-center w-100">
-                                        <img src="{{ url_for('static', filename='images/bg.png')}}" alt="file-icon" height="50" width="50"/>
-                                     </div>
-                                  </div>
-                                  <div class="card-body">
-                                     <div class="content-wrapper">
-                                        <p class="card-text file-name mb-0">{{ site.site_name }}</p>
-                                        <p class="card-text file-size mb-0">Author</p>
-                                        <p class="card-text file-date">23 may 2019</p>
+                                        <p class="card-text site-creation-date">{{ site.creation_time.strftime("%d %b, %Y") }}</p>
                                      </div>
                                      <small class="file-accessed text-muted">Last accessed: 3 hours ago</small>
                                   </div>
@@ -201,8 +139,7 @@
                            <!-- /Files Container Ends -->
                         </div>
                      </div>
-                     <!-- file manager app content ends -->
-                     <!-- File Dropdown Starts-->
+                     <!-- item manager app content ends -->
                      <div class="dropdown-menu dropdown-menu-right file-dropdown">
                         <a class="dropdown-item" href="javascript:void(0);" target="_blank" id="preview">
                         <i data-feather="eye" class="align-middle mr-50"></i>
@@ -211,16 +148,6 @@
                         <a class="dropdown-item" href="javascript:void(0);" id="settings">
                         <i data-feather="edit" class="align-middle mr-50"></i>
                         <span class="align-middle">Settings</span>
-                        </a>
-
-                        <a class="dropdown-item" href="javascript:void(0);" id="create-blogpost">
-                        <i data-feather="edit" class="align-middle mr-50"></i>
-                        <span class="align-middle">Create Post</span>
-                        </a>
-
-                        <a class="dropdown-item" href="javascript:void(0);" id="allposts">
-                        <i data-feather="edit" class="align-middle mr-50"></i>
-                        <span class="align-middle">All Posts</span>
                         </a>
 
                         <div class="dropdown-divider"></div>
@@ -333,7 +260,7 @@
     <script src="{{ url_for('static', filename='app-assets/js/core/app-menu.min.js')}}"></script>
     <script src="{{ url_for('static', filename='app-assets/js/core/app.min.js')}}"></script>
     <script src="{{ url_for('static', filename='app-assets/js/scripts/customizer.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/js/scripts/pages/app-file-manager.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='app-assets/js/scripts/pages/item-manager.min.js')}}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ url_for('static', filename='js/my-sites.js')}}"></script>
 

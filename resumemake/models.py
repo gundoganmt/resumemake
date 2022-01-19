@@ -58,10 +58,7 @@ class Users(UserMixin, db.Model):
         return UserMails.query.filter_by(user_id=self.id).all()
 
     def sites(self):
-        sites = []
-        for s in ResumeSite.query.filter_by(user_id=self.id).all():
-            sites.append(s)
-        return sites
+        return ResumeSite.query.filter_by(user_id=self.id).all()
 
     def __repr__(self):
         return self.username

@@ -20,9 +20,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap-extended.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/colors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/components.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/dark-layout.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/bordered-layout.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/semi-dark-layout.min.css')}}">
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
@@ -122,7 +119,7 @@
                   class="nav-link"
                   id="education-settings"
                   data-toggle="pill"
-                  href="#faq-education-settings"
+                  href="#user-education-settings"
                   aria-expanded="false"
                   role="tab"
                 >
@@ -133,7 +130,7 @@
 
               <!-- my order -->
               <li class="nav-item">
-                <a class="nav-link" id="skills-settings" data-toggle="pill" href="#faq-skills-settings" aria-expanded="false" role="tab">
+                <a class="nav-link" id="skills-settings" data-toggle="pill" href="#user-skills-settings" aria-expanded="false" role="tab">
                   <i data-feather="award" class="font-medium-3 mr-1"></i>
                   <span class="font-weight-bold">Skills</span>
                 </a>
@@ -141,14 +138,14 @@
 
               <!-- product and services-->
               <li class="nav-item">
-                <a class="nav-link" id="product-services" data-toggle="pill" href="#faq-product-services" aria-expanded="false" role="tab">
+                <a class="nav-link" id="product-services" data-toggle="pill" href="#user-product-services" aria-expanded="false" role="tab">
                   <i data-feather="thumbs-up" class="font-medium-3 mr-1"></i>
                   <span class="font-weight-bold">Testimonials</span>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" id="site-settings" data-toggle="pill" href="#faq-site-settings" aria-expanded="false" role="tab">
+                <a class="nav-link" id="site-settings" data-toggle="pill" href="#user-site-settings" aria-expanded="false" role="tab">
                   <i data-feather="settings" class="font-medium-3 mr-1"></i>
                   <span class="font-weight-bold">Site Settings</span>
                 </a>
@@ -819,7 +816,7 @@
             </div>
 
             <!-- cancellation return  -->
-            <div class="tab-pane" id="faq-education-settings" role="tabpanel" aria-labelledby="education-settings" aria-expanded="false">
+            <div class="tab-pane" id="user-education-settings" role="tabpanel" aria-labelledby="education-settings" aria-expanded="false">
               <!-- icon and header -->
               <div class="d-flex align-items-center">
                 <div class="avatar avatar-tag bg-light-primary mr-1">
@@ -939,7 +936,7 @@
                                     <div class="controls">
                                         <label>Start Year</label>
                                         <select class="form-control" id="start_year_edu">
-                                          <option value="2020">2021</option>
+                                          <option value="2021">2021</option>
                                           <option value="2020">2020</option>
                                           <option value="2019">2019</option>
                                           <option value="2018">2018</option>
@@ -1004,7 +1001,7 @@
                                     <div class="controls">
                                         <label>End Year</label>
                                         <select class="form-control" id="end_year_edu">
-                                          <option value="2020">2021</option>
+                                          <option value="2021">2021</option>
                                           <option value="2020">2020</option>
                                           <option value="2019">2019</option>
                                           <option value="2018">2018</option>
@@ -1262,7 +1259,7 @@
             </div>
 
             <!-- my order -->
-            <div class="tab-pane" id="faq-skills-settings" role="tabpanel" aria-labelledby="skills-settings" aria-expanded="false">
+            <div class="tab-pane" id="user-skills-settings" role="tabpanel" aria-labelledby="skills-settings" aria-expanded="false">
               <!-- icon and header -->
               <div class="d-flex align-items-center">
                 <div class="avatar avatar-tag bg-light-primary mr-1">
@@ -1275,21 +1272,21 @@
               </div>
 
               <!-- Set Skills  -->
-              <div class="collapse-margin collapse-icon mt-2" id="faq-skills-settings-qna">
+              <div class="collapse-margin collapse-icon mt-2" id="user-skills-settings-qna">
                 <div class="card">
                   <div
                     class="card-header"
                     id="myOrderOne"
                     data-toggle="collapse"
                     role="button"
-                    data-target="#faq-skills-settings-one"
+                    data-target="#user-skills-settings-one"
                     aria-expanded="false"
-                    aria-controls="faq-skills-settings-one"
+                    aria-controls="user-skills-settings-one"
                   >
                     <span class="lead collapse-title">Skills</span>
                   </div>
 
-                  <div id="faq-skills-settings-one" class="collapse" aria-labelledby="myOrderOne" data-parent="#faq-skills-settings-qna">
+                  <div id="user-skills-settings-one" class="collapse" aria-labelledby="myOrderOne" data-parent="#user-skills-settings-qna">
                     <div class="card-body">
                       <div class="table-responsive" style="margin-bottom: 15px;">
                         {% if resume_site.skills() %}
@@ -1371,12 +1368,12 @@
                   </div>
                 </div>
                 <div class="card">
-                  <div class="card-header" id="myOrderTwo" data-toggle="collapse" role="button" data-target="#faq-skills-settings-two" aria-expanded="false" aria-controls="faq-skills-settings-two">
+                  <div class="card-header" id="myOrderTwo" data-toggle="collapse" role="button" data-target="#user-skills-settings-two" aria-expanded="false" aria-controls="user-skills-settings-two">
                     <span class="lead collapse-title">
                       Languages
                     </span>
                   </div>
-                  <div id="faq-skills-settings-two" class="collapse" aria-labelledby="myOrderTwo" data-parent="#faq-skills-settings-qna">
+                  <div id="user-skills-settings-two" class="collapse" aria-labelledby="myOrderTwo" data-parent="#user-skills-settings-qna">
                     <div class="card-body">
                       <div class="table-responsive" style="margin-bottom: 15px;">
                         {% if resume_site.langs() %}
@@ -1450,7 +1447,7 @@
             </div>
 
             <!-- product services -->
-            <div class="tab-pane" id="faq-product-services" role="tabpanel" aria-labelledby="product-services" aria-expanded="false">
+            <div class="tab-pane" id="user-product-services" role="tabpanel" aria-labelledby="product-services" aria-expanded="false">
               <!-- icon and header -->
               <div class="d-flex align-items-center">
                 <div class="avatar avatar-tag bg-light-primary mr-1">
@@ -1559,7 +1556,7 @@
               </div>
             </div>
 
-            <div class="tab-pane" id="faq-site-settings" role="tabpanel" aria-labelledby="site-settings" aria-expanded="false">
+            <div class="tab-pane" id="user-site-settings" role="tabpanel" aria-labelledby="site-settings" aria-expanded="false">
               <!-- icon and header -->
               <div class="d-flex align-items-center">
                 <div class="avatar avatar-tag bg-light-primary mr-1">
@@ -1572,23 +1569,23 @@
               </div>
 
               <!-- frequent answer and question  collapse  -->
-              <div class="collapse-margin collapse-icon mt-2" id="faq-site-settings">
+              <div class="collapse-margin collapse-icon mt-2" id="user-site-settings">
                 <div class="card">
                   <div
                     class="card-header"
                     id="siteSettingsOne"
                     data-toggle="collapse"
                     role="button"
-                    data-target="#faq-site-settings-one"
+                    data-target="#user-site-settings-one"
                     aria-expanded="false"
-                    aria-controls="faq-site-settings-one"
+                    aria-controls="user-site-settings-one"
                   >
                     <span class="lead collapse-title">
                       Connect Domain
                     </span>
                   </div>
 
-                  <div id="faq-site-settings-one" class="collapse" aria-labelledby="SiteSettingsOne" data-parent="#faq-site-settings">
+                  <div id="user-site-settings-one" class="collapse" aria-labelledby="SiteSettingsOne" data-parent="#user-site-settings">
                     <div class="card-body">
                       <div class="row">
                         <div class="col-lg-10 col-sm-10">
@@ -1674,16 +1671,16 @@
                     id="SiteSettingsTwo"
                     data-toggle="collapse"
                     role="button"
-                    data-target="#faq-site-settings-two"
+                    data-target="#user-site-settings-two"
                     aria-expanded="false"
-                    aria-controls="faq-site-settings-two"
+                    aria-controls="user-site-settings-two"
                   >
                     <span class="lead collapse-title">
                       Notifications
                     </span>
                   </div>
 
-                  <div id="faq-site-settings-two" class="collapse" aria-labelledby="SiteSettingsTwo" data-parent="#faq-site-settings">
+                  <div id="user-site-settings-two" class="collapse" aria-labelledby="SiteSettingsTwo" data-parent="#user-site-settings">
                     <div class="card-body">
                       <div class="table-responsive" style="margin-bottom: 15px;">
                         {% if resume_site.testimos() %}
@@ -1786,11 +1783,6 @@
     <!-- BEGIN: Vendor JS-->
     <script src="{{ url_for('static', filename='app-assets/vendors/js/vendors.min.js')}}"></script>
     <script src="{{ url_for('static', filename='app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
-
-    <!-- <script src="{{ url_for('static', filename='app-assets/vendors/js/pickers/pickadate/picker.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/vendors/js/pickers/pickadate/picker.time.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script> -->
 
     <!-- BEGIN: Theme JS-->
     <script src="{{ url_for('static', filename='app-assets/js/core/app-menu.min.js')}}"></script>
