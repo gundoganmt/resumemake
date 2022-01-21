@@ -65,10 +65,8 @@ def signup():
                 new_user = Users(username=username, email=email, password=hashed_password)
                 db.session.add(new_user)
                 db.session.commit()
-                flash('Sorry we are under development!')
-                return render_template('account/register.html')
-                # login_user(new_user)
-                # return redirect(url_for('dashboard.mysites'))
+                login_user(new_user)
+                return redirect(url_for('dashboard.mysites'))
     return render_template('account/register.html')
 
 @account.route('/logout')

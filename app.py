@@ -7,7 +7,7 @@ from flask import abort
 from resumemake.models import (Users, ResumeSite,
     WorkExperiences, Educations,
     Courses, Skills, Languages, Services,
-    Testimonials, Portfolios, PortTags, PortFiles,
+    Testimonials, Portfolios, PortFiles,
     UserMails, Notifications)
 
 from resumemake import db
@@ -43,7 +43,6 @@ admin.add_view(MyModelView(Skills, db.session))
 admin.add_view(MyModelView(Languages, db.session))
 admin.add_view(MyModelView(Testimonials, db.session))
 admin.add_view(MyModelView(Portfolios, db.session))
-admin.add_view(MyModelView(PortTags, db.session))
 admin.add_view(MyModelView(PortFiles, db.session))
 admin.add_view(MyModelView(UserMails, db.session))
 

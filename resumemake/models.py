@@ -25,7 +25,6 @@ class Users(UserMixin, db.Model):
     youtube = db.Column(db.String(100), nullable=True, default="")
     linkedin = db.Column(db.String(100), nullable=True, default="")
     not_to = db.relationship('Notifications', foreign_keys='Notifications.not_to', backref='notification_to', cascade='all, delete-orphan')
-    not_from = db.relationship('Notifications', foreign_keys='Notifications.not_from', backref='notification_from', cascade='all, delete-orphan')
     mailed = db.relationship('UserMails', backref='mailed', cascade='all, delete-orphan', lazy='dynamic')
     resumes = db.relationship('ResumeSite', backref='owner', cascade='all, delete-orphan', lazy='dynamic')
 
@@ -69,6 +68,10 @@ class ResumeSite(db.Model):
     site_name = db.Column(db.String(50), nullable=False)
     site_id = db.Column(db.String(80), nullable=False, unique=True)
     profile_picture = db.Column(db.String(80), nullable=True, default="blank.png")
+    background_picture = db.Column(db.String(80), nullable=True, default='bg-sunshine.jpg')
+    pdf_resume = db.Column(db.String(80), nullable=True)
+    contact_email_notif = db.Column(db.Boolean, default=False)
+    download_resume_notif = db.Column(db.Boolean, default=False)
     email = db.Column(db.String(50), nullable=True, default="")
     birth_day = db.Column(db.String(50), nullable=True, default="")
     country = db.Column(db.String(50), nullable=True, default="")
@@ -121,13 +124,11 @@ class ResumeSite(db.Model):
     def ports(self):
         return Portfolios.query.filter_by(resume_id=self.id).all()
 
-    def unique_port_tags(self):
-        tags = []
-        for port in self.ports():
-            for t in PortTags.query.filter_by(port_id=port.id).all():
-                if t.tag not in tags:
-                    tags.append(t.tag)
-        return tags
+    def get_port_tags(self):
+        return db.session.query(Portfolios.tag).filter_by(resume_id=self.id).distinct().all()
+    
+    def get_port_from_tag(self, tag):
+        return Portfolios.query.filter_by(resume_id=self.id, tag=tag).all()
 
     def unique_sk_category(self):
         category = []
@@ -146,7 +147,6 @@ class Notifications(db.Model):
     __tablename__ = 'Notifications'
     id = db.Column(db.Integer, primary_key=True)
     resume_id = db.Column(db.Integer, db.ForeignKey('ResumeSite.id'))
-    not_from = db.Column(db.Integer, db.ForeignKey('Users.id'))
     not_to = db.Column(db.Integer, db.ForeignKey('Users.id'))
     not_type = db.Column(db.Integer)
     seen = db.Column(db.Boolean, default=False)
@@ -196,17 +196,11 @@ class Portfolios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(100), nullable=False)
     website = db.Column(db.String(150), nullable=True)
+    tag = db.Column(db.String(150), nullable=False)
     creation_time = db.Column(db.String(20), nullable=False)
     description = db.Column(db.Text, nullable=False)
     resume_id = db.Column(db.Integer, db.ForeignKey('ResumeSite.id'))
-    port = db.relationship('PortTags', backref='tagged', cascade='all, delete-orphan')
     port_files = db.relationship('PortFiles', backref='portf', cascade='all, delete-orphan')
-
-    def porttag(self):
-        tags = []
-        for tag in PortTags.query.filter_by(port_id=self.id).all():
-            tags.append(str(tag))
-        return str(json.dumps(tags)).replace("[","").replace("]","")
 
     def portpic(self):
         portpic = PortFiles.query.filter_by(port_files_id=self.id).first()
@@ -221,15 +215,6 @@ class Portfolios(db.Model):
 
     def __repr__(self):
         return self.project_name
-
-class PortTags(db.Model):
-    __tablename__ = 'PortTags'
-    id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(50), nullable=False)
-    port_id = db.Column(db.Integer, db.ForeignKey('Portfolios.id'))
-
-    def __repr__(self):
-        return self.tag
 
 class PortFiles(db.Model):
     __tablename__ = 'PortFiles'

@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, Response, send_file, jsonify, redirect, url_for, abort
 from flask_login import current_user
-from resumemake.models import Users, Portfolios, UserMails, ResumeSite
+from resumemake.models import Users, Portfolios, UserMails, ResumeSite, Notifications
 import pdfkit
 from resumemake import db
 from utils import only_main, send_email
@@ -44,7 +44,7 @@ def preview(template):
 def previewresume():
     site_id = request.args.get('site_id', str)
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first_or_404()
-    return render_template('preview/resumes/ronaldo-rendered.html', resume_site=resume_site)
+    return render_template('preview/resumes/elegant-rendered.html', resume_site=resume_site)
 
 @public.route('/single-portfolio/<int:port_id>')
 def singleport(port_id):
@@ -89,6 +89,9 @@ def usermails(site_id):
         content=request.form['content'],
         mailed=resume_site.owner
     )
+    notif = Notifications(resume_id=resume_site.id, not_to=resume_site.owner, not_type=1)
+
+    db.session.add(notif)
     db.session.add(mail)
     db.session.commit()
     

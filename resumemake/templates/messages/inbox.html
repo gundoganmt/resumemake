@@ -37,20 +37,25 @@
       <div class="content-overlay"></div>
       <div class="header-navbar-shadow"></div>
       <div class="content-wrapper">
+        <div class="content-header row">
+          <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+              <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Contact Messages</h2>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="content-body">
-
-          <!-- Striped rows start -->
           <div class="row" id="table-striped">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">Striped rows</h4>
+                  <h4 class="card-title">Contact Messages</h4>
                 </div>
                 <div class="card-body">
                   <p class="card-text">
-                    Use <code class="highlighter-rouge">.table-striped</code> to add zebra-striping to any table row within the
-                    <code class="highlighter-rouge">&lt;tbody&gt;</code>. This styling doesn't work in IE8 and below as
-                    <code>:nth-child</code> CSS selector isn't supported.
+                    Messages that has been sent to you via your contact page will be shown here.
                   </p>
                 </div>
                 <div class="table-responsive">
@@ -125,17 +130,16 @@
       })
     </script>
 
-    <div class="modal fade text-left" id="default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal fade text-left" id="default" tabindex="-1" role="dialog" aria-labelledby="subject" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel1">Message</h4>
+                    <h4 class="modal-title" id="subject">Message</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h5 id="subject"></h5>
                     <p id="content"></p>
                 </div>
                 <div class="modal-footer">

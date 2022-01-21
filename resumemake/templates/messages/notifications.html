@@ -77,19 +77,19 @@
                             <div class="d-flex justify-content-left align-items-center">
                               <div class="avatar-wrapper">
                                 <div class="avatar  mr-1">
-                                  <img src="{{ url_for('static', filename='images/profiles/'+nt.notification_from.profile_picture) }}" alt="Avatar" height="32" width="32">
+                                  <img src="{{ url_for('static', filename='images/profiles/'+nt.notification_to.profile_picture) }}" alt="Avatar" height="32" width="32">
                                 </div>
                               </div>
                               <div class="d-flex flex-column">
                                 <a href="app-user-view.html" class="user_name text-truncate">
-                                  <span class="font-weight-bold">{{ nt.notification_from.full_name() }}</span>
+                                  <span class="font-weight-bold">{{ nt.notification_to.full_name() }}</span>
                                 </a>
                               </div>
                             </div>
                           </td>
-                          <td>{{ nt.notification_from.full_name() }} has offered authorship for <strong>{{ nt.notedBlog }}</strong> website</td>
+                          <td>{{ nt.notification_to.full_name() }} has offered authorship for <strong>this is noted blog</strong> website</td>
                           <td>
-                            <button class="btn-icon btn btn-primary btn-round btn-sm waves-effect waves-light accept" type="button" data='{{ nt.notedBlog.id }}'>Accept</button>
+                            <button class="btn-icon btn btn-primary btn-round btn-sm waves-effect waves-light accept" type="button">Accept</button>
                             <button class="btn-icon btn btn-danger btn-round btn-sm waves-effect waves-light reject" type="button">Reject</button>
                           </td>
                         </tr>

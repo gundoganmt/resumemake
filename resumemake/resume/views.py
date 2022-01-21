@@ -8,7 +8,7 @@ from PIL import Image
 from resumemake import db
 from resumemake.models import (WorkExperiences, Educations,
     Courses, Skills, Languages, Services,
-    Testimonials, Portfolios, PortTags, PortFiles, ResumeSite)
+    Testimonials, Portfolios, PortFiles, ResumeSite)
 import os, uuid, bleach, validators
 
 resume = Blueprint('resume',__name__)
@@ -117,14 +117,10 @@ def service(site_id):
 def portfolio(site_id):
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
     port = Portfolios(project_name=request.form['project_name'], website=request.form['website'],
-        creation_time=request.form['creation_time'],
+        creation_time=request.form['creation_time'], tag=request.form['tag'],
         description=request.form['desc_port'], resume_id=resume_site.id)
     db.session.add(port)
     db.session.commit()
-
-    for tag in request.form['tags'].split(','):
-        t = PortTags(tag=tag, port_id=port.id)
-        db.session.add(t)
 
     for i in range(int(request.form['ins'])):
         key = 'port_pics' + str(i)
@@ -137,8 +133,17 @@ def portfolio(site_id):
             port_files = PortFiles(filename=unique_filename, port_files_id=port.id)
             file.save(os.path.join(UPLOAD_PORT_FOLDER, unique_filename))
             db.session.add(port_files)
+
     db.session.commit()
-    return jsonify({"success": True, "current_field": "p", "port_id": port.id, "project_name": port.project_name})
+
+    context = {
+        "success": True, 
+        "current_field": "p", 
+        "port_id": port.id, 
+        "project_name": port.project_name
+    }
+
+    return jsonify(context)
 
 @resume.route('/testimonials/<site_id>', methods=['POST'])
 def testimonials(site_id):

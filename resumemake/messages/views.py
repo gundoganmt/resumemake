@@ -29,12 +29,11 @@ def getMessage(mail_id):
 @messages.route('/delete-message/<int:mail_id>')
 @login_required
 def deleteMessage(mail_id):
-    mail = UserMails.query.filter_by(id=mail_id).first()
+    mail = UserMails.query.filter_by(id=mail_id, mailed=current_user).first()
     if not mail:
-        return jsonify({"msg": "Something went wrong! Refresh the page."})
-    if current_user == mail.mailed:
-        db.session.delete(mail)
-        db.session.commit()
-        return jsonify({"success": True})
-    else:
-        return jsonify({"msg": "You do not have a permission!"})
+        return jsonify({"success": False, "msg": "Something went wrong! Refresh the page."})
+
+    db.session.delete(mail)
+    db.session.commit()
+
+    return jsonify({"success": True})

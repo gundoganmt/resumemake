@@ -17,9 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
        var size = document.getElementById('file').files[0].size;
      }
 
-     if(size > 2*1024*1024) {
+     if(size > 2*1024) {
        alert("Picture size is too big!")
-       return;
+       $(this).text('Save Changes');
+       return false;
      }
      var FirstName = document.getElementById('FirstName').value;
      var LastName = document.getElementById('LastName').value;
@@ -88,8 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
      var ins = document.getElementById('service_file').files.length;
 
      if(ins == 0) {
-       alert("No image found")
-       return;
+       alert("No image found");
+       $(this).text('Save Changes');
+       return false;
      }
      var service_name = document.getElementById('service_name').value;
      var desc_service = document.getElementById('desc_service').value;
@@ -103,18 +105,19 @@ document.addEventListener('DOMContentLoaded', () => {
      var ins = document.getElementById('port_pics').files.length;
 
      if(ins == 0) {
-       alert("No image found")
-       return;
+       alert("No image found");
+       $(this).text('Save Changes');
+       return false;
      }
      var project_name = document.getElementById('port_project_name').value;
      var website = document.getElementById('port_website').value;
      var creation_time = document.getElementById('port_creation_time').value;
      var desc_port = document.getElementById('desc_port').value;
-     var tags = $("#tags").select2("val");
+     var tag = document.getElementById('tag').value; 
      form_data.append("project_name", project_name);
      form_data.append("website", website);
      form_data.append("creation_time", creation_time);
-     form_data.append("tags", tags);
+     form_data.append("tag", tag);
      form_data.append('desc_port', desc_port);
      form_data.append("ins", ins);
      for (i=0; i<ins; i++){
@@ -181,8 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
      var ins = document.getElementById('testi_pic').files.length;
 
      if(ins == 0) {
-       alert("No image found")
-       return;
+       alert("No image found");
+       $(this).text('Save Changes');
+       return false;
      }
      var name = document.getElementById('tested_name').value;
      var company = document.getElementById('com_occ').value;
@@ -673,13 +677,6 @@ document.addEventListener('DOMContentLoaded', () => {
      return false;
    }
  }
-
- $("#tags").select2({
-   tags: true,
-   tokenSeparators: [',', ' ']
- })
-
- $("select").select2();
 
  var readURL = function(input) {
      if (input.files && input.files[0]) {

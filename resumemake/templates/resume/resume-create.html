@@ -10,10 +10,6 @@
 		<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/vendors.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/forms/select/select2.min.css')}}">
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/pickers/pickadate/pickadate.css')}}">
-    <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap.min.css')}}">
@@ -775,8 +771,7 @@
                             <div class="form-group">
                                 <div class="controls">
                                   <label for="tags">Tags</label>
-                                  <select class="form-control" id="tags" multiple="multiple">
-                                  </select>
+                                  <input type="text" class="form-control" placeholder="tag(category)" id="tag" >
                                 </div>
                             </div>
                           </div>
@@ -1676,84 +1671,61 @@
                     aria-controls="user-site-settings-two"
                   >
                     <span class="lead collapse-title">
-                      Notifications
+                      Site Settings
                     </span>
                   </div>
 
                   <div id="user-site-settings-two" class="collapse" aria-labelledby="SiteSettingsTwo" data-parent="#user-site-settings">
                     <div class="card-body">
-                      <div class="table-responsive" style="margin-bottom: 15px;">
-                        {% if resume_site.testimos() %}
-                          <table class="table table-hover" id="testi_table">
-                            <thead>
-                              <tr>
-                                <th>Name</th>
-                                <th>Company</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody id="tbody_testi">
-                          {% for testi in resume_site.testimos() %}
-                            <tr class="table-active" id="t_{{testi.id}}">
-                              <td><span class="font-weight-bold">{{ testi.name }}</span></td>
-                              <td>{{ testi.company }}</td>
-                              <td><i class="fa fa-trash-o deleteItem" data="t_{{testi.id}}" aria-hidden="true"></i></td>
-                            </tr>
-                          {% endfor %}
-                          </tbody>
-                          </table>
-                        {% else %}
-                          <table class="table table-hover" id="testi_table" style="display: none;">
-                            <thead>
-                              <tr>
-                                <th>Name</th>
-                                <th>Company</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody id="tbody_testi">
-
-                            </tbody>
-                          </table>
-                        {% endif %}
-                      </div>
-                      <form id="form_testi">
-                        <div class="row">
-                          <div class="col-lg-4 col-md-12">
-                            <div class="form-group">
-                                <div class="controls">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" placeholder="Name" id="tested_name">
+                      <div class="row">
+                        <h6 class="section-label mx-1 mb-2">Files</h6>
+                        <div class="col-12 mb-2">
+                          <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                              <fieldset class="form-group">
+                                <label for="basicInputFile">Backgroung Image</label>
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" id="port_pics" multiple="multiple">
+                                  <label class="custom-file-label" for="port_pics">Choose file</label>
                                 </div>
+                              </fieldset>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                              <fieldset class="form-group">
+                                <label for="basicInputFile">Upload pdf resume</label>
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" id="port_pics" multiple="multiple">
+                                  <label class="custom-file-label" for="port_pics">Choose file</label>
+                                </div>
+                              </fieldset>
                             </div>
                           </div>
-                          <div class="col-lg-4 col-md-12">
-                            <div class="form-group">
-                              <div class="controls">
-                                <label>Company or Occupation</label>
-                                <input type="text" class="form-control" placeholder="Company or Occupation" id="com_occ">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-12">
-                            <fieldset class="form-group">
-                              <label for="basicInputFile">Photo</label>
-                              <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="testi_pic" accept="image/*">
-                                <label class="custom-file-label" for="testi_pic">Choose file</label>
-                              </div>
-                            </fieldset>
+                        </div>
+                        
+                        <h6 class="section-label mx-1 mt-2">Notifications</h6>
+                        <div class="col-12 mt-1 mb-2">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" checked="" id="accountSwitch4">
+                            <label class="custom-control-label" for="accountSwitch4">Send me email when someone send message from contact page</label>
                           </div>
                         </div>
-                        <label>Testimonial</label>
-                        <textarea class="form-control" id="desc_testi" rows="5" placeholder="Testimonial.."></textarea>
-                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="testi">Save
-                              Changes</button>
-                          <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Reset</button>
+                        <div class="col-12 mb-2">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" checked="" id="accountSwitch6">
+                            <label class="custom-control-label" for="accountSwitch6">Notify me when someone downloads my resume</label>
+                          </div>
                         </div>
-                      </form>
-                      <a class="btn btn-flat-secondary btn-doc-header waves-effect" id="addAnotherTesti" style="display: none;">Add Another</a>
+                        <div class="col-12 mb-75">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="accountSwitch5">
+                            <label class="custom-control-label" for="accountSwitch5">Weekly blog digest</label>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <button type="submit" class="btn btn-primary mt-2 mr-1 waves-effect waves-float waves-light">Save changes</button>
+                          <button type="reset" class="btn btn-outline-secondary mt-2 waves-effect">Cancel</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1782,7 +1754,6 @@
 
     <!-- BEGIN: Vendor JS-->
     <script src="{{ url_for('static', filename='app-assets/vendors/js/vendors.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
 
     <!-- BEGIN: Theme JS-->
     <script src="{{ url_for('static', filename='app-assets/js/core/app-menu.min.js')}}"></script>
