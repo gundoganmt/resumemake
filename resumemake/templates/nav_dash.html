@@ -2,7 +2,11 @@
 <nav class="header-navbar navbar navbar-expand-lg align-items-center navbar-light navbar-shadow bg-dark navbar-dark fixed-top">
   <div class="navbar-container d-flex content">
     <ul class="nav navbar-nav align-items-center ml-auto">
-      <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span class="badge badge-pill badge-danger badge-up">{{ current_user.num_not() }}</span></a>
+      <li class="nav-item dropdown dropdown-notification mr-25">
+        <a class="nav-link" href="javascript:void(0);" data-toggle="dropdown">
+          <i class="ficon" data-feather="bell"></i>
+        <span class="badge badge-pill badge-danger badge-up" id="badge_bell">{{ current_user.num_not() }}</span>
+      </a>
         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
           <li class="dropdown-menu-header">
             <div class="dropdown-header d-flex">
@@ -16,17 +20,17 @@
                 <a class="d-flex" href="{{ url_for('messages.inbox') }}">
                   <div class="media d-flex align-items-start">
                     <div class="media-left">
-                      <div class="avatar"><img src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-15.jpg')}}" alt="avatar" width="32" height="32"></div>
+                      <div class="avatar"><img src="{{ url_for('static', filename='images/profiles/guest.jfif')}}" alt="avatar" width="32" height="32"></div>
                     </div>
                     <div class="media-body">
-                      <p class="media-heading"><span class="font-weight-bolder">You have {{ current_user.num_not() }} unseen messages</p><small class="notification-text"> Won the monthly best seller badge.</small>
+                      <p class="media-heading"><span class="font-weight-bolder">You have {{ current_user.num_not() }} unseen messages</p><small class="notification-text"> someone send you a message.</small>
                     </div>
                   </div>
                 </a>
               {% endif %}
             {% endfor %}
           </li>
-          <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block" href="javascript:void(0)">Read all notifications</a></li>
+          <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block" href="{{ url_for('messages.inbox') }}">Read all notifications</a></li>
         </ul>
       </li>
       <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,3 +47,13 @@
   </div>
 </nav>
 <!-- END: Header-->
+
+<script>
+  var badge = document.getElementById('badge_bell');
+  if (parseInt(badge.innerText) == 0){
+    badge.style.visibility = 'hidden';
+  }
+  else{
+    badge.style.visibility = 'visible';
+  }
+</script>

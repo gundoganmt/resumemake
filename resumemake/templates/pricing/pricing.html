@@ -5,12 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="Webpaget">
-    <title>FAQ - Vuexy - Bootstrap HTML admin template</title>
-    <link rel="apple-touch-icon" href="app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="app-assets/images/ico/favicon.ico">
+    <title>Pricing</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/vendors.min.css')}}">
@@ -21,9 +16,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap-extended.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/colors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/components.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/dark-layout.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/bordered-layout.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/themes/semi-dark-layout.min.css')}}">
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
@@ -52,37 +44,10 @@
             <!-- pricing plan cards -->
             <div class="row pricing-card">
               <div class="col-12 col-sm-offset-2 col-sm-10 col-md-12 col-lg-offset-2 col-lg-10 mx-auto">
-                <div class="row">
-                  <!-- basic plan -->
-                  <div class="col-12 col-md-4">
-                    <div class="card basic-pricing text-center">
-                      <div class="card-body">
-                        <img src="{{ url_for('static', filename='images/Pot1.svg')}}" class="mb-2 mt-5" alt="svg img">
-                        <h3>Basic</h3>
-                        <p class="card-text">A simple start for everyone</p>
-                        <div class="annual-plan">
-                          <div class="plan-price mt-2">
-                            <sup class="font-medium-1 fw-bold text-primary">$</sup>
-                            <span class="pricing-basic-value fw-bolder text-primary">0</span>
-                            <sub class="pricing-duration text-body font-medium-1 fw-bold">/month</sub>
-                          </div>
-                          <small class="annual-pricing d-none text-muted"></small>
-                        </div>
-                        <ul class="list-group list-group-circle text-left">
-                          <li class="list-group-item">100 responses a month</li>
-                          <li class="list-group-item">Unlimited forms and surveys</li>
-                          <li class="list-group-item">Unlimited fields</li>
-                          <li class="list-group-item">Basic form creation tools</li>
-                          <li class="list-group-item">Up to 2 subdomains</li>
-                        </ul>
-                        <button class="btn w-100 btn-outline-success mt-2 waves-effect">Your current plan</button>
-                      </div>
-                    </div>
-                  </div>
-                  <!--/ basic plan -->
-
-                  <!-- standard plan -->
-                  <div class="col-12 col-md-4">
+                <div class="row justify-content-center align-items-center">
+                  
+                  <!-- only plan -->
+                  <div class="col-12 col-md-6">
                     <div class="card standard-pricing popular text-center">
                       <div class="card-body">
                         <div class="pricing-badge text-end">
@@ -99,7 +64,7 @@
                           </div>
                           <small class="annual-pricing d-none text-muted"></small>
                         </div>
-                        <ul class="list-group list-group-circle text-left">
+                        <ul class="list-group list-group-circle text-center " style="display: inline-block;">
                           <li class="list-group-item">Unlimited responses</li>
                           <li class="list-group-item">Unlimited forms and surveys</li>
                           <li class="list-group-item">Instagram profile page</li>
@@ -110,35 +75,8 @@
                       </div>
                     </div>
                   </div>
-                  <!--/ standard plan -->
-
-                  <!-- enterprise plan -->
-                  <div class="col-12 col-md-4">
-                    <div class="card enterprise-pricing text-center">
-                      <div class="card-body">
-                        <img src="{{ url_for('static', filename='images/Pot3.svg')}}" class="mb-2" alt="svg img">
-                        <h3>Enterprise</h3>
-                        <p class="card-text">Solution for big organizations</p>
-                        <div class="annual-plan">
-                          <div class="plan-price mt-2">
-                            <sup class="font-medium-1 fw-bold text-primary">$</sup>
-                            <span class="pricing-enterprise-value fw-bolder text-primary">99</span>
-                            <sub class="pricing-duration text-body font-medium-1 fw-bold">/month</sub>
-                          </div>
-                          <small class="annual-pricing d-none text-muted"></small>
-                        </div>
-                        <ul class="list-group list-group-circle text-left">
-                          <li class="list-group-item">PayPal payments</li>
-                          <li class="list-group-item">Logic Jumps</li>
-                          <li class="list-group-item">File upload with 5GB storage</li>
-                          <li class="list-group-item">Custom domain support</li>
-                          <li class="list-group-item">Stripe integration</li>
-                        </ul>
-                        <button class="btn w-100 btn-outline-primary mt-2 waves-effect">Upgrade</button>
-                      </div>
-                    </div>
-                  </div>
-                  <!--/ enterprise plan -->
+                  <!--/ only plan -->
+                  
                 </div>
               </div>
             </div>

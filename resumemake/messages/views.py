@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, jsonify
 from flask_login import login_required, current_user
-from resumemake.models import UserMails
+from resumemake.models import UserMails, Notifications
 from resumemake import db
 
 messages = Blueprint('messages',__name__)
@@ -8,12 +8,11 @@ messages = Blueprint('messages',__name__)
 @messages.route('/inbox')
 @login_required
 def inbox():
+    notifs = Notifications.query.all()
+    for notif in notifs:
+        db.session.delete(notif)
+    db.session.commit()
     return render_template('messages/inbox.html')
-
-@messages.route('/notifications')
-@login_required
-def notifications():
-    return render_template('messages/notifications.html')
 
 @messages.route('/get-message/<int:mail_id>')
 @login_required

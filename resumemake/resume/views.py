@@ -291,7 +291,6 @@ def check_dns_status(site_id):
 
     return jsonify({'success': False, 'msg': 'Updating dns records takes some time to propagate. Come back later!'})
     
-
 @resume.route('/site_settings/<site_id>', methods=['POST'])
 @login_required
 def site_settings(site_id):
@@ -410,7 +409,6 @@ def deleteItem(site_id):
             return jsonify({"success": True, "current_field": "p"})
         else:
             return jsonify({"success": False})
-
 
 @resume.route('/download/<filename>')
 def download(filename):

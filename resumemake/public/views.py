@@ -51,32 +51,6 @@ def singleport(port_id):
     port = Portfolios.query.filter_by(id=port_id).first()
     return render_template('preview/breezycv-single-port.html', port=port)
 
-@public.route('/single-blog/<int:blog_id>')
-def singleblog(blog_id):
-    blog = BlogPosts.query.filter_by(id=blog_id).first()
-    return render_template('blog/single-breezy-blog.html', blog=blog)
-
-@public.route('/pdf')
-def pdf():
-    #config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
-    #rendered = render_template('preview/another.html')
-    #pdf = pdfkit.from_url('127.0.0.1:5000/pdf1', False, configuration=config)
-
-    #this could be used for proxy
-    r = requests.get("", stream=True)
-    # response = make_response()
-    # if 'Content-Disposition' in r.headers:
-    #     response.headers['Content-Disposition'] = r.headers['Content-Disposition'].replace("attachment;", "inline;")
-    # response.data = r.content
-    # response.headers['Content-Type'] = r.headers['Content-Type']
-
-
-    return Response(r, headers={'Content-Disposition': 'attachment; ' 'filename=trial.mp4'})
-
-@public.route('/pdf1')
-def pdf1():
-    return render_template('preview/another.html')
-
 @public.route('/usermails/<site_id>', methods=['POST'])
 def usermails(site_id):
     resume_site = ResumeSite.query.filter_by(site_id=site_id).first()
@@ -89,7 +63,7 @@ def usermails(site_id):
         content=request.form['content'],
         mailed=resume_site.owner
     )
-    notif = Notifications(resume_id=resume_site.id, not_to=resume_site.owner, not_type=1)
+    notif = Notifications(resume_id=resume_site.id, not_to=resume_site.owner.id, not_type=1)
 
     db.session.add(notif)
     db.session.add(mail)
