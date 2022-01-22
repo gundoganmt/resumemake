@@ -30,15 +30,21 @@ def send_confirmation_email(user):
     thr.start()
 
 ALLOWED_IMG_EXTENSIONS = {'jpeg', 'jpg', 'png'}
+ALLOWED_PDF_EXTENSIONS = {'pdf', 'doc', 'docx'}
 UPLOAD_PROFILE_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/profiles')
 UPLOAD_SERVICE_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/services')
 UPLOAD_TESTI_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/testimonials')
 UPLOAD_PORT_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/portfolios')
+UPLOAD_BACK_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/images/resume_img')
+UPLOAD_PDF_FOLDER = os.path.join(os.getcwd(), 'resumemake/static/pdffiles')
 
 RESUME_SITES_NAMES = ['sunshine', 'ronaldo', 'elegant']
 
 def allowed_img_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMG_EXTENSIONS
+
+def allowed_pdf_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_PDF_EXTENSIONS
 
 def get_extension(filename):
     return '.'+ filename.rsplit('.', 1)[1].lower()

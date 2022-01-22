@@ -197,6 +197,46 @@ document.addEventListener('DOMContentLoaded', () => {
      form_data.append('desc_testi', desc_testi);
    }
 
+   else if(current_field == "site_settings"){
+    var url = '/site_settings/' + site_id;
+    var pdf_resume = document.getElementById('pdf_resume');
+    var contact_notify = document.getElementById('contact_notify');
+    var download_notify = document.getElementById('download_notify');
+
+    var ins = pdf_resume.files.length;
+
+     if(ins > 0) {
+       var size = pdf_resume.files[0].size;
+     }
+
+     if(size > 2*1024*1024) {
+       alert("File size is too big! Max 2MB allowed");
+       $(this).text('Save Changes');
+       return false;
+     }
+
+    if(document.getElementById('background_image') !== null){
+      var background_image = document.getElementById('background_image');
+
+      var ins = background_image.files.length;
+
+      if(ins > 0) {
+       var size = background_image.files[0].size;
+      }
+
+      if(size > 2*1024*1024) {
+       alert("File size is too big! Max 2MB allowed");
+       $(this).text('Save Changes');
+       return false;
+      }
+      form_data.append("background_image", background_image.files[0]);
+    }
+
+    form_data.append("contact_notify", contact_notify.checked);
+    form_data.append("download_notify", download_notify.checked);
+    form_data.append("pdf_resume", pdf_resume.files[0]);
+  }
+
    xhr.open('POST', url)
    xhr.setRequestHeader("X-CSRFToken", csrf_token);
    xhr.onload = () =>{
@@ -258,6 +298,16 @@ document.addEventListener('DOMContentLoaded', () => {
          else if(result.current_field == 't'){
            saveTesti(result.name, result.company, result.testi_id);
          }
+         else if(result.current_field == 'ss'){
+          Swal.fire({
+           title: "Good job!",
+           text: "Saved successfully!",
+           type: "success",
+           confirmButtonClass: 'btn btn-primary',
+           buttonsStyling: false,
+          });
+          $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
 
        }
        else{
@@ -524,7 +574,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const xhr = new XMLHttpRequest();
     var domain = document.getElementById('domain').value;
     var csrf_token = document.getElementById('csrf_token').value;
-    var site_id = $(this).attr('data-site-id');
     var form_data = new FormData();
     form_data.append('domain', domain);
     url = '/connect_resume_domain/' + site_id;
@@ -561,6 +610,40 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     xhr.send(form_data);
+  })
+
+  $(".dns_status").click(function( event ) {
+    const xhr = new XMLHttpRequest();
+    url = '/check_dns_status/' + site_id;
+
+    $(this).text('Checking...');
+
+    xhr.open('GET', url)
+    xhr.onload = () =>{
+      if(xhr.status == 200){
+        const result = JSON.parse(xhr.responseText);
+        if(result.success){
+          Swal.fire({
+           icon: 'success',
+           title: "Domain Connected!",
+           text: "Domain connected to our servers",
+           type: "success",
+           confirmButtonClass: 'btn btn-primary',
+           buttonsStyling: false,
+          });
+          $(this).text('Done');
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Connection pending',
+            text: result.msg,
+          })
+          $(this).text('Check Status');
+        }
+      }
+    }
+    xhr.send();
   })
 
 

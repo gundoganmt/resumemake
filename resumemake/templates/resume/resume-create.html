@@ -307,6 +307,7 @@
                     </div>
                   </div>
                 </div>
+                {% if resume_site.template != 'ronaldo' %}
         				<div class="card">
                   <div
                     class="card-header"
@@ -407,6 +408,7 @@
                     </div>
                   </div>
                 </div>
+                {% endif %}
               </div>
             </div>
 
@@ -639,6 +641,7 @@
                     </div>
                   </div>
                 </div>
+                {% if resume_site.template == 'ronaldo' %}
                 <div class="card">
                   <div class="card-header" id="deliveryThree" data-toggle="collapse" role="button" data-target="#resume-collapse-three" aria-expanded="false" aria-controls="resume-collapse-three">
                     <span class="lead collapse-title">Services</span>
@@ -709,6 +712,7 @@
                     </div>
                   </div>
                 </div>
+                {% endif %}
                 <div class="card">
                   <div class="card-header" id="deliveryTwo" data-toggle="collapse" role="button" data-target="#resume-collapse-two" aria-expanded="false" aria-controls="resume-collapse-two">
                     <span class="lead collapse-title">Portfolio</span>
@@ -1611,7 +1615,7 @@
                               <tr>
                                 <th>Domain</th>
                                 <th>Points To</th>
-                                <th>Actions</th>
+                                <th style="text-align: center;">Actions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -1620,10 +1624,10 @@
                                   <span class="font-weight-bold" id="DomainConnected">https://{{ resume_site.domain }}</span>
                                 </td>
                                 <td id="point">125.111.201.20</td>
-                                <td>
-                                  <button type="button" class="btn btn-flat-success waves-effect">
+                                <td style="text-align: center;">
+                                  <button type="button" class="btn btn-flat-success waves-effect dns_status">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check me-25"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Done</span>
+                                    <span>Check Status</span>
                                   </button>
                                 </td>
                               </tr>
@@ -1681,12 +1685,23 @@
                         <h6 class="section-label mx-1 mb-2">Files</h6>
                         <div class="col-12 mb-2">
                           <div class="row">
+                            {% if resume_site.template == 'ronaldo' %}
+                            <div class="col-lg-12 col-md-12">
+                              <fieldset class="form-group">
+                                <label for="basicInputFile">Upload pdf resume</label>
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" id="pdf_resume">
+                                  <label class="custom-file-label" for="pdf_resume">Choose file</label>
+                                </div>
+                              </fieldset>
+                            </div>
+                            {% else %}
                             <div class="col-lg-6 col-md-12">
                               <fieldset class="form-group">
-                                <label for="basicInputFile">Backgroung Image</label>
+                                <label for="basicInputFile">Background Image</label>
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="port_pics" multiple="multiple">
-                                  <label class="custom-file-label" for="port_pics">Choose file</label>
+                                  <input type="file" class="custom-file-input" id="background_image">
+                                  <label class="custom-file-label" for="background_image">Choose file</label>
                                 </div>
                               </fieldset>
                             </div>
@@ -1694,36 +1709,39 @@
                               <fieldset class="form-group">
                                 <label for="basicInputFile">Upload pdf resume</label>
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="port_pics" multiple="multiple">
-                                  <label class="custom-file-label" for="port_pics">Choose file</label>
+                                  <input type="file" class="custom-file-input" id="pdf_resume">
+                                  <label class="custom-file-label" for="pdf_resume">Choose file</label>
                                 </div>
                               </fieldset>
                             </div>
+                            {% endif %}
                           </div>
                         </div>
                         
                         <h6 class="section-label mx-1 mt-2">Notifications</h6>
                         <div class="col-12 mt-1 mb-2">
                           <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" checked="" id="accountSwitch4">
-                            <label class="custom-control-label" for="accountSwitch4">Send me email when someone send message from contact page</label>
+                            {% if resume_site.contact_email_notif %}
+                            <input type="checkbox" class="custom-control-input" checked id="contact_notify">
+                            {% else %}
+                            <input type="checkbox" class="custom-control-input" id="contact_notify">
+                            {% endif %}
+                            <label class="custom-control-label" for="contact_notify">Send me email when someone send message from contact page</label>
                           </div>
                         </div>
                         <div class="col-12 mb-2">
                           <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" checked="" id="accountSwitch6">
-                            <label class="custom-control-label" for="accountSwitch6">Notify me when someone downloads my resume</label>
+                            {% if resume_site.download_resume_notif %}
+                            <input type="checkbox" class="custom-control-input" checked id="download_notify">
+                            {% else %}
+                            <input type="checkbox" class="custom-control-input" id="download_notify">
+                            {% endif %}
+                            <label class="custom-control-label" for="download_notify">Notify me when someone downloads my resume</label>
                           </div>
                         </div>
-                        <div class="col-12 mb-75">
-                          <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="accountSwitch5">
-                            <label class="custom-control-label" for="accountSwitch5">Weekly blog digest</label>
-                          </div>
-                        </div>
-                        <div class="col-12">
-                          <button type="submit" class="btn btn-primary mt-2 mr-1 waves-effect waves-float waves-light">Save changes</button>
-                          <button type="reset" class="btn btn-outline-secondary mt-2 waves-effect">Cancel</button>
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                          <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light save" data="site_settings">Save
+                              Changes</button>
                         </div>
                       </div>
                     </div>

@@ -157,8 +157,10 @@
                      <!-- BUTTONS -->
                      <div id="about-btn" class="card-action">
                         <div class="about-btn">
+                           {% if resume_site.pdf_resume %}
                            <!-- DOWNLOAD CV BUTTON -->
-                           <a href="#" class="btn waves-effect">Download CV</a>
+                           <a href="{{ url_for('resume.download', filename=resume_site.pdf_resume) }}" class="btn waves-effect">Download CV</a>
+                           {% endif %}
                            <!-- CONTACT BUTTON -->
                            <a href="#contact" class="btn waves-effect">Contact Me</a>
                         </div>
@@ -478,9 +480,9 @@
                <!--CATEGORIES CONTENT-->
                <div class="tab-content">
                   <!--All CATEGORIES-->
-                  <div id="all" class="active"></div>
+                  <div id="all"></div>
                   {% for tag in resume_site.get_port_tags() %}
-                     <div id="{{tag[0]}}" class="tab-pane">
+                     <div id="{{tag[0]}}">
                         {% for port in resume_site.get_port_from_tag(tag[0]) %}
                         <div class="col-md-4 col-sm-6 col-xs-12 grid inRight">
                            <figure class="port-effect-up">
@@ -503,73 +505,6 @@
                      <button id="add-more" class="center-block btn-large waves-effect"><i id="port-add-icon"
                         class="fa fa-plus"></i>
                      </button>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!--==========================================
-         INTEREST
-         ===========================================-->
-      <section id="interest" class="section">
-         <div class="container">
-            <!-- SECTION TITLE -->
-            <div class="section-title">
-               <h4 class="text-uppercase text-center"><img src="/static/images/resume_img/heart.png" alt="demo">Interest</h4>
-            </div>
-            <div id="interest-card" class="card">
-               <!--INTEREST TEXT-->
-               <div class="card-content">
-                  <p>
-                     First of all I love music, country music is my favorite. Love watching
-                     football, movies and playing games with my buddies. I spend quite a lot of time
-                     in traveling and photography, these keeps me fresh for working environment.
-                     I also spend time volunteering at the Red Cross in London, UK each month.
-                  </p>
-               </div>
-               <!--INTEREST ICONS-->
-               <div class="row no-gutters">
-                  <!--INTEREST ICON ONE-->
-                  <div class="col-md-2 col-sm-4 col-xs-6  box text-center">
-                     <div class="interest-icon">
-                        <i class="fa fa-music"></i>
-                        <span>Music</span>
-                     </div>
-                  </div>
-                  <!--INTEREST ICON TWO-->
-                  <div class="col-md-2 col-sm-4 col-xs-6 box text-center">
-                     <div class="interest-icon-even">
-                        <i class="fa fa-gamepad"></i>
-                        <span>Gaming</span>
-                     </div>
-                  </div>
-                  <!--INTEREST ICON THREE-->
-                  <div class="col-md-2 col-sm-4 col-xs-6 box text-center">
-                     <div class="interest-icon">
-                        <i class="fa fa-camera"></i>
-                        <span>Photography</span>
-                     </div>
-                  </div>
-                  <!--INTEREST ICON FOUR-->
-                  <div class="col-md-2 col-sm-4 col-xs-6 box text-center">
-                     <div class="interest-icon-even">
-                        <i class="fa fa-futbol-o"></i>
-                        <span>Football</span>
-                     </div>
-                  </div>
-                  <!--INTEREST ICON FIVE-->
-                  <div class="col-md-2 col-sm-4 col-xs-6 box text-center">
-                     <div class="interest-icon">
-                        <i class="fa fa-plane"></i>
-                        <span>Traveling</span>
-                     </div>
-                  </div>
-                  <!--INTEREST ICON SIX-->
-                  <div class="col-md-2 col-sm-4 col-xs-6 box text-center">
-                     <div class="interest-icon-even">
-                        <i class="fa fa-film"></i>
-                        <span>Movies</span>
-                     </div>
                   </div>
                </div>
             </div>

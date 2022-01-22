@@ -51,7 +51,11 @@
                            <div class="cc-profile-image"><a href="#"><img src="{{ url_for('static', filename='images/resume_img/john_doe.jpg') }}" alt="Image"/></a></div>
                            <div class="h2 title">John Doe</div>
                            <p class="category text-white">{{ resume_site.tagline }}</p>
-                           <a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Hire Me</a><a class="btn btn-primary" href="#" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Download CV</a>
+                           <a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Hire Me</a>
+                           <a class="btn btn-primary" href="#" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Download CV</a>
+                           {% if resume_site.pdf_resume %}
+                           <a class="btn btn-primary" href="{{ url_for('resume.download', filename=resume_site.pdf_resume) }}" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Download CV</a>
+                           {% endif %}
                         </div>
                      </div>
                      <div class="section">

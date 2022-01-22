@@ -1,15 +1,15 @@
 from flask import render_template, Blueprint, request, jsonify, redirect, url_for, abort
 from flask_login import current_user, login_required
-from utils import (crop_max_square, allowed_img_file,
+from utils import (crop_max_square, allowed_img_file, allowed_pdf_file,
     get_extension, UPLOAD_PROFILE_FOLDER, UPLOAD_SERVICE_FOLDER,
-    UPLOAD_TESTI_FOLDER, UPLOAD_PORT_FOLDER)
+    UPLOAD_TESTI_FOLDER, UPLOAD_PORT_FOLDER, UPLOAD_BACK_FOLDER, UPLOAD_PDF_FOLDER)
 from werkzeug.utils import secure_filename
 from PIL import Image
 from resumemake import db
 from resumemake.models import (WorkExperiences, Educations,
     Courses, Skills, Languages, Services,
     Testimonials, Portfolios, PortFiles, ResumeSite)
-import os, uuid, bleach, validators
+import os, uuid, bleach, validators, dns.resolver
 
 resume = Blueprint('resume',__name__)
 
@@ -273,6 +273,68 @@ def connect_domain(site_id):
     db.session.commit()
     return jsonify({"success": True})
 
+@resume.route('/check_dns_status/<site_id>')
+@login_required
+def check_dns_status(site_id):
+    site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    domain = site.domain
+    resolver = dns.resolver.Resolver(); 
+    try:
+        answer = resolver.query(domain , "A")
+    except:
+        return jsonify({'success': False, 'msg': 'Cannot resolve dns information of this domain. Check your spelling.'})
+    for item in answer:
+        resultant_str = item.to_text()
+
+    if resultant_str == '46.101.5.43':
+        return jsonify({'success': True})
+
+    return jsonify({'success': False, 'msg': 'Updating dns records takes some time to propagate. Come back later!'})
+    
+
+@resume.route('/site_settings/<site_id>', methods=['POST'])
+@login_required
+def site_settings(site_id):
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
+    if not resume_site:
+        return jsonify({'success': False, 'msg': "Some thing went wrong! Refresh the page."})
+    else:
+        if 'background_image' in request.files:
+            file = request.files['background_image']
+            filename = file.filename
+            if allowed_img_file(filename):
+                filename = secure_filename(filename)
+                unique_filename = str(uuid.uuid4())+get_extension(filename)
+                resume_site.background_picture = unique_filename
+                file.save(os.path.join(UPLOAD_BACK_FOLDER, unique_filename))
+            else:
+                return jsonify({'success': False, 'msg': "invalid file extension. Allowed jpeg, jpg, png"})
+
+        if 'pdf_resume' in request.files:
+            file = request.files['pdf_resume']
+            filename = file.filename
+            if allowed_pdf_file(filename):
+                filename = secure_filename(filename)
+                unique_filename = str(uuid.uuid4())+get_extension(filename)
+                resume_site.pdf_resume = unique_filename
+                file.save(os.path.join(UPLOAD_PDF_FOLDER, unique_filename))
+            else:
+                return jsonify({'success': False, 'msg': "invalid file extension. Allowed pdf, doc, docx"})
+
+
+        if request.form['contact_notify'] == 'true':
+            resume_site.contact_email_notif = True
+        else:
+            resume_site.contact_email_notif = False
+
+        if request.form['download_notify'] == 'true':
+            resume_site.download_resume_notif = True
+        else:
+            resume_site.download_resume_notif = False
+
+        db.session.commit()
+        return jsonify({"success": True, "current_field": "ss"})
+
 @resume.route('/deleteItem/<site_id>', methods=['POST'])
 @login_required
 def deleteItem(site_id):
@@ -348,3 +410,9 @@ def deleteItem(site_id):
             return jsonify({"success": True, "current_field": "p"})
         else:
             return jsonify({"success": False})
+
+
+@resume.route('/download/<filename>')
+def download(filename):
+    path = os.path.join(UPLOAD_PDF_FOLDER, filename)
+    return send_file(path, as_attachment=True)
