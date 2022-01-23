@@ -41,7 +41,6 @@
         <div class="content-body">
           <section id="pricing-plan">
 
-            <!-- pricing plan cards -->
             <div class="row pricing-card">
               <div class="col-12 col-sm-offset-2 col-sm-10 col-md-12 col-lg-offset-2 col-lg-10 mx-auto">
                 <div class="row justify-content-center align-items-center">
@@ -80,7 +79,6 @@
                 </div>
               </div>
             </div>
-            <!--/ pricing plan cards -->
           </section>
         </div>
       </div>
@@ -114,7 +112,7 @@
 					product: 15888,
 					email: '{{ current_user.email }}',
 					allowQuantity: false,
-					success: '{{ url_for("dashboard.publish", site_name="seoturk") }}'
+					success: '{{ url_for("dashboard.publish", site_id="kkvkkv") }}'
 				});
 			}
 			document.getElementById('buy').addEventListener('click', openCheckout, false);

@@ -49,15 +49,15 @@ def createsite():
         else:
             return jsonify({'success': False, "msg": "Something went wrong! Refresh the page please."})
 
-@dashboard.route('/pricing')
+@dashboard.route('/thanks')
 @login_required
-def pricing():
-    return render_template('pricing/pricing.html')
+def thanks():
+    return render_template('pricing/thanks.html')
 
-@dashboard.route('/publish/<site_name>')
+@dashboard.route('/publish/<site_id>')
 @login_required
-def publish(site_name):
-    # site = BlogSite.query.filter_by(site_name=site_name).first()
-    # site.current_plan = 'Premium'
-    # db.session.commit()
-    return render_template('pricing/thanks.html', site_name=site_name)
+def publish(site_id):
+    site = ResumeSite.query.filter_by(site_id=site_id).first()
+    site.current_plan = 'published'
+    db.session.commit()
+    return redirect(url_for('.thanks'))

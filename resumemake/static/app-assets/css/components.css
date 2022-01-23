@@ -100,7 +100,7 @@ html {
     html body p {
       line-height: 1.5rem; }
     html body.bg-full-screen-image {
-      background: url(../../app-assets/images/pages/vuexy-login-bg.jpg) no-repeat center center;
+      background: url(../../app-assets/images/pages/webpaget-login-bg.jpg) no-repeat center center;
       background-size: cover; }
     html body.blank-page .content {
       margin-left: 0; }
@@ -176,14 +176,6 @@ html {
       overflow: scroll;
       overflow-x: hidden; } }
 
-/*=========================================================================================
-    File Name: sidebar.scss
-    Description: content sidebar specific scss.
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 .sidebar {
   position: relative;
   width: 100%; }
@@ -254,14 +246,6 @@ body.fixed-footer footer.footer-dark {
   display: none;
   z-index: 99; }
 
-/*=========================================================================================
-    File Name: navigations.scss
-    Description: Common mixin for menus, contain dark and light version scss.
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 .main-menu {
   z-index: 1031;
   position: absolute;
@@ -542,7 +526,7 @@ body.fixed-footer footer.footer-dark {
       align-items: center;
       margin-top: 1.35rem; }
       .main-menu .navbar-header .navbar-brand .brand-logo {
-        background: url("../../app-assets/images/logo/vuexy-logo.png") no-repeat;
+        background: url("../../app-assets/images/logo/webpaget-logo.png") no-repeat;
         background-position: -65px -54px;
         height: 24px;
         width: 35px; }
@@ -1292,15 +1276,7 @@ body.fixed-footer .main-menu.menu-fixed {
   .avatar.avatar-sm img {
     width: 24px;
     height: 24px; }
-
-/*=========================================================================================
-	File Name: search.scss
-	Description: Search  functionality.
-	----------------------------------------------------------------------------------------
-	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
+    
 .navbar-container a.nav-link-search {
   float: left; }
 
@@ -2203,14 +2179,6 @@ body.navbar-static .navbar-container .search-input.open {
 .bg-yahoo {
   background-color: #720e9e; }
 
-/*=========================================================================================
-    File Name: demo.scss
-    Description: CSS used for demo purpose only. Remove this css from your project.
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 .fonticon-container > .fonticon-wrap {
   float: left;
   width: 60px;
@@ -2275,14 +2243,6 @@ body.navbar-static .navbar-container .search-input.open {
   right: 30px;
   bottom: 10px; }
 
-/*=========================================================================================
-	File Name: customizer.scss
-	Description: CSS used for demo purpose only. Remove this css from your project.
-	----------------------------------------------------------------------------------------
-	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 .customizer {
   width: 400px;
   right: -400px;

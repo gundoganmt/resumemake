@@ -329,7 +329,6 @@ select.form-control:not([multiple="multiple"]) {
   .form-label-group.has-icon-left > label {
     left: 36px; }
 
-/* Vuexy Custom Checkbox */
 .vs-checkbox-con {
   position: relative;
   display: flex;
@@ -404,7 +403,6 @@ select.form-control:not([multiple="multiple"]) {
         align-items: center;
         color: #fff; }
 
-/* Vuexy Custom Radio */
 .vs-radio-con {
   position: relative;
   display: flex;
@@ -1104,15 +1102,6 @@ html [type="button"],
     transform: translateY(1rem);
     opacity: 0; } }
 
-/* ===============================================================================================
-    File Name: navbar.scss
-    Description: Contain header navigation bar, vertical main navigation bar and
-    horiznotal main navigation bar related SCSS.
-    ----------------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-================================================================================================*/
 .navbar-dark .hamburger-inner,
 .navbar-dark .hamburger-inner::before,
 .navbar-dark .hamburger-inner::after {
@@ -2132,21 +2121,6 @@ body[data-col="1-column"] .header-navbar.floating-nav {
   .media-bordered .media:first-child {
     border-top: 0; }
 
-/*=========================================================================================
-  File Name: progress.scss
-  Description: Extended bootstrap progress bar scss.
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: PIXINVENT
-  Author URL: http://www.themeforest.net/user/pixinvent
-  ----------------------------------------------------------------------------------------
-
-  Modifiers:       `progress-lg`
-                   `progress-md`
-                   `progress-sm`
-                   `progress-xs`
-
-==========================================================================================*/
 .progress {
   margin-bottom: 3rem; }
   .progress:last-child {
@@ -2162,14 +2136,6 @@ body[data-col="1-column"] .header-navbar.floating-nav {
   .progress .progress-bar {
     border-radius: 1.28rem; }
 
-/* ===============================================================================================
-	File Name: list-group.scss
-	Description: Contain list item, list group related extended SCSS.
-	----------------------------------------------------------------------------------------------
-	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
-================================================================================================*/
 ul.list-inline li {
   display: inline-block; }
 

@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
      }
 
      if(size > 2*1024*1024) {
-       alert("Picture size is too big!")
-       return;
+       alert("Picture size is too big! 2Mb max")
+       $(this).text('Save Changes');
+       return false;
      }
      var name = document.getElementById('account-name').value;
      var surname = document.getElementById('account-surname').value;
@@ -32,36 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
      form_data.append("file", document.getElementById('file').files[0]);
    }
 
-   else if (current_field == 'header') {
-     var url = '/header/' + site_name;
-     var header = document.getElementById('header').value;
-     var subheader = document.getElementById('subheader').value;
-     var editSeo = document.getElementById('editSeo');
-     if (editSeo.checked) {
-       var seo_title = document.getElementById('seo_title').value;
-       var seo_desc = document.getElementById('seo_desc').value;
-     }
-     form_data.append("editSeo", editSeo.checked);
-     form_data.append("seo_title", seo_title);
-     form_data.append("seo_desc", seo_desc);
-     form_data.append('header', header);
-     form_data.append('subheader', subheader);
-   }
+   else if (current_field == 'changePass') {
+     var url = '/changePass';
+     var old_pass = document.getElementById('old_pass').value;
+     var new_pass = document.getElementById('new_pass').value;
+     var retype_pass = document.getElementById('retype_pass').value;
 
-   else if (current_field == 'social') {
-     var url = '/socialblog/' + site_name;
-     var twitter = document.getElementById('twitter').value;
-     var facebook = document.getElementById('facebook').value;
-     var instagram = document.getElementById('instagram').value;
-     var github = document.getElementById('github').value;
-     var youtube = document.getElementById('youtube').value;
-     var linkedin = document.getElementById('linkedin').value;
-     form_data.append('twitter', twitter);
-     form_data.append('facebook', facebook);
-     form_data.append('instagram', instagram);
-     form_data.append('github', github);
-     form_data.append('youtube', youtube);
-     form_data.append('linkedin', linkedin);
+     form_data.append("old_pass", old_pass);
+     form_data.append("new_pass", new_pass);
+     form_data.append("retype_pass", retype_pass);
    }
 
    xhr.open('POST', url)
@@ -72,21 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
        const result = JSON.parse(xhr.responseText);
        if(result.success){
          if(result.current_field == 'acc_g'){
-           alert(result.name);
-           alert(result.filename);
-           // Swal.fire({
-           //  title: "Good job!",
-           //  text: "Saved successfully!",
-           //  type: "success",
-           //  confirmButtonClass: 'btn btn-primary',
-           //  buttonsStyling: false,
-           // });
-           $("html, body").animate({ scrollTop: 0 }, "slow");
-         }
-         else if(result.current_field == 'h'){
-           saveHeader(result.header, result.subheader, result.header_id);
-         }
-         else if(result.current_field == 'so'){
            Swal.fire({
             title: "Good job!",
             text: "Saved successfully!",
@@ -96,13 +61,48 @@ document.addEventListener('DOMContentLoaded', () => {
            });
            $("html, body").animate({ scrollTop: 0 }, "slow");
          }
+         else if(result.current_field == 'cp'){
+          Swal.fire({
+            title: "Good job!",
+            text: "Password changed!",
+            type: "success",
+            confirmButtonClass: 'btn btn-primary',
+            buttonsStyling: false,
+           });
+           $("html, body").animate({ scrollTop: 0 }, "slow");
+         }
        }
        else{
-         alert(result.msg);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error occured',
+          text: result.msg,
+        })
+        $(this).text('Save Changes');
        }
      }
    }
    xhr.send(form_data);
    return false;
  })
+
+ $(document).ready(function() {
+  var readURL = function(input) {
+      if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              $('.profile-pic').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+      }
+  }
+
+  $(".file-upload").on('change', function(){
+      readURL(this);
+  });
+
+  $(".upload-button").on('click', function() {
+     $(".file-upload").click();
+  });
+});
 })

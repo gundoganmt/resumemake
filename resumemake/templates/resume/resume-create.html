@@ -62,10 +62,10 @@
           <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
             <div class="form-group breadcrumb-right">
               <div class="dropdown">
-                {% if resume_site.status == 'Active' %}
-                  <button class="btn-icon btn btn-primary btn-round btn-sm" type="button">Publish</button>
+                {% if resume_site.current_plan == 'published' %}
+                  <button class="btn-icon btn btn-success btn-round btn-sm" type="button">Published</button>
                 {% else %}
-                  <a href="#" class="btn-icon btn btn-warning btn-round btn-sm" type="button">Publish</a>
+                  <a data-toggle="modal" data-target="#pricing-modal" class="btn-icon btn btn-warning btn-round btn-sm">Publish</a>
                 {% endif %}
                 <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Preview</button>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -1770,6 +1770,45 @@
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
 
+    <div class="modal fade" id="pricing-modal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Your Site Name</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card standard-pricing popular text-center">
+            <div class="card-body">
+              <div class="pricing-badge text-end">
+                <span class="badge rounded-pill badge-light-primary">Popular</span>
+              </div>
+              <img src="{{ url_for('static', filename='images/Pot2.svg')}}" class="mb-1" alt="svg img">
+              <h3>Standard</h3>
+              <p class="card-text">Billed annually</p>
+              <div class="annual-plan">
+                <div class="plan-price mt-2">
+                  <sup class="font-medium-1 fw-bold text-primary">$</sup>
+                  <span class="fw-bolder text-primary" style="font-size: 3.5rem;">9</span>
+                  <sub class="pricing-duration text-body font-medium-1 fw-bold">/month</sub>
+                </div>
+                <small class="annual-pricing d-none text-muted"></small>
+              </div>
+              <ul class="list-group list-group-circle text-center " style="display: inline-block;">
+                <li class="list-group-item">1 Gb storage</li>
+                <li class="list-group-item">Unlimited site traffic</li>
+                <li class="list-group-item">Unlimited contact page emails</li>
+                <li class="list-group-item">Free future updates</li>
+                <li class="list-group-item">Premium support</li>
+              </ul>
+              <button class="btn w-100 btn-primary mt-2 waves-effect waves-float waves-light" id="buy">Upgrade</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- BEGIN: Vendor JS-->
     <script src="{{ url_for('static', filename='app-assets/vendors/js/vendors.min.js')}}"></script>
 
@@ -1782,6 +1821,23 @@
 
 		<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <!-- END: Theme JS-->
+    <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+
+		<script type="text/javascript">
+		  Paddle.Environment.set('sandbox');
+		  Paddle.Setup({ vendor: 2061 });
+
+			function openCheckout() {
+				Paddle.Checkout.open({
+					product: 15888,
+					email: '{{ current_user.email }}',
+					allowQuantity: false,
+					success: '{{ url_for("dashboard.publish", site_id=resume_site.site_id) }}'
+				});
+			}
+			document.getElementById('buy').addEventListener('click', openCheckout, false);
+
+		</script>
 
     <script>
       $(window).on('load',  function(){

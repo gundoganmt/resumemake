@@ -75,7 +75,7 @@
                      <div class="card-content">
                         <!-- NAME & STATUS -->
                         <div class="info-headings">
-                           <h4 class="text-uppercase left">John DOE</h4>
+                           <h4 class="text-uppercase left">{{ resume_site.owner.full_name() }}</h4>
                            <h6 class="text-capitalize left">{{ resume_site.tagline }}</h6>
                         </div>
                         <!-- CONTACT INFO -->
@@ -83,7 +83,7 @@
                            <ul class="profile-list">
                               <li class="clearfix">
                                  <span class="title"><i class="material-icons">email</i></span>
-                                 <span class="content">john.doe@gmail.com</span>
+                                 <span class="content">{{ resume_site.email }}</span>
                               </li>
                               <li class="clearfix">
                                  <span class="title"><i class="material-icons">language</i></span>

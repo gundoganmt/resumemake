@@ -77,7 +77,7 @@ class ResumeSite(db.Model):
     country = db.Column(db.String(50), nullable=True, default="")
     introduction = db.Column(db.Text, default="")
     creation_time = db.Column(db.DateTime, default=datetime.utcnow)
-    status = db.Column(db.String(25), nullable=True, default="")
+    current_plan = db.Column(db.String(25), nullable=True, default="draft")
     intro_title = db.Column(db.String(150), nullable=True, default="")
     province = db.Column(db.String(25), nullable=True, default="")
     tagline = db.Column(db.String(80), nullable=True, default="")
