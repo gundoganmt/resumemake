@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, jsonify, redirect, url_for, abort
+from flask import render_template, Blueprint, request, jsonify, redirect, url_for, abort, send_file
 from flask_login import current_user, login_required
 from utils import (crop_max_square, allowed_img_file, allowed_pdf_file,
     get_extension, UPLOAD_PROFILE_FOLDER, UPLOAD_SERVICE_FOLDER,
@@ -99,16 +99,12 @@ def workExp(site_id):
 
 @resume.route('/service/<site_id>', methods=['POST'])
 def service(site_id):
-    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first()
-    service = Services(service_name=request.form['service_name'], description=request.form['desc_service'], resume_id=resume_site.id)
-    if 'service_file' in request.files:
-        file = request.files['service_file']
-        filename = file.filename
-    if file and allowed_img_file(filename):
-        filename = secure_filename(filename)
-        unique_filename = str(uuid.uuid4())+get_extension(filename)
-        service.picture = unique_filename
-        file.save(os.path.join(UPLOAD_SERVICE_FOLDER, unique_filename))
+    resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first_or_404()
+    service = Services(service_name=request.form['service_name'], 
+        description=request.form['desc_service'], 
+        resume_id=resume_site.id, picture=request.form['service_icon']
+        )
+    
     db.session.add(service)
     db.session.commit()
     return jsonify({"success": True, "current_field": "se", "service_id": service.id, "service_name": service.service_name})
@@ -383,7 +379,6 @@ def deleteItem(site_id):
     elif itemType == 'se':
         item = Services.query.filter_by(id=itemId).first()
         if resume_site.id == item.resume_id:
-            os.remove(os.path.join(UPLOAD_SERVICE_FOLDER, item.picture))
             db.session.delete(item)
             db.session.commit()
             return jsonify({"success": True, "current_field": "se"})

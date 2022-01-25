@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>Ronaldo - Free Bootstrap 4 Template by Colorlib</title>
+      <title>Welcome to my website</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -12,15 +12,15 @@
       <link rel="stylesheet" href="/static/css/ronaldo/magnific-popup.css">
       <link rel="stylesheet" href="/static/css/ronaldo/aos.css">
       <link rel="stylesheet" href="/static/css/ronaldo/ionicons.min.css">
-      <link rel="stylesheet" href="/static/css/ronaldo/flaticon.css">
       <link rel="stylesheet" href="/static/css/ronaldo/icomoon.css">
       <link rel="stylesheet" href="/static/css/ronaldo/style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       
    </head>
    <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
       <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
          <div class="container">
-            <a class="navbar-brand" href="index.html"><span>R</span>onaldo</a>
+            <a class="navbar-brand" href="#"><span>R</span>onaldo</a>
             <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
             </button>
@@ -43,8 +43,12 @@
                <div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-center">
                   <div class="text text-center">
                      <span class="subheading">Hey! I am</span>
+                     {% if resume_site.owner.name %}
+                     <h1>{{ resume_site.owner.full_name() }}</h1>
+                     {% else %}
                      <h1>Ronaldo Fredrickson</h1>
-                     <h2>I'm a <span class="wrap">{{ resume_site.tagline }}</span>
+                     {% endif %}
+                     <h2><span class="wrap">{{ resume_site.tagline }}</span>
                      </h2>
                   </div>
                </div>
@@ -63,8 +67,13 @@
                <div class="col-md-6 col-lg-6 d-flex">
                   <div class="img-about img d-flex align-items-stretch">
                      <div class="overlay"></div>
+                     {% if resume_site.profile_picture != 'blank.png' %}
+                     <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(/static/images/profiles/{{resume_site.profile_picture}});">
+                     </div>
+                     {% else %}
                      <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(/static/images/resume_img/ronaldo-about.jpg);">
                      </div>
+                     {% endif %}
                   </div>
                </div>
                <div class="col-md-6 col-lg-6 pl-md-5 py-5">
@@ -74,20 +83,31 @@
                         <h2 class="mb-4">About Me</h2>
                         <p>{{ resume_site.introduction|safe }}</p>
                         <ul class="about-info mt-4 px-md-0 px-2">
-                           <li class="d-flex"><span>Name:</span> <span>Ronaldo Fredrickson</span></li>
-                           <li class="d-flex"><span>Date of birth:</span> <span>November 28, 1989</span></li>
-                           <li class="d-flex"><span>Address:</span> <span>San Francisco CA 97987 USA</span></li>
-                           <li class="d-flex"><span>Zip code:</span> <span>1000</span></li>
-                           <li class="d-flex"><span>Email:</span> <span>ronaldo@gmail.com</span></li>
-                           <li class="d-flex"><span>Phone: </span> <span>+1-2234-5678-9-0</span></li>
+                           {% if resume_site.owner.name %}
+                           <li class="d-flex"><span>Name:</span> <span>{{ resume_site.owner.full_name() }}</span></li>
+                           {% endif %}
+                           {% if resume_site.birth_day %}
+                           <li class="d-flex"><span>Date of birth:</span> <span>{{ resume_site.birth_day }}</span></li>
+                           {% endif %}
+                           {% if resume_site.country or resume_site.province %}
+                           <li class="d-flex"><span>Location:</span> <span>{{ resume_site.province }} {{ resume_site.country }} </span></li>
+                           {% endif %}
+                           {% if resume_site.email %}
+                           <li class="d-flex"><span>Email:</span> <span>{{ resume_site.email }}</span></li>
+                           {% endif %}
+                           {% if resume_site.phone_number %}
+                           <li class="d-flex"><span>Phone: </span> <span>{{ resume_site.phone_number }}</span></li>
+                           {% endif %}
                         </ul>
                      </div>
                   </div>
+                  {% if resume_site.pdf_resume %}
                   <div class="counter-wrap ftco-animate d-flex mt-md-3">
                      <div class="text">
-                        <p><a href="#" class="btn btn-primary py-3 px-3">Download CV</a></p>
+                        <p><a href="{{ url_for('resume.download', filename=resume_site.pdf_resume) }}" class="btn btn-primary py-3 px-3">Download CV</a></p>
                      </div>
                   </div>
+                  {% endif %}
                </div>
             </div>
          </div>
@@ -98,14 +118,20 @@
                <div class="col-md-3">
                   <nav id="navi">
                      <ul>
+                        {% if resume_site.edus() %}
                         <li><a href="#page-1">Education</a></li>
+                        {% endif %}
+                        {% if resume_site.workExps() %}
                         <li><a href="#page-2">Experience</a></li>
+                        {% endif %}
+                        {% if resume_site.skills() %}
                         <li><a href="#page-3">Skills</a></li>
-                        <li><a href="#page-4">Awards</a></li>
+                        {% endif %}
                      </ul>
                   </nav>
                </div>
                <div class="col-md-9">
+                  {% if resume_site.edus() %}
                   <div id="page-1" class= "page one">
                      <h2 class="heading">Education</h2>
                      {% for edu in resume_site.edus() %}
@@ -122,6 +148,8 @@
                         </div>
                      {% endfor %}
                   </div>
+                  {% endif %}
+                  {% if resume_site.workExps() %}
                   <div id="page-2" class= "page two">
                      <h2 class="heading">Experience</h2>
                      {% for workexp in resume_site.workExps() %}
@@ -138,6 +166,8 @@
                         </div>
                      {% endfor %}
                   </div>
+                  {% endif %}
+                  {% if resume_site.skills() %}
                   <div id="page-3" class= "page three">
                      <h2 class="heading">Skills</h2>
                      <div class="row progress-circle mb-5">
@@ -166,150 +196,52 @@
                      <div class="row">
                         {% for sk in resume_site.skills() %}
                             <div class="col-md-6 animate-box">
-                            <div class="progress-wrap ftco-animate">
-                                <h3>{{ sk.skill }}</h3>
-                                <div class="progress">
-                                    <div class="progress-bar color-1" role="progressbar" aria-valuenow="{{ sk.level }}"
-                                        aria-valuemin="0" aria-valuemax="100" style="width:{{sk.level}}%">
-                                        <span>{{sk.level}}%</span>
-                                    </div>
-                                </div>
-                            </div>
+                              <div class="progress-wrap ftco-animate">
+                                 <h3>{{ sk.skill }}</h3>
+                                 <div class="progress">
+                                       <div class="progress-bar color-1" role="progressbar" aria-valuenow="{{ sk.level }}"
+                                          aria-valuemin="0" aria-valuemax="100" style="width:{{sk.level}}%">
+                                          <span>{{sk.level}}%</span>
+                                       </div>
+                                 </div>
+                              </div>
                             </div>
                         {% endfor %}
                      </div>
                      {% endif %}
                   </div>
-                  <div id="page-4" class= "page four">
-                     <h2 class="heading">Awards</h2>
-                     <div class="resume-wrap d-flex ftco-animate">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                           <span class="flaticon-ideas"></span>
-                        </div>
-                        <div class="text pl-3">
-                           <span class="date">2014-2015</span>
-                           <h2>Top 10 Web Developer</h2>
-                           <span class="position">Cambridge University</span>
-                           <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                        </div>
-                     </div>
-                     <div class="resume-wrap d-flex ftco-animate">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                           <span class="flaticon-ideas"></span>
-                        </div>
-                        <div class="text pl-3">
-                           <span class="date">2014-2015</span>
-                           <h2>Top 5 LeaderShip Exellence Winner</h2>
-                           <span class="position">Cambridge University</span>
-                           <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                        </div>
-                     </div>
-                     <div class="resume-wrap d-flex ftco-animate">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                           <span class="flaticon-ideas"></span>
-                        </div>
-                        <div class="text pl-3">
-                           <span class="date">2014-2015</span>
-                           <h2>Top 4 Web Tester</h2>
-                           <span class="position">Cambridge University</span>
-                           <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                        </div>
-                     </div>
-                     <div class="resume-wrap d-flex ftco-animate">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                           <span class="flaticon-ideas"></span>
-                        </div>
-                        <div class="text pl-3">
-                           <span class="date">2014-2015</span>
-                           <h2>Art &amp; Creative Director</h2>
-                           <span class="position">Cambridge University</span>
-                           <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                        </div>
-                     </div>
-                  </div>
+                  {% endif %}
                </div>
             </div>
          </div>
       </section>
+      {% if resume_site.services() %}
       <section class="ftco-section" id="services-section">
          <div class="container-fluid px-md-5">
             <div class="row justify-content-center py-5 mt-5">
                <div class="col-md-12 heading-section text-center ftco-animate">
                   <h1 class="big big-2">Services</h1>
                   <h2 class="mb-4">Services</h2>
-                  <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
                </div>
             </div>
             <div class="row">
+               {% for service in resume_site.services() %}
                <div class="col-md-4 text-center d-flex ftco-animate">
-                  <a href="#" class="services-1 shadow">
+                  <a class="services-1 shadow">
                      <span class="icon">
-                     <i class="flaticon-analysis"></i>
+                     <i class="{{service.picture}}"></i>
                      </span>
                      <div class="desc">
-                        <h3 class="mb-5">Web Design</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                        <h3 class="mb-5">{{ service.service_name }}</h3>
+                        <p>{{ service.description }}</p>
                      </div>
                   </a>
                </div>
-               <div class="col-md-4 text-center d-flex ftco-animate">
-                  <a href="#" class="services-1 shadow">
-                     <span class="icon">
-                     <i class="flaticon-flasks"></i>
-                     </span>
-                     <div class="desc">
-                        <h3 class="mb-5">Phtography</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                     </div>
-                  </a>
-               </div>
-               <div class="col-md-4 text-center d-flex ftco-animate">
-                  <a href="#" class="services-1 shadow">
-                     <span class="icon">
-                     <i class="flaticon-ideas"></i>
-                     </span>
-                     <div class="desc">
-                        <h3 class="mb-5">Web Developer</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                     </div>
-                  </a>
-               </div>
-               <div class="col-md-4 text-center d-flex ftco-animate">
-                  <a href="#" class="services-1 shadow">
-                     <span class="icon">
-                     <i class="flaticon-innovation"></i>
-                     </span>
-                     <div class="desc">
-                        <h3 class="mb-5">App Developing</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                     </div>
-                  </a>
-               </div>
-               <div class="col-md-4 text-center d-flex ftco-animate">
-                  <a href="#" class="services-1 shadow">
-                     <span class="icon">
-                     <i class="flaticon-ux-design"></i>
-                     </span>
-                     <div class="desc">
-                        <h3 class="mb-5">Branding</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                     </div>
-                  </a>
-               </div>
-               <div class="col-md-4 text-center d-flex ftco-animate">
-                  <a href="#" class="services-1 shadow">
-                     <span class="icon">
-                     <i class="flaticon-idea"></i>
-                     </span>
-                     <div class="desc">
-                        <h3 class="mb-5">Product Strategy</h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                     </div>
-                  </a>
-               </div>
+               {% endfor %}
             </div>
          </div>
       </section>
+      {% endif %}
       <section class="ftco-section ftco-project" id="projects-section">
          <div class="container-fluid px-md-0">
             <div class="row no-gutters justify-content-center pb-5">
@@ -377,18 +309,7 @@
             </div>
          </div>
       </section>
-      <section class="ftco-section ftco-hireme img" style="background-image: url(images/bg_1.jpg)">
-         <div class="overlay"></div>
-         <div class="container">
-            <div class="row justify-content-center">
-               <div class="col-md-7 ftco-animate text-center">
-                  <h2>I'm <span>Available</span> for freelancing</h2>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                  <p class="mb-0"><a href="#" class="btn btn-primary py-3 px-5">Hire me</a></p>
-               </div>
-            </div>
-         </div>
-      </section>
+
       <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
          <div class="container">
             <div class="row justify-content-center mb-5 pb-3">

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
        var size = document.getElementById('file').files[0].size;
      }
 
-     if(size > 2*1024) {
+     if(size > 2*1024*1024) {
        alert("Picture size is too big!")
        $(this).text('Save Changes');
        return false;
@@ -86,17 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
    else if(current_field == "service"){
      var url = '/service/' + site_id;
-     var ins = document.getElementById('service_file').files.length;
+     var service_name = document.getElementById('service_name').value;
+     var service_icon = document.getElementById('service_icon').value;
+     var desc_service = document.getElementById('desc_service').value;
 
-     if(ins == 0) {
-       alert("No image found");
+     if(!service_name || !desc_service){
+       alert('Servis name and description are required fields');
        $(this).text('Save Changes');
        return false;
      }
-     var service_name = document.getElementById('service_name').value;
-     var desc_service = document.getElementById('desc_service').value;
+
      form_data.append("service_name", service_name);
-     form_data.append("service_file", document.getElementById('service_file').files[0]);
+     form_data.append("service_icon", service_icon);
      form_data.append('desc_service', desc_service);
    }
 

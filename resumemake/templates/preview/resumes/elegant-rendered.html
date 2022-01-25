@@ -4,13 +4,10 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <meta name="author" content="Trimatrix Lab">
-      <meta name="description" content="">
-      <meta name="keywords" content="">
       <title>Welcome to my resume website</title>
       <link rel="icon" href="images/site/fav-icon.png">
       <link rel="apple-touch-icon" href="images/site/apple-touch-icon.png">
-
+ 
       <link href='https://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
       <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -33,7 +30,11 @@
             <div id="menu-options" class="menu-wrap">
                <!--PERSONAL LOGO-->
                <div class="logo-flat">
-                  <img alt="personal-logo" class="img-responsive" src="{{ url_for('static', filename='images/profiles/'+resume_site.profile_picture) }}">
+                  {% if resume_site.profile_picture != 'blank.png' %}
+                     <img alt="personal-logo" class="img-responsive" src="{{ url_for('static', filename='images/profiles/'+resume_site.profile_picture) }}">
+                  {% else %}
+                     <img alt="personal-logo" class="img-responsive" src="{{ url_for('static', filename='images/resume_img/john_doe.jpg') }}">
+                  {% endif %}
                </div>
                <br>
                <!--OPTIONS-->
@@ -56,7 +57,7 @@
             </div>
          </nav>
          <!--HEADER BACKGROUND-->
-         <div class="header-background section"></div>
+         <div class="header-background section" style="background-image: url('/static/images/resume_img/{{resume_site.background_picture}}')"></div>
       </header>
       <!--==========================================
          V-CARD
@@ -69,34 +70,50 @@
                   <div id="v-card" class="card">
                      <!-- PROFILE PICTURE -->
                      <div id="profile" class="right">
-                        <img alt="profile-image" class="img-responsive" src="{{ url_for('static', filename='images/profiles/'+resume_site.profile_picture) }}">
+                        {% if resume_site.profile_picture != 'blank.png' %}
+                           <img alt="profile-image" class="img-responsive" src="{{ url_for('static', filename='images/profiles/'+resume_site.profile_picture) }}">
+                        {% else %}
+                           <img alt="profile-image" class="img-responsive" src="{{ url_for('static', filename='images/resume_img/john_doe.jpg') }}">
+                        {% endif %}
                         <div class="slant"></div>
                      </div>
                      <div class="card-content">
                         <!-- NAME & STATUS -->
                         <div class="info-headings">
+                           {% if resume_site.owner.name %}
                            <h4 class="text-uppercase left">{{ resume_site.owner.full_name() }}</h4>
+                           {% else %}
+                           <h4 class="text-uppercase left">John Doe</h4>
+                           {% endif %}
                            <h6 class="text-capitalize left">{{ resume_site.tagline }}</h6>
                         </div>
                         <!-- CONTACT INFO -->
                         <div class="infos">
                            <ul class="profile-list">
+                              {% if resume_site.email %}
                               <li class="clearfix">
                                  <span class="title"><i class="material-icons">email</i></span>
                                  <span class="content">{{ resume_site.email }}</span>
                               </li>
-                              <li class="clearfix">
-                                 <span class="title"><i class="material-icons">language</i></span>
-                                 <span class="content">yourpersonalwebsite.com</span>
-                              </li>
+                              {% endif %}
+                              {% if resume_site.phone_number %}
                               <li class="clearfix">
                                  <span class="title"><i class="material-icons">phone</i></span>
-                                 <span class="content">+152 25634 254 846</span>
+                                 <span class="content">{{ resume_site.phone_number }}</span>
                               </li>
+                              {% endif %}
+                              {% if resume_site.country %}
+                              <li class="clearfix">
+                                 <span class="title"><i class="material-icons">public</i></span>
+                                 <span class="content">{{ resume_site.country }}</span>
+                              </li>
+                              {% endif %}
+                              {% if resume_site.province %}
                               <li class="clearfix">
                                  <span class="title"><i class="material-icons">place</i></span>
-                                 <span class="content">LampStreet 34/3, London, UK</span>
+                                 <span class="content">{{ resume_site.province }}</span>
                               </li>
+                              {% endif %}
                            </ul>
                         </div>
                         <!--LINKS-->
@@ -114,7 +131,7 @@
                            {% endif %}
 
                            {% if resume_site.instagram %}
-                           <a target="_blank" href="https://instagram.com/{{resume_site.instagram}}" class="social  btn-floating red"><i
+                           <a target="_blank" href="https://instagram.com/{{resume_site.instagram}}" class="social  btn-floating orange"><i
                               class="fa fa-instagram"></i></a>
                            {% endif %}
 
@@ -124,7 +141,7 @@
                            {% endif %}
 
                            {% if resume_site.youtube %}
-                            <a target="_blank" href="https://youtube.com/{{resume_site.youtube}}" class="social  btn-floating blue darken-3"><i
+                            <a target="_blank" href="https://youtube.com/{{resume_site.youtube}}" class="social  btn-floating red darken-3"><i
                                 class="fa fa-youtube"></i></a>
                            {% endif %}
 
@@ -142,6 +159,7 @@
       <!--==========================================
          ABOUT
          ===========================================-->
+      {% if resume_site.intro_title or resume_site.introduction %}
       <div id="about" class="section">
          <div class="container">
             <div class="row">
@@ -169,6 +187,7 @@
             </div>
          </div>
       </div>
+      {% endif %}
       <!--==========================================
          EDUCATION
          ===========================================-->
@@ -213,8 +232,52 @@
       </section>
       {% endif %}
       <!--==========================================
+         COURSES
+         ===========================================-->
+      {% if resume_site.courses() %}
+      <section id="courses" class="section">
+         <div class="container">
+            <!-- SECTION TITLE -->
+            <div class="section-title">
+               <h4 class="text-uppercase text-center"><img src="/static/images/resume_img/courses.png" alt="demo">Courses</h4>
+            </div>
+            <div id="timeline-education">
+               {% for course in resume_site.courses() %}
+                  <div class="timeline-block">
+                     <!-- DOT -->
+                     <div class="timeline-dot">
+                        <h6>{{ course.course_name|first }}</h6>
+                     </div>
+                     <!-- TIMELINE CONTENT -->
+                     <div class="card timeline-content">
+                        <div class="card-content">
+                              <!-- TIMELINE TITLE -->
+                              <h6 class="timeline-title">{{ course.course_name }}</h6>
+                              <!-- TIMELINE TITLE INFO -->
+                              <div class="timeline-info">
+                              <h6>
+                                 <small>{{ course.institution }}</small>
+                              </h6>
+                              <h6>
+                                 <small>{{ course.start_month }} {{ course.start_year }} - {{ course.end_month }} {{ course.end_year }}</small>
+                              </h6>
+                              </div>
+                              <!-- TIMELINE PARAGRAPH -->
+                              <p>
+                                 {{ course.description }}
+                              </p>
+                        </div>
+                     </div>
+                  </div>
+               {% endfor %}
+            </div>
+         </div>
+      </section>
+      {% endif %}
+      <!--==========================================
          SKILLS
          ===========================================-->
+      {% if resume_site.unique_sk_category() %}
       <section id="skills" class="section">
          <div class="container">
             <!-- SECTION TITLE -->
@@ -247,6 +310,7 @@
             </div>
          </div>
       </section>
+      {% endif %}
       <!--==========================================
          EXPERIENCE
          ===========================================-->
@@ -294,6 +358,7 @@
       <!--==========================================
          PORTFOLIOS
          ===========================================-->
+      {% if resume_site.ports() %}
       <section id="portfolios" class="section">
          <div class="container">
             <!-- SECTION TITLE -->
@@ -345,6 +410,7 @@
             </div>
          </div>
       </section>
+      {% endif %}
       <!--==========================================
          TESTIMONIALS AND CLIENTS
          ===========================================-->
@@ -452,7 +518,7 @@
          <div class="container">
             <!--FOOTER DETAILS-->
             <p class="text-center">
-               © All right reserved by
+               © Designed with love by
                <a href="https://webpaget.com/" target="_blank">
                <strong>Webpaget.com</strong>
                </a>

@@ -100,7 +100,6 @@
                         </div>
                         <!-- search area ends here -->
                         <div class="item-manager-content-body">
-                           <!-- Files Container Starts -->
                            <div class="view-container list-view">
                              {% for site in current_user.sites() %}
                                <div class="card item-manager-item file" name="{{ site.__tablename__ }}" id="{{ site.site_id }}">
@@ -135,7 +134,6 @@
                                No Results
                             </div>
                            </div>
-                           <!-- /Files Container Ends -->
                         </div>
                      </div>
                      <!-- item manager app content ends -->
@@ -154,12 +152,7 @@
                         <i data-feather="trash" class="align-middle mr-50"></i>
                         <span class="align-middle">Delete</span>
                         </a>
-                        <a class="dropdown-item" href="javascript:void(0);">
-                        <i data-feather="alert-circle" class="align-middle mr-50"></i>
-                        <span class="align-middle">Report</span>
-                        </a>
                      </div>
-                     <!-- /File Dropdown Ends -->
                   </div>
                </div>
             </div>
