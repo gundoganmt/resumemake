@@ -5,21 +5,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>All blog sites</title>
+    <title>All Resume Sites</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/vendors.min.css')}}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/bootstrap-extended.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/colors.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/components.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/bootstrap-extended.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/colors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/components.min.css')}}">
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/css/pages/my-sites.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/menu/vertical-menu.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/pages/my-sites.min.css')}}">
 
     <!-- END: Page CSS-->
   </head>
@@ -227,13 +227,13 @@
     <!-- END: Footer-->
 
     <!-- BEGIN: Vendor JS-->
-    <script src="{{ url_for('static', filename='app-assets/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/vendors.min.js')}}"></script>
 
     <!-- BEGIN: Theme JS-->
-    <script src="{{ url_for('static', filename='app-assets/js/core/app-menu.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/js/core/app.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/js/scripts/customizer.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='app-assets/js/scripts/pages/item-manager.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/core/app-menu.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/core/app.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/scripts/customizer.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/scripts/item-manager.min.js')}}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ url_for('static', filename='js/my-sites.js')}}"></script>
 
@@ -260,12 +260,8 @@
             const xhr = new XMLHttpRequest();
             var site_id = document.getElementById('deleteSite').getAttribute('data');
             var site_type = document.getElementById('deleteSite').getAttribute('data-sitetype');
-            if (site_type == "BlogSite") {
-              var url = '/delete-site/blog/' + site_id;
-            }
-            else {
-              var url = '/delete-site/resume/' + site_id;
-            }
+            var url = '/delete-site/resume/' + site_id;
+            
             xhr.open('GET', url);
             xhr.onload = () =>{
               if (xhr.status == 200){

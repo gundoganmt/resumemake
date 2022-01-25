@@ -140,6 +140,11 @@ class ResumeSite(db.Model):
     def get_skills_by_cat(self, category):
         return Skills.query.filter_by(category=category, resume_id=self.id).all()
 
+    def basic_exists(self):
+        if self.email or self.phone_number or self.birth_day or self.country or self.province or self.introduction:
+            return True
+        return False
+
     def __repr__(self):
         return self.site_name
 

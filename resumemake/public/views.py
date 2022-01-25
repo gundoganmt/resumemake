@@ -44,7 +44,7 @@ def preview(template):
 def previewresume():
     site_id = request.args.get('site_id', str)
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first_or_404()
-    return render_template('preview/resumes/elegant-rendered.html', resume_site=resume_site)
+    return render_template('preview/resumes/sunshine-rendered.html', resume_site=resume_site)
 
 @public.route('/single-portfolio/<int:port_id>')
 def singleport(port_id):

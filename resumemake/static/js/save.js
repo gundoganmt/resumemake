@@ -175,6 +175,32 @@ document.addEventListener('DOMContentLoaded', () => {
      var url = '/language/' + site_id;
      var lang = document.getElementById('lang').value;
      var level = document.getElementById('lang_level').value;
+
+     if (!lang || !level){
+      Swal.fire({
+        title: "Error!",
+        text: 'Fields are required!',
+        type: "error",
+        confirmButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+       });
+       $("html, body").animate({ scrollTop: 0 }, "slow");
+       $(this).text('Save Changes');
+       return false;
+     }
+     if(parseInt(level) > 100 || parseInt(level) < 1 ){
+      Swal.fire({
+        title: "Error!",
+        text: 'Level should be between 1 and 100!',
+        type: "error",
+        confirmButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+       });
+       $("html, body").animate({ scrollTop: 0 }, "slow");
+       $(this).text('Save Changes');
+       return false;
+     }
+
      form_data.append('lang', lang);
      form_data.append('level', level);
    }
@@ -383,6 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addAnother.style.display = "none";
     })
     $("html, body").animate({ scrollTop: 0 }, "slow");
+    $("#reset_lang").click();
     return false;
   }
 
