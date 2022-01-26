@@ -18,6 +18,10 @@ class MyModelView(sqla.ModelView):
         if not current_user.is_active or not current_user.is_authenticated:
             return abort(404), 404
 
+        # if current_user.is_authenticated and current_user.email == 'your email here':
+        #     return True
+        # else:
+        #     return abort(404), 404
         if current_user.is_authenticated:
             return True
 

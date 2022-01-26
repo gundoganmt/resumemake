@@ -34,9 +34,15 @@
                   <div class="collapse navbar-collapse justify-content-end" id="navigation">
                      <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link smooth-scroll" href="#about">About</a></li>
+                        {% if resume_site.skills() %}
                         <li class="nav-item"><a class="nav-link smooth-scroll" href="#skill">Skills</a></li>
+                        {% endif %}
+                        {% resume_site.ports() %}
                         <li class="nav-item"><a class="nav-link smooth-scroll" href="#portfolio">Portfolio</a></li>
+                        {% endif %}
+                        {% if resume_site.workExps() %}
                         <li class="nav-item"><a class="nav-link smooth-scroll" href="#experience">Experience</a></li>
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link smooth-scroll" href="#contact">Contact</a></li>
                      </ul>
                   </div>
@@ -553,8 +559,6 @@
                   </div>
                </div>
             </div>
-         
-         
          
          </div>
       </div>

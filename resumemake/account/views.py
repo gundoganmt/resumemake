@@ -4,7 +4,7 @@ from resumemake.models import Users
 from datetime import datetime
 from resumemake import db, login_manager
 from flask_login import login_user, logout_user, login_required, current_user
-from utils import only_main
+from utils import only_main()
 
 account = Blueprint('account',__name__)
 

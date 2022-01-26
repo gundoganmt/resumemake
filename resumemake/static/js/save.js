@@ -617,11 +617,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if(result.success){
           document.getElementById('domain_result').style.display = "";
           document.getElementById('DomainConnected').innerText = "https://" + domain;
-          document.getElementById('point').innerText = "125.112.222.20";
+          document.getElementById('point').innerText = "46.101.5.43";
           Swal.fire({
            icon: 'success',
            title: "Domain Connected!",
-           text: "Set A record of your domain to 125.112.222.20",
+           text: "Set A record of your domain to 43.101.5.43",
            type: "success",
            confirmButtonClass: 'btn btn-primary',
            buttonsStyling: false,

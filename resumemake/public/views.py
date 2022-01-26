@@ -15,7 +15,7 @@ def index():
     else:
         resume_site = ResumeSite.query.filter_by(domain=request.host).first_or_404()
         if resume_site.current_plan == 'published':
-            return render_template('preview/blogs/' + resume_site.template + '.html', resume_site=resume_site)
+            return render_template('preview/resumes/' + resume_site.template + '.html', resume_site=resume_site)
         else:
             return jsonify({'success': 'Pending', 
                 'msg': 'your domain appears to be connected but not published. Please publish first.'})
