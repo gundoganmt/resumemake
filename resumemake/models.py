@@ -145,6 +145,11 @@ class ResumeSite(db.Model):
             return True
         return False
 
+    def resume_sec_exists(self):
+        if self.edus() or self.workExps() or self.skills():
+            return True
+        return False
+
     def __repr__(self):
         return self.site_name
 

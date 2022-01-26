@@ -530,6 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addAnother.style.display = "none";
     })
     $("html, body").animate({ scrollTop: 0 }, "slow");
+    $("#reset_port").click();
     return false;
   }
 
@@ -674,7 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
     xhr.send();
   })
 
-
+  
  document.addEventListener('click', deleteItem);
  function deleteItem(e){
    if (e.target.matches('.deleteItem')){

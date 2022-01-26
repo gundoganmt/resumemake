@@ -20,7 +20,11 @@
    <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
       <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
          <div class="container">
+            {% if resume_site.owner.name %}
+            <a class="navbar-brand" href="#"><span>{{resume_site.owner.name|first}}</span>{{resume_site.owner.name[1:]}}</a>
+            {% else %}
             <a class="navbar-brand" href="#"><span>R</span>onaldo</a>
+            {% endif %}
             <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
             </button>
@@ -28,9 +32,15 @@
                <ul class="navbar-nav nav ml-auto">
                   <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
                   <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
+                  {% if resume_site.resume_sec_exists() %}
                   <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
+                  {% endif %}
+                  {% if resume_site.services() %}
                   <li class="nav-item"><a href="#services-section" class="nav-link"><span>Services</span></a></li>
+                  {% endif %}
+                  {% if resume_site.ports() %}
                   <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Projects</span></a></li>
+                  {% endif %}
                   <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
                </ul>
             </div>
@@ -71,7 +81,7 @@
                      <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(/static/images/profiles/{{resume_site.profile_picture}});">
                      </div>
                      {% else %}
-                     <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(/static/images/resume_img/ronaldo-about.jpg);">
+                     <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(/static/images/resume_img/ronaldo-about.jpg); height: 500px;">
                      </div>
                      {% endif %}
                   </div>
@@ -112,6 +122,7 @@
             </div>
          </div>
       </section>
+      {% if resume_site.resume_sec_exists() %}
       <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
          <div class="container">
             <div class="row">
@@ -121,11 +132,14 @@
                         {% if resume_site.edus() %}
                         <li><a href="#page-1">Education</a></li>
                         {% endif %}
+                        {% if resume_site.courses() %}
+                        <li><a href="#page-2">Courses</a></li>
+                        {% endif %}
                         {% if resume_site.workExps() %}
-                        <li><a href="#page-2">Experience</a></li>
+                        <li><a href="#page-3">Experience</a></li>
                         {% endif %}
                         {% if resume_site.skills() %}
-                        <li><a href="#page-3">Skills</a></li>
+                        <li><a href="#page-4">Skills</a></li>
                         {% endif %}
                      </ul>
                   </nav>
@@ -149,8 +163,26 @@
                      {% endfor %}
                   </div>
                   {% endif %}
-                  {% if resume_site.workExps() %}
+                  {% if resume_site.courses() %}
                   <div id="page-2" class= "page two">
+                     <h2 class="heading">Courses</h2>
+                     {% for course in resume_site.courses() %}
+                        <div class="resume-wrap d-flex ftco-animate">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-ideas"></span>
+                            </div>
+                            <div class="text pl-3">
+                            <span class="date">{{ course.start_year }}-{{ course.end_year }}</span>
+                            <h2>{{ course.course_name }}</h2>
+                            <span class="position">{{ course.institution }}</span>
+                            <p>{{ course.description }}</p>
+                            </div>
+                        </div>
+                     {% endfor %}
+                  </div>
+                  {% endif %}
+                  {% if resume_site.workExps() %}
+                  <div id="page-3" class= "page three">
                      <h2 class="heading">Experience</h2>
                      {% for workexp in resume_site.workExps() %}
                         <div class="resume-wrap d-flex ftco-animate">
@@ -168,7 +200,7 @@
                   </div>
                   {% endif %}
                   {% if resume_site.skills() %}
-                  <div id="page-3" class= "page three">
+                  <div id="page-4" class= "page four">
                      <h2 class="heading">Skills</h2>
                      <div class="row progress-circle mb-5">
                         {% for sk in resume_site.skills()[:3] %}
@@ -215,6 +247,7 @@
             </div>
          </div>
       </section>
+      {% endif %}
       {% if resume_site.services() %}
       <section class="ftco-section" id="services-section">
          <div class="container-fluid px-md-5">
@@ -242,6 +275,7 @@
          </div>
       </section>
       {% endif %}
+      {% if resume_site.ports() %}
       <section class="ftco-section ftco-project" id="projects-section">
          <div class="container-fluid px-md-0">
             <div class="row no-gutters justify-content-center pb-5">
@@ -252,64 +286,21 @@
                </div>
             </div>
             <div class="row no-gutters">
+               {% for port in resume_site.ports() %}
                <div class="col-md-4">
-                  <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(/static/images/resume_img/image_01.jpg);">
+                  <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(/static/images/portfolios/{{port.portpic()}});">
                      <div class="overlay"></div>
                      <div class="text text-center p-4">
-                        <h3><a href="#">Branding &amp; Illustration Design</a></h3>
-                        <span>Web Design</span>
+                        <h3><a href="https://{{port.website}}" target="_blank">{{ port.project_name }}</a></h3>
+                        <span>{{ port.website }}</span>
                      </div>
                   </div>
                </div>
-               <div class="col-md-4">
-                  <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(/static/images/resume_img/image_02.jpg);">
-                     <div class="overlay"></div>
-                     <div class="text text-center p-4">
-                        <h3><a href="#">Branding &amp; Illustration Design</a></h3>
-                        <span>Web Design</span>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(/static/images/resume_img/image_03.jpg);">
-                     <div class="overlay"></div>
-                     <div class="text text-center p-4">
-                        <h3><a href="#">Branding &amp; Illustration Design</a></h3>
-                        <span>Web Design</span>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(/static/images/resume_img/image_08.jpg);">
-                     <div class="overlay"></div>
-                     <div class="text text-center p-4">
-                        <h3><a href="#">Branding &amp; Illustration Design</a></h3>
-                        <span>Web Design</span>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(/static/images/resume_img/image_07.jpg);">
-                     <div class="overlay"></div>
-                     <div class="text text-center p-4">
-                        <h3><a href="#">Branding &amp; Illustration Design</a></h3>
-                        <span>Web Design</span>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(/static/images/resume_img/image_06.jpg);">
-                     <div class="overlay"></div>
-                     <div class="text text-center p-4">
-                        <h3><a href="#">Branding &amp; Illustration Design</a></h3>
-                        <span>Web Design</span>
-                     </div>
-                  </div>
-               </div>
+               {% endfor %}
             </div>
          </div>
       </section>
-
+      {% endif %}
       <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
          <div class="container">
             <div class="row justify-content-center mb-5 pb-3">

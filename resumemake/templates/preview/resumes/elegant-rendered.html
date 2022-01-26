@@ -40,11 +40,21 @@
                <!--OPTIONS-->
                <a href="#home"><i class="title-icon fa fa-user"></i>Home</a>
                <a href="#about"><i class="title-icon fa fa-dashboard"></i>About</a>
+               {% if resume_site.edus() %}
                <a href="#education"><i class="title-icon fa fa-graduation-cap"></i>Education</a>
+               {% endif %}
+               {% if resume_site.skills() %}
                <a href="#skills"><i class="title-icon fa fa-sliders"></i>Skills</a>
+               {% endif %}
+               {% if resume_site.workExps() %}
                <a href="#experience"><i class="title-icon fa fa-suitcase"></i>Experience</a>
+               {% endif %}
+               {% if resume_site.ports() %}
                <a href="#portfolios"><i class="title-icon fa fa-archive"></i>Portfolios</a>
+               {% endif %}
+               {% if resume_site.testimos() %}
                <a href="#testimonials"><i class="title-icon fa fa-users"></i>Testimonials</a>
+               {% endif %}
                <a href="#contact"><i class="title-icon fa fa-envelope"></i>Contact</a>
             </div>
             <!-- MENU BUTTON -->
@@ -384,17 +394,16 @@
                   {% for tag in resume_site.get_port_tags() %}
                      <div id="{{tag[0]}}">
                         {% for port in resume_site.get_port_from_tag(tag[0]) %}
-                        <div class="col-md-4 col-sm-6 col-xs-12 grid inRight">
+                        <div class="col-md-4 col-sm-6 col-xs-12 grid inLeft">
                            <figure class="port-effect-up">
-                              <img src="{{ url_for('static', filename='images/portfolios/'+port.portpic()) }}" class="img-responsive" alt="portfolio image"/>
-                              <figcaption>
-                                 <h2>Lightbox <span> IMAGE</span></h2>
-                                 <p>Two Hover Effect For Portfolio Grid Blocks. Its Up</p>
-                                 <a href="{{ url_for('static', filename='images/portfolios/'+port.portpic()) }}" class="popup-image"
-                                    data-effect="mfp-move-horizontal">View more</a>
-                              </figcaption>
+                               <img src="{{ url_for('static', filename='images/portfolios/'+port.portpic()) }}" class="img-responsive" alt="portfolio-demo"/>
+                               <figcaption>
+                                   <h2>{{ port.project_name }}</h2>
+                                   <p>{{ port.creation_time }} </p>
+                                   <a href="{{ url_for('public.singleport', port_id=port.id)}}" target="_blank">View more</a>
+                               </figcaption>
                            </figure>
-                        </div>
+                       </div>
                         {% endfor %}
                      </div>
                   {% endfor %}

@@ -4,6 +4,7 @@ from resumemake.models import Users
 from datetime import datetime
 from resumemake import db, login_manager
 from flask_login import login_user, logout_user, login_required, current_user
+from utils import only_main
 
 account = Blueprint('account',__name__)
 
@@ -12,6 +13,7 @@ def load_user(id):
     return Users.query.get(int(id))
 
 @account.route('/login', methods=['GET', 'POST'])
+@only_main()
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard.mysites'))
@@ -37,6 +39,7 @@ def login():
     return render_template('account/login.html')
 
 @account.route('/signup', methods=['GET','POST'])
+@only_main()
 def signup():
     if current_user.is_authenticated:
         return redirect(url_for('public.index'))
@@ -71,6 +74,7 @@ def signup():
 
 @account.route('/logout')
 @login_required
+@only_main()
 def logout():
     logout_user()
     return redirect(url_for('public.index'))

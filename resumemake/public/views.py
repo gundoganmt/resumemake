@@ -10,23 +10,18 @@ public = Blueprint('public',__name__)
 
 @public.route('/')
 def index():
-    if request.host == '127.0.0.1:5000':
+    if request.host == 'webpaget.com':
         return render_template('public/index.html')
-    # else:
-    #     blog_site = BlogSite.query.filter_by(domain=request.host).first()
-    #     return render_template('preview/blogs/' + blog_site.template + '.html', blog_site=blog_site)
-
-
-    #return render_template('public/index.html')
-    #return redirect(url_for('.liveblog', site_name=blog_site.site_name))
-    # elif request.host == 'www.jobby.net':
-    #     user = Users.query.filter_by(domain=request.host).first()
-    #     return render_template('preview/breezycv.html', user=user)
-    # else:
-    #     user = Users.query.filter_by(domain=request.host).first()
-    #     return render_template('preview/breezycv.html', user=user)
+    else:
+        resume_site = ResumeSite.query.filter_by(domain=request.host).first_or_404()
+        if resume_site.current_plan == 'published':
+            return render_template('preview/blogs/' + resume_site.template + '.html', resume_site=resume_site)
+        else:
+            return jsonify({'success': 'Pending', 
+                'msg': 'your domain appears to be connected but not published. Please publish first.'})
 
 @public.route('/preview/<template>')
+@only_main()
 def preview(template):
     if template == 'sunshine':
         return render_template('preview/resumes/sunshine.html')
@@ -41,6 +36,7 @@ def preview(template):
         return abort(404), 404
 
 @public.route('/previewresume')
+@only_main()
 def previewresume():
     site_id = request.args.get('site_id', str)
     resume_site = ResumeSite.query.filter_by(site_id=site_id, owner=current_user).first_or_404()
@@ -49,7 +45,7 @@ def previewresume():
 @public.route('/single-portfolio/<int:port_id>')
 def singleport(port_id):
     port = Portfolios.query.filter_by(id=port_id).first()
-    return render_template('preview/breezycv-single-port.html', port=port)
+    return render_template('preview/resumes/single-port.html', port=port)
 
 @public.route('/usermails/<site_id>', methods=['POST'])
 def usermails(site_id):
@@ -88,3 +84,7 @@ def contact():
 @public.app_errorhandler(404)
 def page_not_found(e):
     return render_template('public/404.html'), 404
+
+@public.app_errorhandler(400)
+def expired(e):
+    return jsonify({'success': False, 'msg': 'Error occured. Probably csrf token expired. Please refresh the page and try again!'})

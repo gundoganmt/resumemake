@@ -3,10 +3,10 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Webpaget - Create Your Professional Resume & Multiauthored Blog Website</title>
+        <title>Webpaget - Create Your Professional Resume Website</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Create online resume, cv websites and multiauthored blog websites." />
-        <meta name="keywords" content="Multiauthored Blog Website, Create Blog, Online resume, Resume Website, Create Website" />
+        <meta name="description" content="Create online resume, cv websites." />
+        <meta name="keywords" content="Online resume, Resume Website, Create Website" />
         <meta name="author" content="Webpaget" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- tobii css -->
@@ -40,7 +40,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-7 col-md-7 order-1 order-md-2">
                         <div class="title-heading mt-4 ms-lg-5">
-                            <h1 class="heading mb-3">Build a professional resume and multiauthored blog websites with <span class="text-primary">Webpaget</span></h1>
+                            <h1 class="heading mb-3">Build a professional resume websites with <span class="text-primary">Webpaget</span></h1>
                             <p class="para-desc text-muted">Get access to our beautiful webpage designs and launch your website literally within minutes. Only pay when you see the result.</p>
                             <div class="mt-4 pt-2">
                                 <a href="{{ url_for('account.signup') }}" class="btn btn-primary m-1">Get Started <i class="uil uil-angle-right-b"></i></a>
@@ -128,7 +128,7 @@
                     <div class="col-lg-4 col-md-6 mt-4 pt-2">
                         <div class="portfolio-box rounded shadow overflow-hidden position-relative">
                             <div class="work-img position-relative overflow-hidden">
-                                <a href="{{ url_for('public.preview', template='sunshine')}}" target="_blank"><img src="{{ url_for('static', filename='images/resume_img/sunshine.jpg')}}" class="img-fluid" alt="sunshine resume template" style="height: 240px;"></a>
+                                <a href="{{ url_for('public.preview', template='sunshine')}}" target="_blank"><img src="{{ url_for('static', filename='images/sunshine.jpg')}}" class="img-fluid" alt="sunshine resume template" style="height: 240px;"></a>
                             </div>
                             <div class="gallary-title border-top bg-light text-center pt-4 pb-4 p-3">
                                 <h6 class="title"><a href="{{ url_for('public.preview', template='sunshine')}}" target="_blank" class="text-dark">Sunshine</a></h6>
@@ -140,10 +140,10 @@
                     <div class="col-lg-4 col-md-6 mt-4 pt-2">
                         <div class="portfolio-box rounded shadow overflow-hidden position-relative">
                             <div class="work-img position-relative overflow-hidden">
-                                <a href="{{ url_for('public.preview', template='unique')}}" target="_blank"><img src="{{ url_for('static', filename='images/resume_img/unique-demo.jpg')}}" class="img-fluid" alt="unique resume template" style="height: 240px;"></a>
+                                <a href="{{ url_for('public.preview', template='elegant')}}" target="_blank"><img src="{{ url_for('static', filename='images/elegant.jpg')}}" class="img-fluid" alt="unique resume template" style="height: 240px;"></a>
                             </div>
                             <div class="gallary-title border-top bg-light text-center pt-4 pb-4 p-3">
-                                <h6 class="title"><a href="{{ url_for('public.preview', template='unique')}}" target="_blank" class="text-dark">Unique</a></h6>
+                                <h6 class="title"><a href="{{ url_for('public.preview', template='elegant')}}" target="_blank" class="text-dark">Elegant</a></h6>
                                 <span class="text-muted">Resume &amp; Porfolio Template</span>
                             </div>
                         </div>
@@ -152,59 +152,17 @@
                     <div class="col-lg-4 col-md-6 mt-4 pt-2">
                         <div class="portfolio-box rounded shadow overflow-hidden position-relative">
                             <div class="work-img position-relative overflow-hidden">
-                                <a href="{{ url_for('public.preview', template='vcard') }}" target="_blank"><img src="{{ url_for('static', filename='images/resume_img/light-image.jpg')}}" class="img-fluid" alt="vcard resume template" style="height: 240px;"></a>
+                                <a href="{{ url_for('public.preview', template='ronaldo') }}" target="_blank"><img src="{{ url_for('static', filename='images/ronaldo.jpg')}}" class="img-fluid" alt="vcard resume template" style="height: 240px;"></a>
                             </div>
                             <div class="gallary-title border-top bg-light text-center pt-4 pb-4 p-3">
-                                <h6 class="title"><a href="{{ url_for('public.preview', template='vcard') }}" target="_blank" class="text-dark">Vcard</a></h6>
+                                <h6 class="title"><a href="{{ url_for('public.preview', template='ronaldo') }}" target="_blank" class="text-dark">Ronaldo</a></h6>
                                 <span class="text-muted">Resume &amp; Porfolio Template</span>
                             </div>
                         </div>
                     </div><!--end col-->
-
-                    <div class="col-lg-4 col-md-6 mt-4 pt-2">
-                        <div class="portfolio-box rounded shadow overflow-hidden position-relative">
-                            <div class="work-img position-relative overflow-hidden">
-                                <a href="{{ url_for('public.preview', template='breezycv')}}" target="_blank"><img src="{{ url_for('static', filename='images/resume_img/breezycv.jpg')}}" class="img-fluid" alt="breezycv resume template" style="height: 240px;"></a>
-                            </div>
-                            <div class="gallary-title border-top bg-light text-center pt-4 pb-4 p-3">
-                                <h6 class="title"><a href="{{ url_for('public.preview', template='breezycv')}}" target="_blank" class="text-dark">Breezycv</a></h6>
-                                <span class="text-muted">Resume &amp; Porfolio Template</span>
-                            </div>
-                        </div>
-                    </div><!--end col-->
-
-                    <div class="col-lg-4 col-md-6 mt-4 pt-2">
-                        <div class="portfolio-box rounded shadow overflow-hidden position-relative">
-                            <div class="work-img position-relative overflow-hidden">
-                              <a href="{{ url_for('public.preview', template='noonpost') }}" target="_blank"><img src="{{ url_for('static', filename='images/blog_img/noonpost/noonpost.png')}}" class="img-fluid" alt="noonpost blog template" style="height: 240px; width: 100%;"></a>
-                            </div>
-                        <div class="gallary-title border-top bg-light text-center pt-4 pb-4 p-3">
-                                <h6 class="title"><a href="{{ url_for('public.preview', template='noonpost') }}" target="_blank" class="text-dark">Noonpost</a></h6>
-                            <span class="text-muted">Responsive Multipurpose Blog Template</span>
-                            </div>
-                        </div>
-                    </div><!--end col-->
-
-                    <div class="col-lg-4 col-md-6 mt-4 pt-2">
-                        <div class="portfolio-box rounded shadow overflow-hidden position-relative">
-                            <div class="work-img position-relative overflow-hidden">
-                              <a href="{{ url_for('public.preview', template='flow')}}" target="_blank"><img src="{{ url_for('static', filename='images/blog_img/flow/flow-display.jpg')}}" class="img-fluid" alt="flow blog template" style="height: 240px; width: 100%;"></a>
-                            </div>
-                            <div class="gallary-title border-top bg-light text-center pt-4 pb-4 p-3">
-                                <h6 class="title"><a href="{{ url_for('public.preview', template='bizblog')}}" target="_blank" class="text-dark">Flow Blog</a></h6>
-                                <span class="text-muted">Multipurpose Creative Template</span>
-                            </div>
-                        </div>
-                    </div><!--end col-->
-
-                    <!-- <div class="col-12 text-center mt-4 pt-2">
-                        <a href="page-products.html" class="btn btn-outline-primary">See More <i class="mdi mdi-chevron-right"></i></a>
-                    </div> -->
-
                 </div><!--end row-->
             </div><!--end container-->
             <!-- Product End -->
-
         </section>
 
         <section class="section bg-light" style="padding-top: 20px;">
@@ -427,25 +385,20 @@
                     <div class="col-lg-2 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
                         <h5 class="text-light footer-head">Company</h5>
                         <ul class="list-unstyled footer-list mt-4">
-                            <li><a href="page-aboutus.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> About us</a></li>
-                            <li><a href="page-services.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Services</a></li>
-                            <li><a href="page-team.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Team</a></li>
-                            <li><a href="page-pricing.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Pricing</a></li>
-                            <li><a href="page-portfolio-modern.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Project</a></li>
-                            <li><a href="page-jobs.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Careers</a></li>
-                            <li><a href="page-blog-grid.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Blog</a></li>
-                            <li><a href="auth-cover-login.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Login</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> About us</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Services</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Team</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Pricing</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Project</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Blog</a></li>
                         </ul>
                     </div><!--end col-->
 
                     <div class="col-lg-3 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
                         <h5 class="text-light footer-head">Usefull Links</h5>
                         <ul class="list-unstyled footer-list mt-4">
-                            <li><a href="page-terms.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Terms of Services</a></li>
-                            <li><a href="page-privacy.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Privacy Policy</a></li>
-                            <li><a href="documentation.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Documentation</a></li>
-                            <li><a href="changelog.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Changelog</a></li>
-                            <li><a href="components.html" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Components</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Terms of Services</a></li>
+                            <li><a href="#" class="text-foot"><i class="uil uil-angle-right-b me-1"></i> Privacy Policy</a></li>
                         </ul>
                     </div><!--end col-->
 
