@@ -63,7 +63,7 @@ def only_main():
     def wrapper(fn):
         @wraps(fn)
         def decorator(*args, **kwargs):
-            if request.host == 'webpaget.com' or request.host == 'www.webpaget.com':
+            if request.host == '46.101.5.43':
                 return fn(*args, **kwargs)
             else:
                 abort(404), 404

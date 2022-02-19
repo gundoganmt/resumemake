@@ -10,7 +10,7 @@ public = Blueprint('public',__name__)
 
 @public.route('/')
 def index():
-    if request.host == 'webpaget.com':
+    if request.host == '46.101.5.43':
         return render_template('public/index.html')
     else:
         resume_site = ResumeSite.query.filter_by(domain=request.host).first_or_404()
